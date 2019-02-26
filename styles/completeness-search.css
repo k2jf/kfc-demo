@@ -1,0 +1,19 @@
+.completeness-search {
+  height: 100px;
+}
+
+.completeness-search-title {
+  height: 50px;
+  border-bottom: 1px solid #e8eaec;
+  display: flex;
+  align-items: center;
+}
+
+.completeness-search-title p {
+  font-weight: 600;
+  font-size: large;
+}
+
+.completeness-search-body {
+  margin-top: 10px;
+}
