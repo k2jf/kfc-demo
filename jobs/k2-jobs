@@ -1,0 +1,111 @@
+<template>
+  <div>
+    <Tabs value="name1">
+      <TabPane :label="label1" name="name1">
+        <div style="width: 300px;margin-left: 0px">{{inputLable}} <Input prefix="ios-search" placeholder="搜索" style="margin-left: 10px; width: 200px" /></div>
+        <br/>
+        <i-table style="margin-left: 10px;margin-right: 10px"
+          :loading="loading"
+          :columns='headers'
+          :data='datas'>
+        </i-table>
+        <div class='md4x-bottom'>
+          <i-page
+            v-if='!disablePage'
+            class='md4x-page'
+            :current='pageNo'
+            :total='total'
+            @on-change='onPageNoChange'
+            @on-page-size-change='onPageSizeChange'
+            show-total
+            show-sizer>
+          </i-page>
+        </div>
+      </TabPane>
+    </Tabs>
+  </div>
+</template>
+
+<script>
+import { Table, Page, Tabs, TabPane, Input } from 'iview'
+export default {
+  name: 'k2-job',
+  components: {
+    'i-table': Table,
+    'i-page': Page,
+    Tabs,
+    TabPane,
+    Input
+  },
+  props: {
+    label1: {
+      type: String,
+      default () {
+        return ''
+      }
+    },
+    inputLable: {
+      type: String,
+      default () {
+        return ''
+      }
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    headers: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    datas: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    total: {
+      type: Number,
+      default: 0
+    },
+    disablePage: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  data () {
+    return {
+      pageNo: 1,
+      pageSize: 10
+    }
+  },
+
+  methods: {
+    onPageNoChange (pageNo) {
+      this.pageNo = pageNo
+      this.$emit('on-page-change', pageNo, this.pageSize)
+    },
+    onPageSizeChange (pageSize) {
+      this.pageSize = pageSize
+      this.$emit('on-page-change', this.pageNo, pageSize)
+    },
+    resetPage (pageNo, pageSize) {
+      this.pageNo = pageNo
+      this.pageSize = pageSize || this.pageSize
+    }
+  }
+}
+</script>
+
+<style scoped>
+  .md4x-bottom {
+    margin-top: 10px;
+    width: 100%;
+  }
+  .md4x-page {
+    float: right;
+  }
+</style>
