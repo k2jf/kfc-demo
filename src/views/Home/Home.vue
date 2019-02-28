@@ -1,5 +1,6 @@
 <template>
   <div class="home page-container">
+    <TimeSeries :queryParams="queryParams" />
     <img alt="Vue logo" src="../../assets/logo.png">
     <HelloWorld msg="KMX 应用组件开发模板" />
     <footer class="footer">
@@ -17,18 +18,32 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld'
 import { Button } from 'iview'
+import TimeSeries from '@/components/kfc-timeseries-chart'
 
 export default {
-	name: 'Home',
-	components: {
-		HelloWorld,
-		Button
-	},
-	methods: {
-		navigateToAnotherPage () {
-			this.$router.push('/another-page')
-		}
-	}
+  name: 'Home',
+  components: {
+    HelloWorld,
+    Button,
+    TimeSeries
+  },
+  data () {
+    return {
+      queryParams: {
+        'query': 'select type, ts,wfid,wtid,WTUR_WSpd_Ra_F32,WTUR_Temp_Ra_F32 from gw_scada_7s_extension where ((type=\'gw_scada_7s_extension\' and wfid = \'140604\' and wtid = \'140604006\')) and ts >= \'2019-01-11 00:00:00.000\' and ts <= \'2019-01-11 23:59:59.000\'',
+        'resultType': 'REST',
+        'path': 'filestore://',
+        'queueName': 'default_queue',
+        'timeout': 6000
+      }
+    }
+  },
+  methods: {
+    navigateToAnotherPage () {
+      this.$router.push('/another-page')
+    }
+  }
+
 }
 </script>
 

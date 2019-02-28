@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "dayjs": "^1.8.8",
+    "echarts": "^4.1.0",
     "iview": "^3.2.2",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
