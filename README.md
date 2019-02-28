@@ -1,4 +1,4 @@
-# PorjectList
+# ProjectList
 
 ## 功能
 用于展示模型开发项目列表
@@ -17,13 +17,13 @@ k2liumc
 ## 示例
 ```
 <template>
-    <PorjectList />
+    <ProjectList />
 </template>
 
 <script>
-    import PorjectList from '@/components/kfc-data-project'
+    import ProjectList from '@/components/kfc-data-project'
     components: {
-        PorjectList
+        ProjectList
     },
     export default {
     }
