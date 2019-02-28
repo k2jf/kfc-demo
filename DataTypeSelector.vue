@@ -20,7 +20,7 @@
               @click="onSelectChange(item.id)">
               <Row>
                 <Col span="4">
-                <h1><img src="../../assets/category_7s.png" style="width: 40px"></h1>
+                <h1><img src="#" style="width: 40px"></h1>
                 </Col>
                 <Col span="14">
                 <h3>{{ item.id }}</h3>
@@ -52,7 +52,7 @@
               @click="onSelectChange(item.objectClassId)">
               <Row>
                 <Col span="4">
-                <h1><img src="../../assets/category_b.png" style="width: 40px"></h1>
+                <h1><img src="#" style="width: 40px"></h1>
                 </Col>
                 <Col span="14">
                 <h3>{{ item.objectClassName }}</h3>

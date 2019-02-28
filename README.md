@@ -34,7 +34,7 @@ wangyanan
 
 <script>
 import { Button, Input } from 'iview'
-import DataTypeSelector from '@/components/DataTypeSelector'
+import DataTypeSelector from '@/components/kfc-datatype-selector'
 
 export default {
     components: {
