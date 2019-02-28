@@ -1,6 +1,6 @@
-#### CompletenessList
+#### ProjectList
 
-用于展示示例模板
+用于展示项目示例模板
 
 author: liumc
 
