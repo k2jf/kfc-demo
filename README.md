@@ -1,3 +1,4 @@
+···
 <template>
   <div>
     <k-job :label1="label1" :inputLable="inputLable" :headers="table.headers" :datas='table.dataList' :total='table.total' @on-page-change='onPageChange'></k-job>
@@ -183,3 +184,4 @@ export default {
 <style scoped>
 
 </style>
+···
