@@ -1,5 +1,5 @@
 <template>
-  <div ref="TimeSeriesChart" class="chart-container" />
+  <div class="chart-container" ref="TimeSeriesChart" />
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
       },
       option: {
         title: {
-          text: '新疆哈密烟墩大二期整装天润风电场-F084机组',
+          text: 'F084机组',
           textStyle: {
             color: '#666'
           },
@@ -76,6 +76,16 @@ export default {
           }
         ]
       }
+    }
+  },
+  watch: {
+    timeSeriesData: {
+      handler (curVal, oldVal) {
+        if (curVal) {
+          this.showTimeSeriesChart()
+        }
+      },
+      deep: true
     }
   },
   created () {
@@ -149,16 +159,6 @@ export default {
       }, [])
 
       return seriesData
-    }
-  },
-  watch: {
-    timeSeriesData: {
-      handler (curVal, oldVal) {
-        if (curVal) {
-          this.showTimeSeriesChart()
-        }
-      },
-      deep: true
     }
   },
   beforDestory () {
