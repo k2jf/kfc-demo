@@ -37,7 +37,7 @@ export default {
         'resultType': 'REST',
         'path': 'filestore://',
         'queueName': 'default_queue',
-        'timeout': 6000
+        'timeout': 12000
       },
       pasQueryParams: {
         filePath: '/test-lxt/102282/31284/20190226140308149/EXTRACTION',
