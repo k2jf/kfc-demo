@@ -14,7 +14,7 @@
           <div class="tab-pane-div">
             <div
               class="col"
-              :style="{border: checkedTypeId === item.id ? '1px solid #16A8F3' : '1px solid #fff'}"
+              :style="{border: checkedTypeId === item.id ? '1px solid #16A8F3' : '1px solid #cdcdcd'}"
               v-for="item in realTimeDataType"
               :key="item.id"
               @click="onSelectChange(item.id)">
@@ -46,7 +46,7 @@
           <div class="tab-pane-div">
             <div
               class="col"
-              :style="{border: checkedTypeId === item.objectClassId ? '1px solid #16A8F3' : '1px solid #fff'}"
+              :style="{border: checkedTypeId === item.objectClassId ? '1px solid #16A8F3' : '1px solid #cdcdcd'}"
               v-for="item in objectClassDataType"
               :key="item.objectClassId"
               @click="onSelectChange(item.objectClassId)">
@@ -136,7 +136,7 @@ export default {
 		},
 		ok () {
 			if (this.currentDataType) {
-				this.$emit('input-text', this.currentDataType)
+				this.$emit('checked-type', this.currentDataType)
 			}
 			this.$emit('on-close')
 		},
