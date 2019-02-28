@@ -1,6 +1,7 @@
 <template>
   <div class="home page-container">
     <TimeSeries :queryParams="queryParams" />
+    <PasResultsList :pasQueryParams="pasQueryParams"></PasResultsList>
     <img alt="Vue logo" src="../../assets/logo.png">
     <HelloWorld msg="KMX 应用组件开发模板" />
     <footer class="footer">
@@ -19,13 +20,15 @@
 import HelloWorld from '@/components/HelloWorld'
 import { Button } from 'iview'
 import TimeSeries from '@/components/kfc-timeseries-chart'
+import PasResultsList from '@/components/kfc-pas-results-list'
 
 export default {
   name: 'Home',
   components: {
     HelloWorld,
     Button,
-    TimeSeries
+    TimeSeries,
+    PasResultsList
   },
   data () {
     return {
@@ -35,6 +38,10 @@ export default {
         'path': 'filestore://',
         'queueName': 'default_queue',
         'timeout': 6000
+      },
+      pasQueryParams: {
+        filePath: '/test-lxt/102282/31284/20190226140308149/EXTRACTION',
+        expand: false
       }
     }
   },
