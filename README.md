@@ -1,4 +1,4 @@
-# TimeSeries
+# DataTypeSelector
 
 ## 功能
 数据类型选择器
