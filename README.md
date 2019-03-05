@@ -8,8 +8,6 @@ wangliheng@k2data.com.cn
 
 | 属性        | 说明     | 类型   | 默认值 |
 | ----------- | -------- | ------ | ------ |
-| datas | 列表数据 | Object | -      |
-| total | 数据总量 | Object | -      |
 
 ## 示例
 ```
