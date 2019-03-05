@@ -53,7 +53,7 @@ export default {
       xhr.ontimeout = function (event) {
         alert('请求超时！')
       }
-      let url = `http://10.12.20.36:28085/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}&type=like&name=${}`
+      let url = `http://10.12.20.36:28085/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}`
       xhr.open('GET', url)
       xhr.setRequestHeader('K2_KEY', token)
       xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
