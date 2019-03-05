@@ -1,12 +1,12 @@
 <template>
   <div>
     <Tabs value="name1">
-      <TabPane :label="label1" name="name1">
-        <div style="width: 300px;margin-left: 0px">{{inputLable}} <Input prefix="ios-search" placeholder="搜索" style="margin-left: 10px; width: 200px" /></div>
+      <TabPane label="服务作业" name="name1">
+        <div style="width: 300px;margin-left: 0px">分析作业 <Input prefix="ios-search" placeholder="搜索" style="margin-left: 10px; width: 200px" /></div>
         <br/>
         <i-table style="margin-left: 10px;margin-right: 10px"
           :loading="loading"
-          :columns='headers'
+          :columns='table.headers'
           :data='datas'>
         </i-table>
         <div class='md4x-bottom'>
@@ -28,6 +28,8 @@
 
 <script>
 import { Table, Page, Tabs, TabPane, Input } from 'iview'
+import { formatDateTime, formatDuring } from '@/components/jobs/utils'
+
 export default {
   name: 'k2-job',
   components: {
@@ -38,21 +40,13 @@ export default {
     Input
   },
   props: {
-    label1: {
-      type: String,
-      default () {
-        return ''
-      }
-    },
-    inputLable: {
-      type: String,
-      default () {
-        return ''
-      }
-    },
     loading: {
       type: Boolean,
       default: false
+    },
+    searchName: {
+      type: String,
+      default: ''
     },
     headers: {
       type: Array,
@@ -79,7 +73,90 @@ export default {
   data () {
     return {
       pageNo: 1,
-      pageSize: 10
+      pageSize: 10,
+      table: {
+        headers: [
+          { title: '序号', type: 'index', width: 80 },
+          { title: '作业编号',
+            render: (h, params) => {
+              return h('span', params.row.instance.jobId)
+            }
+          },
+          { title: '分析项目',
+            render: (h, params) => {
+              return h('span', params.row.project.projName)
+            }
+          },
+          { title: '启动时间',
+            render: (h, params) => {
+              return h('span', formatDateTime(params.row.instance.taskInstance.startTime))
+            }
+          },
+          { title: '结束时间',
+            render: (h, params) => {
+              return h('span', formatDateTime(params.row.instance.taskInstance.endTime))
+            }
+          },
+          { title: '运行时长',
+            render: (h, params) => {
+              return h('span', formatDuring(params.row.instance.taskInstance.endTime - params.row.instance.taskInstance.startTime))
+            }
+          },
+          { title: '运行状态',
+            render: (h, params) => {
+              return h('span', params.row.instance.taskInstance.status)
+            }
+          },
+          { title: '运行结果',
+            render: (h, params) => {
+              return h('span', params.row.instance.taskInstance.result)
+            }
+          },
+          { title: '执行者',
+            render: (h, params) => {
+              return h('span', params.row.instance.lastEditor)
+            }
+          },
+          { title: '操作',
+            width: 140,
+            render: (h, params) => {
+              return h('div', [
+                h('a', {
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.download(params)
+                    }
+                  }
+                }, '下载'),
+                h('a', {
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.stop(params)
+                    }
+                  }
+                }, '停止'),
+                h('a', {
+                  style: {
+                    color: '#c5c8ce'
+                  },
+                  on: {
+                  }
+                }, '删除')
+              ])
+            }
+          }
+        ],
+        dataList: [],
+        pageNo: 1,
+        pageSize: 10,
+        total: 7
+      }
     }
   },
 
