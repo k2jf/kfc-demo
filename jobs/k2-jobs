@@ -5,16 +5,14 @@
         <div style="width: 300px;margin-left: 0px">分析作业 <Input prefix="ios-search" placeholder="搜索" style="margin-left: 10px; width: 200px" /></div>
         <br/>
         <i-table style="margin-left: 10px;margin-right: 10px"
-          :loading="loading"
           :columns='table.headers'
-          :data='datas'>
+          :data='table.dataList'>
         </i-table>
         <div class='md4x-bottom'>
           <i-page
-            v-if='!disablePage'
             class='md4x-page'
             :current='pageNo'
-            :total='total'
+            :total='table.total'
             @on-change='onPageNoChange'
             @on-page-size-change='onPageSizeChange'
             show-total
@@ -39,37 +37,9 @@ export default {
     TabPane,
     Input
   },
-  props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    searchName: {
-      type: String,
-      default: ''
-    },
-    headers: {
-      type: Array,
-      default () {
-        return []
-      }
-    },
-    datas: {
-      type: Array,
-      default () {
-        return []
-      }
-    },
-    total: {
-      type: Number,
-      default: 0
-    },
-    disablePage: {
-      type: Boolean,
-      default: false
-    }
+  mounted () {
+    this.getJobsData()
   },
-
   data () {
     return {
       pageNo: 1,
@@ -172,6 +142,31 @@ export default {
     resetPage (pageNo, pageSize) {
       this.pageNo = pageNo
       this.pageSize = pageSize || this.pageSize
+    },
+    onPageChange (pageNo, pageSize) {
+      this.table.tableLoading = true
+      this.table.pageNo = pageNo
+      this.table.pageSize = pageSize
+      this.getJobsData()
+    },
+    getJobsData () {
+      let token = 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..K09zHAVbgBDJLugW2TsKhg.ImY4y0pxJw1buidfWO6W7p7xwf7TxdOhBfndlPWhoCfcK7ggiqAj5qyWiMXCHbTr4scEGmzv1kROmGKJaNvX-aVFnEsnXSdjCjtfHT_GX-e0MSBWKfsfOgCtuLznXk5wcVK0BFf1mQXOQUS74JWmTNK9OGfRqyKwAm_iwI3CBz46OFgZ3H53VhXZZhLM1N-Uz0FRtgZ8JtIAL_CIP5ZcMotSH7OgCRWNanIT6s5b8JXBaHOcjM1qkzPlY0kSuNlm.ZlizGrSVV40yJEvnTMdFQsc_lyxPW7v0'
+      let xhr = new XMLHttpRequest()
+      xhr.timeout = 6000
+      xhr.ontimeout = function (event) {
+        alert('请求超时！')
+      }
+      let url = `http://10.12.20.36:28085/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}`
+      xhr.open('GET', url)
+      xhr.setRequestHeader('K2_KEY', token)
+      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          console.log(JSON.parse(xhr.responseText).result)
+          this.table.dataList = JSON.parse(xhr.responseText).result
+        }
+      }
+      xhr.send(null)
     }
   }
 }
