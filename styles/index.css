@@ -1,0 +1,29 @@
+.auth-split{
+  height: 700px;
+  border: 1px solid #dcdee2;
+  background: #fff;
+}
+.auth-edit-pane {
+  padding: 6px;
+}
+.c-pointer {
+  cursor: pointer;
+}
+.ivu-tabs-nav-container {
+  padding: 10px;
+}
+.auth-right-pane {
+  padding: 10px 20px;
+}
+.ivu-row {
+  line-height: 32px;
+}
+.margin-bottom {
+  margin-bottom: 10px;
+}
+.page-container {
+  float: right;
+}
+.ivu-page-options-sizer {
+  margin-right: 0;
+}
