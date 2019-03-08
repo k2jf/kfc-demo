@@ -163,7 +163,6 @@ export default {
       xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
-          this.$refs.formValidate.resetFields()
           this.$emit('on-submit', permission)
           this.$refs.formValidate.resetFields()
         }
