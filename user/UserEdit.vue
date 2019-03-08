@@ -107,7 +107,7 @@ export default {
       let users = []
       this.selectUser.forEach(item => {
         users.push({
-          name: item
+          name: item.name
         })
       })
       let url = `http://10.12.20.36:28091/auth-service/v1/roles/${this.currentRole.id}/add`

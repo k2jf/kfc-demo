@@ -28,7 +28,6 @@
       :columns="resourceData.columns"
       :data="resourceData.data"
       size="small"
-      :height="500"
       :loading="resourceData.loading"
       class="margin-bottom"></Table>
     <Page
@@ -81,7 +80,7 @@ export default {
     return {
       resourceData: {
         page: 1,
-        size: 20,
+        size: 10,
         total: 0,
         loading: false,
         appResInfoId: '',

@@ -1,5 +1,5 @@
 .auth-split{
-  height: 700px;
+  height: 100%;
   border: 1px solid #dcdee2;
   background: #fff;
 }
@@ -12,8 +12,11 @@
 .ivu-tabs-nav-container {
   padding: 10px;
 }
-.auth-right-pane {
+.auth-pane {
   padding: 10px 20px;
+}
+.user-pane {
+  padding: 0 20px 10px;
 }
 .ivu-row {
   line-height: 32px;

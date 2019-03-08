@@ -1,61 +1,63 @@
 <template>
   <div class="auth-split">
     <Split
-      :value="0.3"
+      :value="0.2"
       :min="240"
       :max="250">
-      <div style="height: 100%" slot="left">
-        <RoleInfo @on-role-change="getCurrentRole" />
-      </div>
-      <div slot="right">
-        <Tabs type="line" v-model="currentTab">
-          <div slot="extra">
-            <Button
-              type="primary"
-              size="small"
-              style="margin: 15px"
-              v-if="currentTab === 'auth'"
-              @click="isShowAuthModal = true"
-            >
-              添加权限
-            </Button>
-            <Button
-              type="primary"
-              size="small"
-              style="margin: 15px"
-              v-if="currentTab === 'user'"
-              @click="isShowUserModal = true"
-            >
-              添加已有用户
-            </Button>
-          </div>
-          <TabPane label="用户" name="user">
-            <UserList :currentRole="currentRole" :isReloadUserList="isReloadUserList" />
-            <UserEdit
-              :currentRole="currentRole"
-              :isShowUserModal="isShowUserModal"
-              v-if="currentRole"
-              @on-submit="reloadUserList"
-              @on-close="isShowUserModal = false" />
-          </TabPane>
-          <TabPane
-            label="权限"
-            name="auth"
-            class="auth-right-pane">
-            <ResourceInfo
-              :currentRole="currentRole"
-              :resourceTypeList="resourceTypeList"
-              :permission="permission" />
-            <ResourceEdit
-              :currentRole="currentRole"
-              :resourceTypeList="resourceTypeList"
-              :isShowAuthModal="isShowAuthModal"
-              v-if="currentRole"
-              @on-submit="getPermission"
-              @on-close="isShowAuthModal = false" />
-          </TabPane>
-        </Tabs>
-      </div>
+      <RoleInfo slot="left" @on-role-change="getCurrentRole" />
+      <Tabs
+        type="line"
+        slot="right"
+        v-model="currentTab">
+        <div slot="extra">
+          <Button
+            type="primary"
+            size="small"
+            style="margin: 15px"
+            v-if="currentTab === 'auth'"
+            @click="isShowAuthModal = true"
+          >
+            添加权限
+          </Button>
+          <Button
+            type="primary"
+            size="small"
+            style="margin: 15px"
+            v-if="currentTab === 'user'"
+            @click="isShowUserModal = true"
+          >
+            添加已有用户
+          </Button>
+        </div>
+        <TabPane
+          label="用户"
+          name="user"
+          class="user-pane">
+          <UserList :currentRole="currentRole" :isReloadUserList="isReloadUserList" />
+          <UserEdit
+            :currentRole="currentRole"
+            :isShowUserModal="isShowUserModal"
+            v-if="currentRole"
+            @on-submit="reloadUserList"
+            @on-close="isShowUserModal = false" />
+        </TabPane>
+        <TabPane
+          label="权限"
+          name="auth"
+          class="auth-pane">
+          <ResourceInfo
+            :currentRole="currentRole"
+            :resourceTypeList="resourceTypeList"
+            :permission="permission" />
+          <ResourceEdit
+            :currentRole="currentRole"
+            :resourceTypeList="resourceTypeList"
+            :isShowAuthModal="isShowAuthModal"
+            v-if="currentRole"
+            @on-submit="getPermission"
+            @on-close="isShowAuthModal = false" />
+        </TabPane>
+      </Tabs>
     </Split>
   </div>
 </template>
@@ -127,3 +129,9 @@ export default {
   }
 }
 </script>
+
+<style lang="css" scoped>
+.ivu-tabs {
+  height: 100%;
+}
+</style>

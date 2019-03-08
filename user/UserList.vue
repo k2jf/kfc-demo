@@ -5,7 +5,6 @@
       :columns="user.columns"
       :data="user.data"
       size="small"
-      :height="500"
       :loading="user.loading"
       class="margin-bottom"></Table>
     <Page
@@ -42,7 +41,7 @@ export default {
     return {
       user: {
         page: 1,
-        size: 20,
+        size: 10,
         total: 0,
         loading: false,
         data: [],
