@@ -1,6 +1,6 @@
 <!-- 角色信息 -->
 <template>
-  <div slot="left">
+  <div style="height: 100%">
     <div class="auth-edit-pane">
       <Button
         type="default"
@@ -79,7 +79,7 @@ export default {
     // 新建成功更新角色列表
     onReloadList () {
       this.isShowRoleModal = false
-      setTimeout(this.getRoleList(), 3000)
+      setTimeout(this.getRoleList(), 5000)
     },
     // 选择角色
     onChangeRole (id) {

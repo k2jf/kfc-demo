@@ -1,16 +1,17 @@
 <!-- 角色列表信息 -->
 <template>
-  <CellGroup>
+  <CellGroup @on-click="onSelectClick">
     <Cell
       icon="ios-people"
       :selected="currentRole && roleItem.id === currentRole.id"
+      :name="roleItem.id"
       v-for="roleItem in roleData"
       :key="roleItem.id">
       <Icon type="ios-people" slot="icon" />
       <span
         class="c-pointer"
         slot="label"
-        @click="onSelectClick(roleItem.id)">{{ roleItem.name }}</span>
+      >{{ roleItem.name }}</span>
       <span slot="extra" @click="onDeleteClick(roleItem.id)"><Icon type="ios-trash" /></span>
     </Cell>
   </CellGroup>

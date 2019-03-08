@@ -4,7 +4,7 @@
       :value="0.3"
       :min="240"
       :max="250">
-      <div slot="left">
+      <div slot="left" style="height: 100%">
         <RoleInfo @on-role-change="getCurrentRole" />
       </div>
       <div slot="right">
@@ -23,12 +23,13 @@
             label="权限"
             name="auth"
             class="auth-right-pane">
-            <ResourceInfo :currentRole="currentRole" :resourceTypeList="resourceTypeList" />
+            <ResourceInfo :currentRole="currentRole" :resourceTypeList="resourceTypeList" :permission="permission" />
             <ResourceEdit
               :currentRole="currentRole"
               :resourceTypeList="resourceTypeList"
               :isShowAuthModal="isShowAuthModal"
               v-if="currentRole"
+              @on-submit="getPermission"
               @on-close="isShowAuthModal = false" />
           </TabPane>
         </Tabs>
@@ -60,6 +61,7 @@ export default {
       isShowAuthModal: false,
       currentRole: null,
       resourceTypeList: [],
+      permission: null,
       token: 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..K09zHAVbgBDJLugW2TsKhg.ImY4y0pxJw1buidfWO6W7p7xwf7TxdOhBfndlPWhoCfcK7ggiqAj5qyWiMXCHbTr4scEGmzv1kROmGKJaNvX-aVFnEsnXSdjCjtfHT_GX-e0MSBWKfsfOgCtuLznXk5wcVK0BFf1mQXOQUS74JWmTNK9OGfRqyKwAm_iwI3CBz46OFgZ3H53VhXZZhLM1N-Uz0FRtgZ8JtIAL_CIP5ZcMotSH7OgCRWNanIT6s5b8JXBaHOcjM1qkzPlY0kSuNlm.ZlizGrSVV40yJEvnTMdFQsc_lyxPW7v0'
     }
   },
@@ -84,6 +86,10 @@ export default {
     },
     getCurrentRole (currentRole) {
       this.currentRole = currentRole
+    },
+    getPermission (permission) {
+      this.isShowAuthModal = false
+      this.permission = permission
     }
   }
 }

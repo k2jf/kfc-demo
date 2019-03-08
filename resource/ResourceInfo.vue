@@ -67,6 +67,14 @@ export default {
       default: () => {
         return []
       }
+    },
+    // 新增权限
+    permission: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {}
+      }
     }
   },
   data () {
@@ -129,6 +137,14 @@ export default {
     currentRole: {
       handler (curVal, oldVal) {
         if (curVal && curVal.id && this.resourceData.appResTypeId) {
+          this.getResourceData()
+        }
+      }
+    },
+    permission: {
+      handler (curVal, oldVal) {
+        if (curVal && curVal.appResTypeId === this.resourceData.appResTypeId) {
+          // 新增权限类型为当前列表显示类型刷新页面
           this.getResourceData()
         }
       }

@@ -106,7 +106,6 @@ export default {
     return {
       isShowModal: this.isShowAuthModal,
       selectResource: [], // 选中资源
-      resourceinfos: [], // 资源列表
       operations: [], // 操作列表
       operationNames: [], // 选中操作
       resourceData: {
@@ -135,6 +134,14 @@ export default {
     isShowAuthModal: {
       handler (curVal, oldVal) {
         this.isShowModal = curVal
+        // 清空选中参数
+        this.selectResource.splice(0, this.selectResource.length)
+        this.operationNames.splice(0, this.operationNames.length)
+        this.operations.splice(0, this.operations.length)
+        this.resourceData.appResTypeId = ''
+        this.resourceData.appResInfoId = ''
+        this.resourceData.loading = false
+        this.resourceData.data.splice(0, this.resourceData.data.length)
       }
     }
   },
@@ -157,7 +164,7 @@ export default {
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           this.$refs.formValidate.resetFields()
-          this.$emit('on-close')
+          this.$emit('on-submit', permission)
           this.$refs.formValidate.resetFields()
         }
       }
@@ -187,6 +194,10 @@ export default {
       xhr.send(null)
     },
     onTypeChange () {
+      // 清空选中参数
+      this.selectResource.splice(0, this.selectResource.length)
+      this.operationNames.splice(0, this.operationNames.length)
+      this.resourceData.appResInfoId = ''
       this.getResourceData()
     },
     onSelectChange (selection) {
