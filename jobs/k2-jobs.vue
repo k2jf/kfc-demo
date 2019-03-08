@@ -1,8 +1,10 @@
 <template>
   <div>
     <Tabs value="name1">
-      <TabPane label="服务作业" name="name1">
-        <div style="width: 300px;margin-left: 0px">分析作业 <Input prefix="ios-search" placeholder="搜索" style="margin-left: 10px; width: 200px" /></div>
+      <TabPane label="项目作业" name="name1">
+        <div style="width: 300px;margin-left: 0px">
+          分析作业 <Input prefix="ios-search" v-model="content" placeholder="搜索" style="margin-left: 10px; width: 200px" @on-enter="onsearch()" />
+        </div>
         <br/>
         <i-table style="margin-left: 10px;margin-right: 10px"
           :columns='table.headers'
@@ -26,7 +28,7 @@
 
 <script>
 import { Table, Page, Tabs, TabPane, Input } from 'iview'
-import { formatDateTime, formatDuring } from '@/components/jobs/utils'
+import { formatDateTime, formatDuring } from '@/components/utils'
 
 export default {
   name: 'k2-job',
@@ -42,6 +44,7 @@ export default {
   },
   data () {
     return {
+      content: '',
       pageNo: 1,
       pageSize: 10,
       table: {
@@ -50,45 +53,53 @@ export default {
           { title: '作业编号',
             render: (h, params) => {
               return h('span', params.row.instance.jobId)
-            }
+            },
+            width: 120
           },
           { title: '分析项目',
             render: (h, params) => {
               return h('span', params.row.project.projName)
-            }
+            },
+            minWidth: 180
           },
           { title: '启动时间',
             render: (h, params) => {
               return h('span', formatDateTime(params.row.instance.taskInstance.startTime))
-            }
+            },
+            width: 180
           },
           { title: '结束时间',
             render: (h, params) => {
               return h('span', formatDateTime(params.row.instance.taskInstance.endTime))
-            }
+            },
+            width: 180
           },
           { title: '运行时长',
             render: (h, params) => {
               return h('span', formatDuring(params.row.instance.taskInstance.endTime - params.row.instance.taskInstance.startTime))
-            }
+            },
+            width: 120
           },
           { title: '运行状态',
             render: (h, params) => {
               return h('span', params.row.instance.taskInstance.status)
-            }
+            },
+            width: 120
           },
           { title: '运行结果',
             render: (h, params) => {
               return h('span', params.row.instance.taskInstance.result)
-            }
+            },
+            width: 120
           },
           { title: '执行者',
             render: (h, params) => {
               return h('span', params.row.instance.lastEditor)
-            }
+            },
+            minWidth: 120
           },
           { title: '操作',
-            width: 140,
+            minWidth: 140,
             render: (h, params) => {
               return h('div', [
                 h('a', {
@@ -125,7 +136,7 @@ export default {
         dataList: [],
         pageNo: 1,
         pageSize: 10,
-        total: 7
+        total: 0
       }
     }
   },
@@ -133,41 +144,51 @@ export default {
   methods: {
     onPageNoChange (pageNo) {
       this.pageNo = pageNo
-      this.$emit('on-page-change', pageNo, this.pageSize)
+      this.table.pageNo = pageNo
+      // this.$emit('on-page-change', pageNo, this.pageSize)
+      this.getJobsData()
     },
     onPageSizeChange (pageSize) {
       this.pageSize = pageSize
-      this.$emit('on-page-change', this.pageNo, pageSize)
+      this.table.pageSize = pageSize
+      // this.$emit('on-page-change', this.pageNo, pageSize)
+      this.getJobsData()
     },
     resetPage (pageNo, pageSize) {
       this.pageNo = pageNo
       this.pageSize = pageSize || this.pageSize
     },
-    onPageChange (pageNo, pageSize) {
-      this.table.tableLoading = true
-      this.table.pageNo = pageNo
-      this.table.pageSize = pageSize
+    getJobsData () {
+      let url = ''
+      if (this.content === '') {
+        url = `http://10.12.20.36:28085/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}`
+      } else {
+        url = `http://10.12.20.36:28085/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}&type=like&name=${this.content}`
+      }
+      this.getData(url)
+    },
+    onsearch () {
       this.getJobsData()
     },
-    getJobsData () {
+    getData (url) {
       let token = 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..K09zHAVbgBDJLugW2TsKhg.ImY4y0pxJw1buidfWO6W7p7xwf7TxdOhBfndlPWhoCfcK7ggiqAj5qyWiMXCHbTr4scEGmzv1kROmGKJaNvX-aVFnEsnXSdjCjtfHT_GX-e0MSBWKfsfOgCtuLznXk5wcVK0BFf1mQXOQUS74JWmTNK9OGfRqyKwAm_iwI3CBz46OFgZ3H53VhXZZhLM1N-Uz0FRtgZ8JtIAL_CIP5ZcMotSH7OgCRWNanIT6s5b8JXBaHOcjM1qkzPlY0kSuNlm.ZlizGrSVV40yJEvnTMdFQsc_lyxPW7v0'
       let xhr = new XMLHttpRequest()
       xhr.timeout = 6000
       xhr.ontimeout = function (event) {
         alert('请求超时！')
       }
-      let url = `http://10.12.20.36:28085/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}`
       xhr.open('GET', url)
       xhr.setRequestHeader('K2_KEY', token)
       xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
-          console.log(JSON.parse(xhr.responseText).result)
           this.table.dataList = JSON.parse(xhr.responseText).result
+          this.table.total = JSON.parse(xhr.responseText).pageInfo.total
         }
       }
       xhr.send(null)
     }
+
   }
 }
 </script>
