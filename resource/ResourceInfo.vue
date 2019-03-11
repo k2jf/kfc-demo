@@ -41,6 +41,8 @@
 // eslint-disable-next-line
 import { Col, Row, Input, Select, Option, Table, Page, Icon } from 'iview'
 
+import { api } from '@/api/auth'
+
 export default {
   name: 'ResourceInfo',
   components: {
@@ -128,8 +130,7 @@ export default {
             }
           }
         ]
-      },
-      token: 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..K09zHAVbgBDJLugW2TsKhg.ImY4y0pxJw1buidfWO6W7p7xwf7TxdOhBfndlPWhoCfcK7ggiqAj5qyWiMXCHbTr4scEGmzv1kROmGKJaNvX-aVFnEsnXSdjCjtfHT_GX-e0MSBWKfsfOgCtuLznXk5wcVK0BFf1mQXOQUS74JWmTNK9OGfRqyKwAm_iwI3CBz46OFgZ3H53VhXZZhLM1N-Uz0FRtgZ8JtIAL_CIP5ZcMotSH7OgCRWNanIT6s5b8JXBaHOcjM1qkzPlY0kSuNlm.ZlizGrSVV40yJEvnTMdFQsc_lyxPW7v0'
+      }
     }
   },
   watch: {
@@ -155,42 +156,26 @@ export default {
       this.getResourceData()
     },
     deleteResource (id) {
-      var xhr = new XMLHttpRequest()
-      var url = `http://10.12.20.36:28091/auth-service/v1/permissions?subjectId=${this.currentRole.id}&subjectType=role&appResTypeId=${this.resourceData.appResTypeId}&appResInfoId=${id}`
-
-      xhr.open('DELETE', url, true)
-      xhr.setRequestHeader('K2_KEY', this.token)
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          this.getResourceData()
-        }
-      }
-      xhr.send(JSON.stringify({}))
+      this.$axios.delete(`${api.permissions}?subjectId=${this.currentRole.id}&subjectType=role&appResTypeId=${this.resourceData.appResTypeId}&appResInfoId=${id}`, JSON.stringify({})).then(res => {
+        this.getResourceData()
+      })
     },
     // 获取资源列表
     getResourceData () {
       this.resourceData.loading = true
       let { page, size, subjectType, appResTypeId, appResInfoId } = this.resourceData
       let subjectId = this.currentRole.id
-      let xhr = new XMLHttpRequest()
-      let url = `http://10.12.20.36:28091/auth-service/v1/resourceinfos?page=${page}&size=${size}&subjectId=${subjectId}&subjectType=${subjectType}&appResTypeId=${encodeURIComponent(appResTypeId)}`
+      let url = `${api.resourceinfos}?page=${page}&size=${size}&subjectId=${subjectId}&subjectType=${subjectType}&appResTypeId=${encodeURIComponent(appResTypeId)}`
 
       if (appResInfoId) {
         url += `&appResInfoId=${appResInfoId}`
       }
 
-      xhr.open('GET', url, true)
-      xhr.setRequestHeader('K2_KEY', this.token)
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          this.resourceData.loading = false
-          this.resourceData.data = JSON.parse(xhr.responseText).result
-          this.resourceData.total = JSON.parse(xhr.responseText).pages.total
-        }
-      }
-      xhr.send(null)
+      this.$axios.get(url).then(res => {
+        this.resourceData.loading = false
+        this.resourceData.data = res.data.result
+        this.resourceData.total = res.data.pages.total
+      })
     },
     // 资源类型改变
     onTypeChange () {

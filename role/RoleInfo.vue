@@ -33,6 +33,8 @@ import { Input, Button } from 'iview'
 import RoleEdit from './RoleEdit.vue'
 import RoleList from './RoleList.vue'
 
+import { api } from '@/api/auth'
+
 export default {
   name: 'RoleInfo',
   components: {
@@ -46,8 +48,7 @@ export default {
       isShowRoleModal: false,
       rolename: '',
       roleData: null,
-      currentRole: null,
-      token: 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..K09zHAVbgBDJLugW2TsKhg.ImY4y0pxJw1buidfWO6W7p7xwf7TxdOhBfndlPWhoCfcK7ggiqAj5qyWiMXCHbTr4scEGmzv1kROmGKJaNvX-aVFnEsnXSdjCjtfHT_GX-e0MSBWKfsfOgCtuLznXk5wcVK0BFf1mQXOQUS74JWmTNK9OGfRqyKwAm_iwI3CBz46OFgZ3H53VhXZZhLM1N-Uz0FRtgZ8JtIAL_CIP5ZcMotSH7OgCRWNanIT6s5b8JXBaHOcjM1qkzPlY0kSuNlm.ZlizGrSVV40yJEvnTMdFQsc_lyxPW7v0'
+      currentRole: null
     }
   },
   mounted () {
@@ -56,25 +57,19 @@ export default {
   methods: {
     // 获取角色列表
     getRoleList () {
-      var xhr = new XMLHttpRequest()
-      var url = 'http://10.12.20.36:28091/auth-service/v1/roles?type=all'
+      // var xhr = new XMLHttpRequest()
+      let url = `${api.roles}?type=all`
 
       if (this.rolename) {
         url += `&rolename=${this.rolename}`
       }
 
-      xhr.open('GET', url, true)
-      xhr.setRequestHeader('K2_KEY', this.token)
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          this.roleData = JSON.parse(xhr.responseText).result
-          if (this.currentRole) return
-          this.currentRole = this.roleData[0]
-          this.$emit('on-role-change', this.currentRole)
-        }
-      }
-      xhr.send(null)
+      this.$axios.get(url).then(res => {
+        this.roleData = res.data.result
+        if (this.currentRole) return
+        this.currentRole = this.roleData[0]
+        this.$emit('on-role-change', this.currentRole)
+      })
     },
     // 新建成功更新角色列表
     onReloadList () {
@@ -88,22 +83,13 @@ export default {
     },
     // 删除角色
     onDeleteRole (id) {
-      var xhr = new XMLHttpRequest()
-      var url = `http://10.12.20.36:28091/auth-service/v1/roles/${id}`
-
-      xhr.open('DELETE', url, true)
-      xhr.setRequestHeader('K2_KEY', this.token)
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          // 删除的角色为当前选中角色当前选中角色设置为null
-          if (this.currentRole.id === id) {
-            this.currentRole = null
-          }
-          this.getRoleList()
+      this.$axios.delete(`${api.roles}/${id}`).then(res => {
+        // 删除的角色为当前选中角色当前选中角色设置为null
+        if (this.currentRole.id === id) {
+          this.currentRole = null
         }
-      }
-      xhr.send(null)
+        this.getRoleList()
+      })
     },
     onSearchClick () {
       this.getRoleList()

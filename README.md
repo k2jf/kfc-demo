@@ -29,3 +29,17 @@ youli
 </script>
 
 ```
+
+## src/api/auth.js
+```
+module.exports = {
+  api: {
+    resourceTypes: '/auth-service/v1/resourcetypes',
+    roles: '/auth-service/v1/roles',
+    users: '/auth-service/v1/users',
+    permissions: '/auth-service/v1/permissions',
+    resourceinfos: '/auth-service/v1/resourceinfos'
+  }
+}
+
+```

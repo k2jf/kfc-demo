@@ -68,6 +68,7 @@
 
 <script>
 import { Modal, Input, Form, FormItem, Select, Option, Row, Col, Table, CheckboxGroup, Checkbox, Tag } from 'iview'
+import { api } from '@/api/auth'
 
 export default {
   name: 'ResourceEdit',
@@ -119,8 +120,7 @@ export default {
           { title: '资源id', key: 'appResInfoId', minWidth: 50 },
           { title: '资源名称', key: 'appResInfoName', minWidth: 80 }
         ]
-      },
-      token: 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..K09zHAVbgBDJLugW2TsKhg.ImY4y0pxJw1buidfWO6W7p7xwf7TxdOhBfndlPWhoCfcK7ggiqAj5qyWiMXCHbTr4scEGmzv1kROmGKJaNvX-aVFnEsnXSdjCjtfHT_GX-e0MSBWKfsfOgCtuLznXk5wcVK0BFf1mQXOQUS74JWmTNK9OGfRqyKwAm_iwI3CBz46OFgZ3H53VhXZZhLM1N-Uz0FRtgZ8JtIAL_CIP5ZcMotSH7OgCRWNanIT6s5b8JXBaHOcjM1qkzPlY0kSuNlm.ZlizGrSVV40yJEvnTMdFQsc_lyxPW7v0'
+      }
     }
   },
   computed: {
@@ -148,26 +148,19 @@ export default {
   methods: {
     // 新建权限
     onClickOk () {
-      let xhr = new XMLHttpRequest()
       let appResInfoId = this.selectResource.map(item => item.appResInfoId).join(',')
       let permission = {
         appResInfoId,
         appResTypeId: this.resourceData.appResTypeId,
         operationNames: this.operationNames,
         subjectId: this.currentRole.id,
-        subjectType: 'role' }
-      let url = 'http://10.12.20.36:28091/auth-service/v1/permissions'
-
-      xhr.open('POST', url, true)
-      xhr.setRequestHeader('K2_KEY', this.token)
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          this.$emit('on-submit', permission)
-          this.$refs.formValidate.resetFields()
-        }
+        subjectType: 'role'
       }
-      xhr.send(JSON.stringify(permission))
+
+      this.$axios.post(`${api.permissions}`, JSON.stringify(permission)).then(res => {
+        this.$emit('on-submit', permission)
+        this.$refs.formValidate.resetFields()
+      })
     },
     onClickCancel () {
       this.$emit('on-close')
@@ -177,20 +170,11 @@ export default {
       this.resourceData.loading = true
       let { appResTypeId } = this.resourceData
       if (!appResTypeId) return
-      let xhr = new XMLHttpRequest()
-      let url = `http://10.12.20.36:28091/auth-service/v1/resourceinfos?type=all&appResTypeId=${encodeURIComponent(appResTypeId)}`
-
-      xhr.open('GET', url, true)
-      xhr.setRequestHeader('K2_KEY', this.token)
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          this.resourceData.loading = false
-          this.resourceData.data = JSON.parse(xhr.responseText).result
-          this.operations = this.resourceData.data[0].operations
-        }
-      }
-      xhr.send(null)
+      this.$axios.get(`${api.resourceinfos}?type=all&appResTypeId=${encodeURIComponent(appResTypeId)}`).then(res => {
+        this.resourceData.loading = false
+        this.resourceData.data = res.data.result
+        this.operations = this.resourceData.data[0].operations
+      })
     },
     onTypeChange () {
       // 清空选中参数
