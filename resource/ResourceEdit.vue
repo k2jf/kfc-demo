@@ -68,7 +68,7 @@
 
 <script>
 import { Modal, Input, Form, FormItem, Select, Option, Row, Col, Table, CheckboxGroup, Checkbox, Tag } from 'iview'
-import { api } from '@/api/auth'
+import { api } from '../api'
 
 export default {
   name: 'ResourceEdit',

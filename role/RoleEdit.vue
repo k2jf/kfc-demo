@@ -27,7 +27,7 @@
 <script>
 import { Modal, Input, Form, FormItem } from 'iview'
 
-import { api } from '@/api/auth'
+import { api } from '../api'
 
 export default {
   name: 'RoleEdit',

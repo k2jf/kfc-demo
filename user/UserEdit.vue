@@ -40,7 +40,7 @@
 <script>
 import { Modal, Input, Table, Tag, Row, Col } from 'iview'
 
-import { api } from '@/api/auth'
+import { api } from '../api'
 
 export default {
   name: 'UserEdit',

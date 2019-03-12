@@ -18,7 +18,7 @@
 // eslint-disable-next-line
 import { Table, Page, Icon } from 'iview'
 
-import { api } from '@/api/auth'
+import { api } from '../api'
 
 export default {
   name: 'UserList',

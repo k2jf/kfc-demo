@@ -33,7 +33,7 @@ import { Input, Button } from 'iview'
 import RoleEdit from './RoleEdit.vue'
 import RoleList from './RoleList.vue'
 
-import { api } from '@/api/auth'
+import { api } from '../api'
 
 export default {
   name: 'RoleInfo',

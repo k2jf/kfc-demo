@@ -41,7 +41,7 @@
 // eslint-disable-next-line
 import { Col, Row, Input, Select, Option, Table, Page, Icon } from 'iview'
 
-import { api } from '@/api/auth'
+import { api } from '../api'
 
 export default {
   name: 'ResourceInfo',

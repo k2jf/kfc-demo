@@ -74,7 +74,7 @@ import UserList from './user'
 import ResourceEdit from './resource/ResourceEdit.vue'
 import UserEdit from './user/UserEdit.vue'
 
-import { api } from '@/api/auth'
+import { api } from './api'
 
 export default {
   name: 'Authorization',
