@@ -157,7 +157,7 @@ export default {
         subjectType: 'role'
       }
 
-      this.$axios.post(`${api.permissions}`, JSON.stringify(permission)).then(res => {
+      this.$axios.post(`${api.permissions}`, permission).then(res => {
         this.$emit('on-submit', permission)
         this.$refs.formValidate.resetFields()
       })

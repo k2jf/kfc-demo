@@ -156,7 +156,7 @@ export default {
       this.getResourceData()
     },
     deleteResource (id) {
-      this.$axios.delete(`${api.permissions}?subjectId=${this.currentRole.id}&subjectType=role&appResTypeId=${this.resourceData.appResTypeId}&appResInfoId=${id}`, JSON.stringify({})).then(res => {
+      this.$axios.delete(`${api.permissions}?subjectId=${this.currentRole.id}&subjectType=role&appResTypeId=${this.resourceData.appResTypeId}&appResInfoId=${id}`).then(res => {
         this.getResourceData()
       })
     },
@@ -189,7 +189,3 @@ export default {
   }
 }
 </script>
-
-<style lang="css" scoped>
-
-</style>

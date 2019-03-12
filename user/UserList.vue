@@ -111,7 +111,7 @@ export default {
   methods: {
     // 删除用户
     deleteUser (name) {
-      this.$axios.put(`${api.roles}/${this.currentRole.id}/remove`, JSON.stringify({ users: [{ name: name }] })).then(res => {
+      this.$axios.put(`${api.roles}/${this.currentRole.id}/remove`, { users: [{ name: name }] }).then(res => {
         this.getUserList()
       })
     },

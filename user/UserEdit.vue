@@ -111,7 +111,7 @@ export default {
         })
       })
 
-      this.$axios.put(`${api.roles}/${this.currentRole.id}/add`, JSON.stringify({ users: users })).then(res => {
+      this.$axios.put(`${api.roles}/${this.currentRole.id}/add`, { users: users }).then(res => {
         this.$emit('on-submit')
       })
     },

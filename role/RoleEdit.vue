@@ -70,7 +70,7 @@ export default {
       this.$refs.formValidate.validate((valid) => {
         this.$emit('on-submit')
         if (valid) {
-          this.$axios.post(`${api.roles}`, JSON.stringify(this.role)).then(res => {
+          this.$axios.post(`${api.roles}`, this.role).then(res => {
             this.$refs.formValidate.resetFields()
           })
         }
