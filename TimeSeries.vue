@@ -9,17 +9,58 @@ import { api } from './api'
 export default {
   name: 'TimeSeries',
   props: {
-    queryParams: {
-      type: Object,
+    title: {
+      type: String,
+      required: true
+    },
+    path: {
+      type: String,
       required: false,
       default () {
-        return {
-          'query': 'select type, ts,wfid,wtid,WTUR_WSpd_Ra_F32,WTUR_Temp_Ra_F32 from gw_scada_7s_extension where ((type=\'gw_scada_7s_extension\' and wfid = \'140604\' and wtid = \'140604006\')) and ts >= \'2019-01-11 00:00:00.000\' and ts <= \'2019-01-11 23:59:59.000\'',
-          'resultType': 'REST',
-          'path': 'filestore://',
-          'queueName': 'default_queue',
-          'timeout': 6000
-        }
+        return 'filestore://'
+      }
+    },
+    queueName: {
+      type: String,
+      required: false,
+      default () {
+        return 'default_queue'
+      }
+    },
+    selectType: {
+      type: String,
+      required: true
+    },
+    selectTable: {
+      type: String,
+      required: true
+    },
+    wfid: {
+      type: String,
+      required: false,
+      default () {
+        return '140604'
+      }
+    },
+    wtid: {
+      type: String,
+      required: false,
+      default () {
+        return '140604006'
+      }
+    },
+    startTime: {
+      type: String,
+      required: false,
+      default () {
+        return '2019-01-11 00:00:00.000'
+      }
+    },
+    endTime: {
+      type: String,
+      required: false,
+      default () {
+        return '2019-01-11 23:59:59.000'
       }
     }
   },
@@ -36,7 +77,7 @@ export default {
       },
       option: {
         title: {
-          text: '新疆哈密烟墩大二期整装天润风电场-F084机组',
+          text: this.title,
           textStyle: {
             color: '#666'
           },
@@ -44,10 +85,7 @@ export default {
           left: 'center'
         },
         legend: {
-          data: [
-            'WTUR_Temp_Ra_F32',
-            'WTUR_WSpd_Ra_F32'
-          ],
+          data: [],
           bottom: 0
         },
         toolbox: {
@@ -109,12 +147,31 @@ export default {
     },
     // 调用接口获取时序数据
     getTimeSeriesData () {
-      this.$axios.post(`${api.timeSeries}`, this.queryParams).then(res => {
+      let queryParams = {
+        // eslint-disable-next-line
+        query: `select type, ${this.selectType} from ${this.selectTable} where ((type=\'${this.selectTable}\' and wfid = \'${this.wfid}\' and wtid = \'${this.wtid}\')) and ts >= \'${this.startTime}\' and ts <= \'${this.endTime}\'`,
+        resultType: 'REST',
+        path: this.path,
+        queueName: this.queueName,
+        timeout: 6000
+      }
+
+      this.$axios.post(`${api.timeSeries}`, queryParams).then(res => {
         this.timeSeriesData = res.data.body.results
       })
     },
     // 时序折线图
     showTimeSeriesChart () {
+      let dataType = ['ts', 'type', 'wfid', 'wtid']
+      let legendData = []
+      // 获取图例
+      Object.keys(this.timeSeriesData[0]).filter(item => {
+        if (!dataType.includes(item)) {
+          legendData.push(item)
+        }
+      })
+      this.option.legend.data = legendData
+
       let option = {
         ...this.option,
         series: this.getSeriesData()
@@ -165,6 +222,7 @@ export default {
 <style lang="css" scoped>
 .chart-container {
   width: 100%;
-  height: 600px;
+  height: 100%;
+  min-height: 360px;
 }
 </style>
