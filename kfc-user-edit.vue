@@ -74,129 +74,139 @@ import Server from './server.js'
 let prefixCls = 'kfc-user-form'
 
 export default {
-	name: 'KfcUserEdit',
-	components: {
-		'i-modal': Modal,
-		'i-form': Form,
-		'i-form-item': FormItem,
-		'i-input': Input,
-		'i-select': Select,
-		'i-option': Option
-	},
-	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
-		username: {
-			type: String,
-			default: ''
-		}
-	},
-	data () {
-		return {
-			isCreatePage: !this.username,
-			isModalLoading: true,
-			isModalShow: this.value,
-			formModel: {
-				username: '',
-				email: '',
-				password: '',
-				confirmPassword: '',
-				roles: '',
-				groups: ''
-			},
-			formRules: {
-				username: [
-					{ required: true, type: 'string', message: '用户名不能为空', trigger: 'change' }
-				],
-				email: [
-					{ required: true, type: 'string', message: '邮箱不能为空', trigger: 'change' }
-				],
-				password: [
-					{ required: true, type: 'string', message: '密码不能为空', trigger: 'change' }
-				],
-				confirmPassword: [
-					{ required: true, type: 'string', message: '确认密码不能为空', trigger: 'change' }
-				]
-			},
-			roleOpts: [],
-			groupOpts: [],
-			prefixCls: prefixCls
-		}
-	},
-	computed: {
-		title: function () {
-			return this.isCreatePage ? '创建用户' : '修改用户'
-		}
-	},
-	watch: {
-		value (val) {
-			this.isModalShow = val
-		},
-		username (val) {
-			this.isCreatePage = !val
+  name: 'KfcUserEdit',
+  components: {
+    'i-modal': Modal,
+    'i-form': Form,
+    'i-form-item': FormItem,
+    'i-input': Input,
+    'i-select': Select,
+    'i-option': Option
+  },
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    },
+    username: {
+      type: String,
+      default: ''
+    }
+  },
+  data () {
+    return {
+      isCreatePage: !this.username,
+      isModalLoading: true,
+      isModalShow: this.value,
+      formModel: {
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        roles: '',
+        groups: ''
+      },
+      formRules: {
+        username: [
+          { required: true, type: 'string', message: '用户名不能为空', trigger: 'change' }
+        ],
+        email: [
+          { required: true, type: 'string', message: '邮箱不能为空', trigger: 'change' }
+        ],
+        password: [
+          { required: true, type: 'string', message: '密码不能为空', trigger: 'change' }
+        ],
+        confirmPassword: [
+          { required: true, type: 'string', message: '确认密码不能为空', trigger: 'change' }
+        ]
+      },
+      roleOpts: [],
+      groupOpts: [],
+      prefixCls: prefixCls
+    }
+  },
+  computed: {
+    title: function () {
+      return this.isCreatePage ? '创建用户' : '修改用户'
+    }
+  },
+  watch: {
+    value (val) {
+      this.isModalShow = val
+    },
+    username (val) {
+      this.isCreatePage = !val
 
-			if (this.isCreatePage) {
-				this.formModel = {
-					username: '',
-					email: '',
-					password: '',
-					confirmPassword: '',
-					roles: '',
-					groups: ''
-				}
+      if (this.isCreatePage) {
+        this.formModel = {
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+          roles: '',
+          groups: ''
+        }
 
-				this.$refs.formRef.resetFields()
-				return
-			}
+        this.$refs.formRef.resetFields()
+        return
+      }
 
-			Server.getUserInfo(val)
-				.then(data => {
-					this.formModel = data
-				})
-		}
-	},
-	mounted () {
-		Server.getRoleList()
-			.then(data => {
-				this.roleOpts = data
-			})
-		Server.getGroupList()
-			.then(data => {
-				this.groupOpts = data
-			})
-	},
-	methods: {
-		onOkClick () {
-			this.$refs.formRef.validate()
-				.then(isSuccess => {
-					if (!isSuccess) {
-						this.isModalLoading = false
-						this.$nextTick(() => {
-							this.isModalLoading = true
-						})
-					}
+      Server.getUserInfo(val)
+        .then(data => {
+          this.formModel = data
+        })
+    }
+  },
+  mounted () {
+    Server.getRoleList()
+      .then(data => {
+        this.roleOpts = data
+      })
+    Server.getGroupList()
+      .then(data => {
+        this.groupOpts = data
+      })
+  },
+  methods: {
+    onOkClick () {
+      this.$refs.formRef.validate()
+        .then(isSuccess => {
+          if (!isSuccess) {
+            this.isModalLoading = false
+            this.$nextTick(() => {
+              this.isModalLoading = true
+            })
+          }
 
-					Server.saveUser(this.formModel)
-						.then(() => {
-							this.$emit('on-ok')
-						})
-						.finally(() => {
-							this.isModalLoading = false
-							this.$nextTick(() => {
-								this.isModalLoading = true
-							})
-						})
-				})
-		},
-		onCancelClick () {
-			this.$emit('on-cancel')
-		},
+          if (this.isCreatePage) {
+            Server.saveUser(this.formModel)
+              .then(() => {
+                this.$emit('on-ok')
+              })
+              .finally(() => {
+                this.isModalLoading = false
+                this.$nextTick(() => {
+                  this.isModalLoading = true
+                })
+              })
+            return
+          }
 
-		init () {
-
-		}
-	}
+          Server.updateUser(this.formModel)
+            .then(() => {
+              this.$emit('on-ok')
+            })
+            .finally(() => {
+              this.isModalLoading = false
+              this.$nextTick(() => {
+                this.isModalLoading = true
+              })
+            })
+        })
+    },
+    onCancelClick () {
+      this.$emit('on-cancel')
+    }
+  }
 }
 </script>

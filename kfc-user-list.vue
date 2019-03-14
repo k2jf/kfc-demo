@@ -95,7 +95,7 @@ export default {
         { title: '用户名', key: 'name' },
         { title: '邮箱', key: 'email' },
         { title: '操作',
-          minWidth: 200,
+          width: 300,
           render: (h, params) => {
             return h('div', [
               h(KfcCopyAction, {
