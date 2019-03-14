@@ -158,6 +158,9 @@ export default {
 
       this.$axios.post(`${api.timeSeries}`, queryParams).then(res => {
         this.timeSeriesData = res.data.body.results
+      }).catch(() => {
+        // eslint-disable-next-line
+        this.timeSeriesChart.hideLoading()
       })
     },
     // 时序折线图
