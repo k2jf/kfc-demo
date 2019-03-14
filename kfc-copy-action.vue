@@ -5,7 +5,6 @@
 <script>
 import { Message } from 'iview'
 import Clipboard from 'clipboard'
-import Server from './server.js'
 
 export default {
   name: 'KfcCopyAction',
@@ -22,8 +21,9 @@ export default {
     }
   },
   mounted () {
-    Server.getUserTokens(this.username)
-      .then(data => {
+    this.$axios.get(`/kmx/auth-service/v1/tokens?username=${this.username}`)
+      .then(res => {
+        let data = res.data.result
         if (!data.length) {
           return
         }

@@ -1,10 +1,14 @@
 <template>
   <i-modal
-  v-model='visible'
-  @on-ok='onOkClick'
-  @on-cancel='onCancelClick'
+    v-model="visible"
+    @on-ok="onOkClick"
+    @on-cancel="onCancelClick"
   >
-    <slot name='header'><div slot='header'>{{ title }}</div></slot>
+    <slot name="header">
+      <div slot="header">
+        {{ title }}
+      </div>
+    </slot>
     <slot><div>{{ desc }}</div></slot>
   </i-modal>
 </template>
@@ -35,6 +39,11 @@ export default {
       visible: this.value
     }
   },
+  watch: {
+    value (val) {
+      this.visible = val
+    }
+  },
   methods: {
     onOkClick () {
       this.$emit('input', false)
@@ -43,11 +52,6 @@ export default {
     onCancelClick () {
       this.$emit('input', false)
       this.$emit('on-cancel')
-    }
-  },
-  watch: {
-    value (val) {
-      this.visible = val
     }
   }
 }

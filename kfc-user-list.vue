@@ -67,8 +67,6 @@ import KfcUserEdit from './kfc-user-edit.vue'
 import KfcModifyPassword from './kfc-modify-password.vue'
 import KfcDeleteModal from './kfc-delete-modal.vue'
 
-import Server from './server.js'
-
 let prefixCls = 'kfc-user-manage'
 
 export default {
@@ -168,25 +166,24 @@ export default {
     },
     onPageNoChange (pageNo) {
       this.pageNo = pageNo
-      Server.getUserList(this.filters, this.pageNo, this.pageSize)
-        .then(data => {
-          this.data = data.data
-          this.total = data.total
-        })
+      this.reload()
     },
     onPageSizeChange (pageSize) {
       this.pageSize = pageSize
-      Server.getUserList(this.filters, this.pageNo, this.pageSize)
-        .then(data => {
-          this.data = data.data
-          this.total = data.total
-        })
+      this.reload()
     },
     reload () {
-      Server.getUserList(this.filters, this.pageNo, this.pageSize)
-        .then(data => {
-          this.data = data.data
-          this.total = data.total
+      let params = {}
+      if (this.filters.username) {
+        params.username = this.filters.username
+      }
+      if (this.filters.email) {
+        params.email = this.filters.email
+      }
+      this.$axios.get(`/kmx/auth-service/v1/users?size=${this.pageSize}&page=${this.pageNo}`, { params: params })
+        .then(res => {
+          this.data = res.data.result
+          this.total = res.data.pages.total
         })
     },
     onUserEditOk () {
@@ -204,13 +201,9 @@ export default {
     },
     onDeleteModalClick () {
       this.isDeleteModalShow = false
-      Server.deleteUser(this.deleteUsername)
-        .then(() => {
-          Server.getUserList(this.filters, this.pageNo, this.pageSize)
-            .then(data => {
-              this.data = data.data
-              this.total = data.total
-            })
+      this.$axios.delete(`/kmx/auth-service/v1/users/${this.deleteUsername}`)
+        .then(res => {
+          this.reload()
         })
     }
   }

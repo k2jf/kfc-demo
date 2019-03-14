@@ -28,80 +28,79 @@
 
 <script>
 import { Modal, Form, FormItem, Input } from 'iview'
-import Server from './server.js'
 
 let prefixCls = 'kfc-user-form'
 
 export default {
-	name: 'KfcModifyPassword',
-	components: {
-		'i-modal': Modal,
-		'i-form': Form,
-		'i-form-item': FormItem,
-		'i-input': Input
-	},
-	props: {
-		value: {
-			type: Boolean,
-			default: false
-		},
-		userId: {
-			type: Number,
-			default: null
-		}
-	},
-	data () {
-		return {
-			isModalLoading: true,
-			isModalShow: this.value,
-			formModel: {
-				password: '',
-				confirmPassword: ''
-			},
-			formRules: {
-				password: [
-					{ required: true, type: 'string', message: '密码不能为空', trigger: 'change' }
-				],
-				confirmPassword: [
-					{ required: true, type: 'string', message: '确认密码不能为空', trigger: 'change' }
-				]
-			},
-			prefixCls: prefixCls
-		}
-	},
-	watch: {
-		value (val) {
-			this.isModalShow = val
-		}
-	},
-	mounted () {
-	},
-	methods: {
-		onOkClick () {
-			this.$refs.formRef.validate()
-				.then(isSuccess => {
-					if (!isSuccess) {
-						this.isModalLoading = false
-						this.$nextTick(() => {
-							this.isModalLoading = true
-						})
-					}
+  name: 'KfcModifyPassword',
+  components: {
+    'i-modal': Modal,
+    'i-form': Form,
+    'i-form-item': FormItem,
+    'i-input': Input
+  },
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    },
+    userId: {
+      type: Number,
+      default: null
+    }
+  },
+  data () {
+    return {
+      isModalLoading: true,
+      isModalShow: this.value,
+      formModel: {
+        password: '',
+        confirmPassword: ''
+      },
+      formRules: {
+        password: [
+          { required: true, type: 'string', message: '密码不能为空', trigger: 'change' }
+        ],
+        confirmPassword: [
+          { required: true, type: 'string', message: '确认密码不能为空', trigger: 'change' }
+        ]
+      },
+      prefixCls: prefixCls
+    }
+  },
+  watch: {
+    value (val) {
+      this.isModalShow = val
+    }
+  },
+  mounted () {
+  },
+  methods: {
+    onOkClick () {
+      this.$refs.formRef.validate()
+        .then(isSuccess => {
+          if (!isSuccess) {
+            this.isModalLoading = false
+            this.$nextTick(() => {
+              this.isModalLoading = true
+            })
+          }
 
-					Server.modifyPassword(this.userId, this.formModel)
-						.then(() => {
-							this.$emit('on-ok')
-						})
-						.finally(() => {
-							this.isModalLoading = false
-							this.$nextTick(() => {
-								this.isModalLoading = true
-							})
-						})
-				})
-		},
-		onCancelClick () {
-			this.$emit('on-cancel')
-		}
-	}
+          this.$axios.put(`/kmx/auth-service/v1/users/${this.formModel.username}`, { password: this.formModel.password })
+            .then(() => {
+              this.$emit('on-ok')
+            })
+            .finally(() => {
+              this.isModalLoading = false
+              this.$nextTick(() => {
+                this.isModalLoading = true
+              })
+            })
+        })
+    },
+    onCancelClick () {
+      this.$emit('on-cancel')
+    }
+  }
 }
 </script>

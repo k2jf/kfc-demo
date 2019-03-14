@@ -69,7 +69,6 @@
 
 <script>
 import { Modal, Form, FormItem, Input, Select, Option } from 'iview'
-import Server from './server.js'
 
 let prefixCls = 'kfc-user-form'
 
@@ -151,20 +150,21 @@ export default {
         return
       }
 
-      Server.getUserInfo(val)
-        .then(data => {
-          this.formModel = data
+      this.$axios.get(`/kmx/auth-service/v1/users/${val}`)
+        .then(res => {
+          this.formModel = res.data.result
         })
     }
   },
   mounted () {
-    Server.getRoleList()
-      .then(data => {
-        this.roleOpts = data
+    this.$axios.get('/kmx/auth-service/v1/roles?type=all')
+      .then(res => {
+        this.roleOpts = res.data.result
       })
-    Server.getGroupList()
-      .then(data => {
-        this.groupOpts = data
+
+    this.$axios.get('/kmx/auth-service/v1/groups?type=all')
+      .then(res => {
+        this.groupOpts = res.data.result
       })
   },
   methods: {
@@ -179,7 +179,12 @@ export default {
           }
 
           if (this.isCreatePage) {
-            Server.saveUser(this.formModel)
+            let formParams = JSON.parse(JSON.stringify(this.formModel))
+            formParams.groups = formParams.groups ? formParams.groups.map(item => ({ name: item })) : []
+            formParams.roles = formParams.roles ? formParams.roles.map(item => ({ name: item })) : []
+            delete formParams.confirmPassword
+
+            this.$axios.post('/kmx/auth-service/v1/users', formParams)
               .then(() => {
                 this.$emit('on-ok')
               })
@@ -192,7 +197,7 @@ export default {
             return
           }
 
-          Server.updateUser(this.formModel)
+          this.$axios.put(`/kmx/auth-service/v1/users/${this.formModel.username}`, { email: this.formModel.email })
             .then(() => {
               this.$emit('on-ok')
             })
