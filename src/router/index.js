@@ -4,6 +4,7 @@ import Home from '@/views/Home'
 import KFCFrame from '@/components/kfc-frame'
 import TimeSeries from '@/components/kfc-timeseries-chart'
 import Authorization from '@/components/kfc-auth'
+import k2Job from '@/components/kfc-jobs/jobs/k2-jobs'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
           path: '/auth',
           name: 'auth',
           component: Authorization
+        },
+        {
+          path: '/pasJob',
+          name: 'pasJob',
+          component: k2Job
         }
       ]
     }

@@ -31,9 +31,9 @@ module.exports = {
     ],
     'top-menu2': [
       {
-        name: 'page3',
+        name: 'pasJob',
         icon: 'md-person',
-        title: '左侧一级菜单3'
+        title: 'PAS任务'
       },
       {
         icon: 'md-person',
