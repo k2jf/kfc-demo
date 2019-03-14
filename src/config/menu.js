@@ -16,12 +16,17 @@ module.exports = {
       {
         name: 'home',
         icon: 'md-person',
-        title: '左侧一级菜单1'
+        title: '首页'
       },
       {
-        name: 'page2',
+        name: 'timeseries',
         icon: 'md-person',
-        title: '左侧一级菜单2'
+        title: '时序图'
+      },
+      {
+        name: 'auth',
+        icon: 'md-person',
+        title: '授权管理'
       }
     ],
     'top-menu2': [
