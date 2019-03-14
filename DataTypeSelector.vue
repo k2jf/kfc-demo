@@ -5,9 +5,7 @@
     :mask-closable="false"
     :closable="false"
     style="height: 40px"
-    v-model="val"
-    @on-ok="ok"
-    @on-cancel="cancel">
+    v-model="val">
     <div class="data-type-tab">
       <Tabs value="realTime" @on-click="changeTab">
         <TabPane label="时序数据" name="realTime">
@@ -19,10 +17,10 @@
               :key="item.id"
               @click="onSelectChange(item.id)">
               <Row>
-                <Col span="4">
-                <h1><img src="#" style="width: 40px"></h1>
+                <Col span="2">
+                <h1>&nbsp;</h1>
                 </Col>
-                <Col span="14">
+                <Col span="16">
                 <h3>{{ item.id }}</h3>
                 </Col>
                 <Col span="4">
@@ -51,10 +49,10 @@
               :key="item.objectClassId"
               @click="onSelectChange(item.objectClassId)">
               <Row>
-                <Col span="4">
-                <h1><img src="#" style="width: 40px"></h1>
+                <Col span="2">
+                <h1>&nbsp;</h1>
                 </Col>
-                <Col span="14">
+                <Col span="16">
                 <h3>{{ item.objectClassName }}</h3>
                 </Col>
                 <Col span="4">
@@ -76,11 +74,17 @@
         </TabPane>
       </Tabs>
     </div>
+    <Button
+      key="primary"
+      slot="footer"
+      @click="cancel">
+      取消
+    </Button>
   </Modal>
 </template>
 
 <script>
-import { Modal, Tabs, TabPane, Row, Col, Icon, Tooltip } from 'iview'
+import { Modal, Tabs, TabPane, Row, Col, Icon, Tooltip, Button } from 'iview'
 
 export default {
 	name: 'DataTypeSelector',
@@ -91,27 +95,23 @@ export default {
 		Row,
 		Col,
 		Icon,
-		Tooltip
+		Tooltip,
+		Button
 	},
 	props: {
 		value: {
 			type: Boolean,
 			default: false,
 			required: true
-		},
-		checkedDataType: {
-			type: String,
-			default: '',
-			required: false
 		}
 	},
 	data () {
 		return {
-			checkedTypeId: this.checkedDataType,
+			checkedTypeId: null,
 			val: this.value,
 			realTimeDataType: [],
 			objectClassDataType: [],
-			currentDataType: ''
+			currentDataType: null
 		}
 	},
 	watch: {
@@ -120,9 +120,6 @@ export default {
 			if (this.val) {
 				this.changeTab('realTime')
 			}
-		},
-		checkedDataType: function (val) {
-			this.checkedTypeId = val
 		}
 	},
 	beforeDestroy () {
@@ -133,8 +130,6 @@ export default {
 		onSelectChange (val) {
 			this.currentDataType = val
 			this.checkedTypeId = val
-		},
-		ok () {
 			if (this.currentDataType) {
 				this.$emit('checked-type', this.currentDataType)
 			}
