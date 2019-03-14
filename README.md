@@ -41,10 +41,11 @@ npm install --save echarts
 
 <script>
 import TimeSeries from '@/components/kfc-timeseries-chart'
-components: {
-  TimeSeries
-},
+
 export default {
+  components: {
+    TimeSeries
+  },
   data () {
     return {
       title: '新疆哈密烟墩大二期整装天润风电场-F084机组',
