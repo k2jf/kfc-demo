@@ -32,6 +32,11 @@ module.exports = {
         name: 'dataTypeSelector',
         icon: 'md-person',
         title: '选择数据类型'
+      },
+      {
+        name: 'fieldselector',
+        icon: 'md-person',
+        title: '选择变量'
       }
     ],
     'top-menu2': [

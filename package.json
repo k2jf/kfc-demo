@@ -26,7 +26,8 @@
     "iview": "^3.2.2",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "kfc-k2transfer": "git+https://github.com/k2jf/kfc-k2transfer.git"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",

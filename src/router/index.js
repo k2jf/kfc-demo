@@ -7,6 +7,7 @@ import Authorization from '@/components/kfc-auth'
 // import k2Job from '@/components/kfc-jobs/jobs/k2-jobs'
 // import DataTypeSelector from '@/components/kfc-datatype-selector'
 import DataTypeSelector from '@/views/datatypeselector'
+import fieldselector from '@/views/fieldselector'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
           path: '/dataTypeSelector',
           name: 'dataTypeSelector',
           component: DataTypeSelector
+        },
+        {
+          path: '/fieldselector',
+          name: 'fieldselector',
+          component: fieldselector
         }
       ]
     }
