@@ -8,6 +8,7 @@ import Authorization from '@/components/kfc-auth'
 // import DataTypeSelector from '@/components/kfc-datatype-selector'
 import DataTypeSelector from '@/views/datatypeselector'
 import fieldselector from '@/views/fieldselector'
+import pasresults from '@/views/pasresults'
 
 Vue.use(Router)
 
@@ -44,6 +45,11 @@ export default new Router({
           path: '/fieldselector',
           name: 'fieldselector',
           component: fieldselector
+        },
+        {
+          path: '/pasresults',
+          name: 'pasresults',
+          component: pasresults
         }
       ]
     }

@@ -8,7 +8,7 @@ module.exports = {
     {
       name: 'top-menu2',
       icon: 'md-person',
-      title: '导航菜单2'
+      title: 'PAS'
     }
   ],
   siderMenuMap: {
@@ -41,9 +41,9 @@ module.exports = {
     ],
     'top-menu2': [
       {
-        name: 'pasJob',
+        name: 'pasresults',
         icon: 'md-person',
-        title: 'PAS任务'
+        title: 'PAS结果'
       },
       {
         icon: 'md-person',
