@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home'
+import KFCFrame from '@/components/kfc-frame'
 
 Vue.use(Router)
 
@@ -12,7 +13,7 @@ export default new Router({
       path: '/',
       name: 'demo',
       component: KFCFrame,
-      chilren: [
+      children: [
         {
           path: '/home',
           name: 'home',
@@ -21,7 +22,7 @@ export default new Router({
         {
           path: '/page2',
           name: 'page2',
-          component: Page2
+          component: Home
         }
       ]
     }
