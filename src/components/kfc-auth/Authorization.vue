@@ -3,7 +3,8 @@
     <Split
       :value="0.2"
       :min="240"
-      :max="250">
+      :max="250"
+      style="height: 100%">
       <div slot="left">
         <RoleInfo @on-role-change="getCurrentRole" />
       </div>
