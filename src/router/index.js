@@ -4,7 +4,9 @@ import Home from '@/views/Home'
 import KFCFrame from '@/components/kfc-frame'
 import TimeSeries from '@/components/kfc-timeseries-chart'
 import Authorization from '@/components/kfc-auth'
-import k2Job from '@/components/kfc-jobs/jobs/k2-jobs'
+// import k2Job from '@/components/kfc-jobs/jobs/k2-jobs'
+// import DataTypeSelector from '@/components/kfc-datatype-selector'
+import DataTypeSelector from '@/views/datatypeselector'
 
 Vue.use(Router)
 
@@ -33,9 +35,9 @@ export default new Router({
           component: Authorization
         },
         {
-          path: '/pasJob',
-          name: 'pasJob',
-          component: k2Job
+          path: '/dataTypeSelector',
+          name: 'dataTypeSelector',
+          component: DataTypeSelector
         }
       ]
     }

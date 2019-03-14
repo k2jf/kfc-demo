@@ -27,6 +27,11 @@ module.exports = {
         name: 'auth',
         icon: 'md-person',
         title: '授权管理'
+      },
+      {
+        name: 'dataTypeSelector',
+        icon: 'md-person',
+        title: '选择数据类型'
       }
     ],
     'top-menu2': [
