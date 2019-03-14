@@ -1,9 +1,6 @@
 <template>
   <div class="auth-split">
-    <Split
-      :value="0.2"
-      :min="240"
-      :max="250">
+    <Split v-model="split">
       <div slot="left">
         <RoleInfo @on-role-change="getCurrentRole" />
       </div>
@@ -91,6 +88,7 @@ export default {
   },
   data () {
     return {
+      split: 0.2,
       currentTab: 'user',
       isShowAuthModal: false,
       isShowUserModal: false,
