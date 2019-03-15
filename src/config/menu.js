@@ -41,6 +41,11 @@ module.exports = {
     ],
     'top-menu2': [
       {
+        name: 'pasprojects',
+        icon: 'md-person',
+        title: 'PAS项目'
+      },
+      {
         name: 'pasjobs',
         icon: 'md-person',
         title: 'PAS任务'
