@@ -4,7 +4,7 @@ import Home from '@/views/Home'
 import KFCFrame from '@/components/kfc-frame'
 import TimeSeries from '@/components/kfc-timeseries-chart'
 import Authorization from '@/components/kfc-auth'
-// import k2Job from '@/components/kfc-jobs/jobs/k2-jobs'
+import Jobs from '@/components/kfc-jobs'
 // import DataTypeSelector from '@/components/kfc-datatype-selector'
 import DataTypeSelector from '@/views/datatypeselector'
 import fieldselector from '@/views/fieldselector'
@@ -45,6 +45,11 @@ export default new Router({
           path: '/fieldselector',
           name: 'fieldselector',
           component: fieldselector
+        },
+        {
+          path: '/pasjobs',
+          name: 'pasjobs',
+          component: Jobs
         },
         {
           path: '/pasresults',
