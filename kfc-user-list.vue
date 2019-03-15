@@ -29,6 +29,7 @@
     <div :class="[prefixCls + '-content']">
       <i-table
         stripe
+        :loading="loading"
         :columns="columns"
         :data="data" />
       <i-page
@@ -142,6 +143,7 @@ export default {
         }
       ],
       data: [],
+      loading: true,
       pageNo: 1,
       pageSize: 10,
       total: 0,
@@ -180,10 +182,13 @@ export default {
       if (this.filters.email) {
         params.email = this.filters.email
       }
+      this.loading = true
       this.$axios.get(`/kmx/auth-service/v1/users?size=${this.pageSize}&page=${this.pageNo}`, { params: params })
         .then(res => {
           this.data = res.data.result
           this.total = res.data.pages.total
+        }).finally(() => {
+          this.loading = false
         })
     },
     onUserEditOk () {
