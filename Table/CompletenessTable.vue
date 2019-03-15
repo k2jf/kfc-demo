@@ -28,53 +28,53 @@ import DataApi from '../server.js'
 const prefixCls = 'completeness-table'
 
 export default {
-	name: 'CompletenessTable',
-	components: {
-		'i-table': Table,
-		'i-page': Page
-	},
-	data () {
-		return {
-			columns: [
-				{ title: '序号', type: 'index' },
-				{ title: '数据类型', key: 'dataTypeNameCh' }
-			],
-			data: [],
-			pageNo: 1,
-			pageSize: 10,
-			total: 0,
-			filters: null,
-			prefixCls: prefixCls
-		}
-	},
-	methods: {
-		onPageNoChange (pageNo) {
-			this.pageNo = pageNo
-			DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
-				.then(data => {
-					this.data = data.data
-					this.total = data.total
-				})
-		},
-		onPageSizeChange (pageSize) {
-			this.pageSize = pageSize
-			DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
-				.then(data => {
-					this.data = data.data
-					this.total = data.total
-				})
-		},
-		reload (filters) {
-			this.filters = filters
-			this.pageNo = 1
-			this.pageSize = 10
+  name: 'CompletenessTable',
+  components: {
+    'i-table': Table,
+    'i-page': Page
+  },
+  data () {
+    return {
+      columns: [
+        { title: '序号', type: 'index' },
+        { title: '数据类型', key: 'dataTypeNameCh' }
+      ],
+      data: [],
+      pageNo: 1,
+      pageSize: 10,
+      total: 0,
+      filters: null,
+      prefixCls: prefixCls
+    }
+  },
+  methods: {
+    onPageNoChange (pageNo) {
+      this.pageNo = pageNo
+      DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
+        .then(data => {
+          this.data = data.data
+          this.total = data.total
+        })
+    },
+    onPageSizeChange (pageSize) {
+      this.pageSize = pageSize
+      DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
+        .then(data => {
+          this.data = data.data
+          this.total = data.total
+        })
+    },
+    reload (filters) {
+      this.filters = filters
+      this.pageNo = 1
+      this.pageSize = 10
 
-			DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
-				.then(data => {
-					this.data = data.data
-					this.total = data.total
-				})
-		}
-	}
+      DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
+        .then(data => {
+          this.data = data.data
+          this.total = data.total
+        })
+    }
+  }
 }
 </script>
