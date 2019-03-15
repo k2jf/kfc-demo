@@ -37,6 +37,11 @@ module.exports = {
         name: 'fieldselector',
         icon: 'md-person',
         title: '选择变量'
+      },
+      {
+        name: 'completeness',
+        icon: 'md-person',
+        title: '数据完整度'
       }
     ],
     'top-menu2': [

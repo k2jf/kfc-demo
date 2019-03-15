@@ -11,6 +11,7 @@ import fieldselector from '@/views/fieldselector'
 import pasresults from '@/views/pasresults'
 import ProjectList from '@/components/kfc-data-project'
 import PasProjectDetail from '@/components/kfc-project-detail'
+import DataCompleteness from '@/components/kfc-data-completeness'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
           path: '/fieldselector',
           name: 'fieldselector',
           component: fieldselector
+        },
+        {
+          path: '/completeness',
+          name: 'completeness',
+          component: DataCompleteness
         },
         {
           path: '/pasprojects',
