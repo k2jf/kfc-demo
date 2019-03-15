@@ -3,12 +3,12 @@ module.exports = {
     {
       name: 'top-menu1',
       icon: 'md-person',
-      title: '导航菜单1'
+      title: '数据管理'
     },
     {
       name: 'top-menu2',
       icon: 'md-person',
-      title: 'PAS'
+      title: '数据分析'
     }
   ],
   siderMenuMap: {
@@ -22,6 +22,11 @@ module.exports = {
         name: 'timeseries',
         icon: 'md-person',
         title: '时序图'
+      },
+      {
+        name: 'user',
+        icon: 'md-person',
+        title: '用户管理'
       },
       {
         name: 'auth',

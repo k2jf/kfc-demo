@@ -12,6 +12,7 @@ import pasresults from '@/views/pasresults'
 import ProjectList from '@/components/kfc-data-project'
 import PasProjectDetail from '@/components/kfc-project-detail'
 import DataCompleteness from '@/components/kfc-data-completeness'
+import KfcUserManage from '@/components/kfc-user-manage'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ export default new Router({
           path: '/timeseries',
           name: 'timeseries',
           component: TimeSeries
+        },
+        {
+          path: '/user',
+          name: 'user',
+          component: KfcUserManage
         },
         {
           path: '/auth',
