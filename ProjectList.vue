@@ -11,21 +11,21 @@ import Search from './Search'
 import Table from './Table'
 
 export default {
-	name: 'CompletenessList',
-	components: {
-		'p-search': Search,
-		'p-table': Table,
-		'i-content': Content
-	},
-	data () {
-		return {
-			searchFilters: null
-		}
-	},
-	methods: {
-		onSearchClick (filters) {
-			this.$refs['table'].reload(filters)
-		}
-	}
+  name: 'ProjectList',
+  components: {
+    'p-search': Search,
+    'p-table': Table,
+    'i-content': Content
+  },
+  data () {
+    return {
+      searchFilters: null
+    }
+  },
+  methods: {
+    onSearchClick (filters) {
+      this.$refs['table'].reload(filters)
+    }
+  }
 }
 </script>

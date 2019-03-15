@@ -22,20 +22,18 @@
 import { Table, Page } from 'iview'
 import DateCell from './DateCell.vue'
 
-import DataApi from '../server.js'
-
 const prefixCls = 'project-table'
 
 export default {
-	name: 'ProjectTable',
-	components: {
-		'i-table': Table,
-		'i-page': Page
-	},
-	data () {
-		return {
-			columns: [
-				{ title: '序号', type: 'index' },
+  name: 'Table',
+  components: {
+    'i-table': Table,
+    'i-page': Page
+  },
+  data () {
+    return {
+      columns: [
+        { title: '序号', type: 'index' },
         { title: '项目名称', key: 'projName' },
         { title: '描述', key: 'description' },
         { title: '创建者', key: 'creator' },
@@ -58,43 +56,46 @@ export default {
             })
           }
         }
-			],
-			data: [],
-			pageNo: 1,
-			pageSize: 10,
-			total: 0,
-			filters: null,
-			prefixCls: prefixCls
-		}
-	},
-	methods: {
-		onPageNoChange (pageNo) {
-			this.pageNo = pageNo
-			DataApi.getDataProjects(this.filters, this.pageNo, this.pageSize)
-				.then(data => {
-					this.data = data.data
-					this.total = data.total
-				})
-		},
-		onPageSizeChange (pageSize) {
-			this.pageSize = pageSize
-			DataApi.getDataProjects(this.filters, this.pageNo, this.pageSize)
-				.then(data => {
-					this.data = data.data
-					this.total = data.total
-				})
-		},
-		reload (filters) {
-			this.filters = filters
-			this.pageNo = 1
-			this.pageSize = 10
+      ],
+      data: [],
+      pageNo: 1,
+      pageSize: 10,
+      total: 0,
+      filters: null,
+      prefixCls: prefixCls
+    }
+  },
+  methods: {
+    onPageNoChange (pageNo) {
+      this.pageNo = pageNo
+      this.reloadTable()
+    },
+    onPageSizeChange (pageSize) {
+      this.pageSize = pageSize
+      this.reloadTable()
+    },
+    reload (filters) {
+      this.filters = filters
+      this.pageNo = 1
+      this.pageSize = 10
 
-			DataApi.getDataProjects(this.filters, this.pageNo, this.pageSize)
-				.then(data => {
-					this.data = data.data
-					this.total = data.total
-				})
-		}
-	}
+      this.reloadTable()
+    },
+
+    reloadTable () {
+      let params = {}
+      for (let key in this.filters) {
+        if (this.filters[key]) {
+          params[key] = this.filters[key]
+        }
+      }
+
+      this.$axios.get(`/kmx/pas/services/projects?size=${this.pageSize}&page=${this.pageNo}`, { params: params })
+        .then(res => {
+          this.data = res.data.result
+          this.total = res.data.pageInfo.total
+        })
+    }
+  }
 }
 </script>

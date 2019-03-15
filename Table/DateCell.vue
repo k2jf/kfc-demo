@@ -6,7 +6,7 @@
 import DateUtil from '../utils/date-util.js'
 
 export default {
-	name: 'DateCell',
+  name: 'DateCell',
   props: {
     timestamp: {
       type: Number
@@ -16,7 +16,7 @@ export default {
       default: 'yyyy-MM-dd HH:mm:ss'
     }
   },
-	computed: {
+  computed: {
     formatedDate: function () {
       return DateUtil.formatToStr(new Date(this.timestamp), this.format)
     }
