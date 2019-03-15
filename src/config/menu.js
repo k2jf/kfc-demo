@@ -46,6 +46,11 @@ module.exports = {
         title: 'PAS项目'
       },
       {
+        name: 'pasprojectdetail',
+        icon: 'md-person',
+        title: 'PAS项目详情'
+      },
+      {
         name: 'pasjobs',
         icon: 'md-person',
         title: 'PAS任务'

@@ -10,6 +10,7 @@ import DataTypeSelector from '@/views/datatypeselector'
 import fieldselector from '@/views/fieldselector'
 import pasresults from '@/views/pasresults'
 import ProjectList from '@/components/kfc-data-project'
+import PasProjectDetail from '@/components/kfc-project-detail'
 
 Vue.use(Router)
 
@@ -51,6 +52,11 @@ export default new Router({
           path: '/pasprojects',
           name: 'pasprojects',
           component: ProjectList
+        },
+        {
+          path: '/pasprojectdetail',
+          name: 'pasprojectdetail',
+          component: PasProjectDetail
         },
         {
           path: '/pasjobs',
