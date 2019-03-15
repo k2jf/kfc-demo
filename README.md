@@ -1,4 +1,4 @@
-# kfc-pas-jobs-list
+# kfc-jobs
 
 ## 功能
 项目作业结果
@@ -13,17 +13,16 @@ wangliheng@k2data.com.cn
 ```
 <template>
   <div>
-    <k-job></k-job>
+    <Jobs></Jobs>
   </div>
 </template>
 
 <script>
-import k2Job from '@/components/jobs/k2-job'
+import Jobs from '@/components/kfc-jobs'
 
 export default {
-  name: 'service-jobs',
   components: {
-    'k-job': k2Job
+    Jobs
   }
 }
 </script>
@@ -31,4 +30,5 @@ export default {
 <style scoped>
 
 </style>
+
 

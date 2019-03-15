@@ -3,22 +3,28 @@
     <Tabs value="name1">
       <TabPane label="项目作业" name="name1">
         <div style="width: 300px;margin-left: 0px">
-          分析作业 <Input prefix="ios-search" v-model="content" placeholder="搜索" style="margin-left: 10px; width: 200px" @on-enter="onsearch()" />
+          分析作业 <Input
+            prefix="ios-search"
+            placeholder="搜索"
+            style="margin-left: 10px; width: 200px"
+            v-model="content"
+            @on-enter="onsearch()" />
         </div>
-        <br/>
-        <i-table style="margin-left: 10px;margin-right: 10px"
-          :columns='table.headers'
-          :data='table.dataList'>
+        <br />
+        <i-table
+          style="margin-left: 10px;margin-right: 10px"
+          :columns="table.headers"
+          :data="table.dataList">
         </i-table>
-        <div class='md4x-bottom'>
+        <div class="md4x-bottom">
           <i-page
-            class='md4x-page'
-            :current='pageNo'
-            :total='table.total'
-            @on-change='onPageNoChange'
-            @on-page-size-change='onPageSizeChange'
+            class="md4x-page"
+            :current="pageNo"
+            :total="table.total"
             show-total
-            show-sizer>
+            show-sizer
+            @on-change="onPageNoChange"
+            @on-page-size-change="onPageSizeChange">
           </i-page>
         </div>
       </TabPane>
@@ -28,19 +34,16 @@
 
 <script>
 import { Table, Page, Tabs, TabPane, Input } from 'iview'
-import { formatDateTime, formatDuring } from '@/components/utils'
+import { formatDateTime, formatDuring } from '@/components/kfc-jobs/utils'
 
 export default {
-  name: 'k2-job',
+  name: 'Jobs',
   components: {
     'i-table': Table,
     'i-page': Page,
     Tabs,
     TabPane,
     Input
-  },
-  mounted () {
-    this.getJobsData()
   },
   data () {
     return {
@@ -139,6 +142,9 @@ export default {
         total: 0
       }
     }
+  },
+  mounted () {
+    this.getJobsData()
   },
 
   methods: {
