@@ -18,7 +18,6 @@ DataTypeButton： 数据类型选择button对话框展示
 | 属性        | 说明                                        | 类型   | 默认值 |
 | ----------- | ------------------------------------------ | ------- | ------ |
 | v-model       | 绑定v-model, 获取选中的数据类型| String,Number | 无   |
-| borderStyle       | 可以设置边框 | String | 无  |
 
 ## Slot
 
