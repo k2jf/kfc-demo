@@ -1,185 +1,147 @@
 <template>
-  <Modal
-    class-name="data-type-modal"
-    title="请选择数据类型"
-    :mask-closable="false"
-    :closable="false"
-    style="height: 40px"
-    v-model="val">
-    <div class="data-type-tab">
-      <Tabs value="realTime" @on-click="changeTab">
-        <TabPane label="时序数据" name="realTime">
-          <div class="tab-pane-div">
-            <div
-              class="col"
-              :style="{border: checkedTypeId === item.id ? '1px solid #16A8F3' : '1px solid #cdcdcd'}"
-              v-for="item in realTimeDataType"
-              :key="item.id"
-              @click="onSelectChange(item.id)">
-              <Row>
-                <Col span="2">
-                <h1>&nbsp;</h1>
-                </Col>
-                <Col span="16">
-                <h3>{{ item.id }}</h3>
-                </Col>
-                <Col span="4">
-                <h5>
-                  <Tooltip
-                    content="30天数据完整度"
-                    placement="top"
-                    :transfer="true">
-                    <span>80%</span>
-                  </Tooltip>
-                </h5>
-                </Col>
-                <Col span="2">
-                <h4><Icon type="ios-arrow-forward" /></h4>
-                </Col>
-              </Row>
-            </div>
+  <div class="data-type-tab">
+    <Tabs value="realTime" @on-click="changeTab">
+      <TabPane label="时序数据" name="realTime">
+        <div class="tab-pane-div">
+          <div
+            class="col"
+            :style="{border: checkedTypeId === item.id ? '1px solid #16A8F3' : '1px solid #cdcdcd'}"
+            v-for="item in realTimeDataType"
+            :key="item.id"
+            @click="onSelectChange(item.id)">
+            <Row>
+              <Col span="2">
+              <h1>&nbsp;</h1>
+              </Col>
+              <Col span="16">
+              <h3>{{ item.id }}</h3>
+              </Col>
+              <Col span="4">
+              <h5>
+                <Tooltip
+                  content="30天数据完整度"
+                  placement="top"
+                  :transfer="true">
+                  <span>80%</span>
+                </Tooltip>
+              </h5>
+              </Col>
+              <Col span="2">
+              <h4><Icon type="ios-arrow-forward" /></h4>
+              </Col>
+            </Row>
           </div>
-        </TabPane>
-        <TabPane label="对象数据" name="objectClass">
-          <div class="tab-pane-div">
-            <div
-              class="col"
-              :style="{border: checkedTypeId === item.objectClassId ? '1px solid #16A8F3' : '1px solid #cdcdcd'}"
-              v-for="item in objectClassDataType"
-              :key="item.objectClassId"
-              @click="onSelectChange(item.objectClassId)">
-              <Row>
-                <Col span="2">
-                <h1>&nbsp;</h1>
-                </Col>
-                <Col span="16">
-                <h3>{{ item.objectClassName }}</h3>
-                </Col>
-                <Col span="4">
-                <h5>
-                  <Tooltip
-                    content="30天文件个数"
-                    placement="top"
-                    :transfer="true">
-                    <span>2</span>
-                  </Tooltip>
-                </h5>
-                </Col>
-                <Col span="2">
-                <h4><Icon type="ios-arrow-forward" /></h4>
-                </Col>
-              </Row>
-            </div>
+        </div>
+      </TabPane>
+      <TabPane label="对象数据" name="objectClass">
+        <div class="tab-pane-div">
+          <div
+            class="col"
+            :style="{border: checkedTypeId === item.objectClassId ? '1px solid #16A8F3' : '1px solid #cdcdcd'}"
+            v-for="item in objectClassDataType"
+            :key="item.objectClassId"
+            @click="onSelectChange(item.objectClassId)">
+            <Row>
+              <Col span="2">
+              <h1>&nbsp;</h1>
+              </Col>
+              <Col span="16">
+              <h3>{{ item.objectClassName }}</h3>
+              </Col>
+              <Col span="4">
+              <h5>
+                <Tooltip
+                  content="30天文件个数"
+                  placement="top"
+                  :transfer="true">
+                  <span>2</span>
+                </Tooltip>
+              </h5>
+              </Col>
+              <Col span="2">
+              <h4><Icon type="ios-arrow-forward" /></h4>
+              </Col>
+            </Row>
           </div>
-        </TabPane>
-      </Tabs>
-    </div>
-    <Button
-      key="primary"
-      slot="footer"
-      @click="cancel">
-      取消
-    </Button>
-  </Modal>
+        </div>
+      </TabPane>
+    </Tabs>
+  </div>
 </template>
 
 <script>
-import { Modal, Tabs, TabPane, Row, Col, Icon, Tooltip, Button } from 'iview'
-
+import { Tabs, TabPane, Row, Col, Icon, Tooltip } from 'iview'
+import { api } from './api'
 export default {
-	name: 'DataTypeSelector',
-	components: {
-		Modal,
-		Tabs,
-		TabPane,
-		Row,
-		Col,
-		Icon,
-		Tooltip,
-		Button
-	},
-	props: {
-		value: {
-			type: Boolean,
-			default: false,
-			required: true
-		}
-	},
-	data () {
-		return {
-			checkedTypeId: null,
-			val: this.value,
-			realTimeDataType: [],
-			objectClassDataType: [],
-			currentDataType: null
-		}
-	},
-	watch: {
-		value: function (val) {
-			this.val = val
-			if (this.val) {
-				this.changeTab('realTime')
-			}
-		}
-	},
-	beforeDestroy () {
-		this.checkedTypeId = ''
-		this.currentDataType = ''
-	},
-	methods: {
-		onSelectChange (val) {
-			this.currentDataType = val
-			this.checkedTypeId = val
-			if (this.currentDataType) {
-				this.$emit('checked-type', this.currentDataType)
-			}
-			this.$emit('on-close')
-		},
-		cancel () {
-			// this.$Message.info('Clicked cancel')
-			this.$emit('on-close')
-		},
-		changeTab (name) {
-			switch (name) {
-			case 'realTime':
-				if (this.realTimeDataType && this.realTimeDataType.length !== 0) {
-					break
-				}
-				this.getDataType('realTime')
-				break
-			case 'objectClass':
-				if (this.objectClassDataType && this.objectClassDataType.length !== 0) {
-					break
-				}
-				this.getDataType('objectClass')
-				break
-			default:
-				this.getDataType('realTime')
-			}
-		},
-		getDataType (name) {
-			var xhr = new XMLHttpRequest()
-			var url = 'http://10.12.20.36:8081/data-service/v2/field-groups?select=*&order=desc-createdAt&pageSize=20&page=1'
-			let token = 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..DKInRzSv705fETH7equI1Q.Je2FVCpN_G2umkeLSexnmpTQZz2TWfOhLgG39iYspF1vyQfq3xtvXBxRCPdrQhN4MLPLEXRTlPx1cbDsuu0o9DA7DbwiU82x2ojTgFCVy5HvRi_uKtJW_2nAetFUopoi-EmYPhI44xrITztR_aE0x83Em95ijchagmCu012uBqZdv9nKht3DFsUIMvF4CSLFJMa0tFE274D1yQI_456_5ixhCb7-NggOrJ5Z_0w2BwPl4hyncLpH_i33KdQKoiGvD-E1EtbAsKq007Gk0N6pkQ.APvHmLOA3uFkJAL3wnZba8o5vJTds0zL'
-			if (name === 'objectClass') {
-				url = 'http://10.12.20.36:28090/object-rest/object-classes/?page=1&pageSize=20'
-			}
-			xhr.open('GET', url, true)
-			xhr.setRequestHeader('K2_KEY', token)
-			xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-			xhr.onreadystatechange = () => {
-				if (xhr.readyState === 4) {
-					if (name === 'objectClass') {
-						this.objectClassDataType = JSON.parse(xhr.responseText).objectClasses
-					} else {
-						this.realTimeDataType = JSON.parse(xhr.responseText).fieldGroups
-					}
-				}
-			}
-			xhr.send(null)
-		}
-	}
-
+  name: 'DataTypeSelector',
+  components: {
+    Tabs,
+    TabPane,
+    Row,
+    Col,
+    Icon,
+    Tooltip
+  },
+  props: {
+    value: {
+      type: [String, Number]
+    }
+  },
+  data () {
+    return {
+      checkedTypeId: this.value,
+      realTimeDataType: [],
+      objectClassDataType: [],
+      currentDataType: this.value
+    }
+  },
+  beforeDestroy () {
+    this.checkedTypeId = ''
+    this.currentDataType = ''
+  },
+  mounted () {
+    this.changeTab('realTime')
+  },
+  methods: {
+    onSelectChange (val) {
+      this.currentDataType = val
+      this.checkedTypeId = val
+      if (this.currentDataType) {
+        this.$emit('input', this.currentDataType)
+      }
+    },
+    changeTab (name) {
+      switch (name) {
+      case 'realTime':
+        if (this.realTimeDataType && this.realTimeDataType.length !== 0) {
+          break
+        }
+        this.getDataType('realTime')
+        break
+      case 'objectClass':
+        if (this.objectClassDataType && this.objectClassDataType.length !== 0) {
+          break
+        }
+        this.getDataType('objectClass')
+        break
+      default:
+        this.getDataType('realTime')
+      }
+    },
+    getDataType (name) {
+      var url = `${api.realTimeData}?select=*&order=desc-createdAt&pageSize=20&page=1`
+      if (name === 'objectClass') {
+        url = `${api.classObjectData}?page=1&pageSize=20`
+      }
+      this.$axios.get(url).then(res => {
+        if (name === 'objectClass') {
+          this.objectClassDataType = res.data.objectClasses
+        } else {
+          this.realTimeDataType = res.data.fieldGroups
+        }
+      })
+    }
+  }
 }
 </script>
 

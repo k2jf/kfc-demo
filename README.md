@@ -6,6 +6,10 @@
 ## 维护者
 wangyanan
 
+## 组件
+DataTypeSelector： 数据类型选择tab页展示
+DataTypeButton： 数据类型选择button对话框展示
+
 ## 依赖
 无
 
@@ -13,49 +17,47 @@ wangyanan
 
 | 属性        | 说明                                        | 类型   | 默认值 |
 | ----------- | ------------------------------------------ | ------- | ------ |
-| value       | 绑定v-model, true显示对话框, false隐藏对话框 | Boolean | false   |
+| v-model       | 绑定v-model, 获取选中的数据类型| String,Number | 无   |
+| borderStyle       | 可以设置边框 | String | 无  |
+
+## Slot
+
+| 名称        | 说明                                        |
+| ----------- | ------------------------------------------ |
+| button       | 自定义按钮，可以是img, icon，a等| 
 
 ## 示例
 ```
 <template>
-    <div>
-        <!--显示选择的数据类型id-->
-        <Input placeholder="default size" v-model="dataType" />
-        <!-- 触发对话框按钮 -->
-        <Button type="primary" @click="checkDataType2">
-        选择数据类型
-        </Button>
-        <DataTypeSelector
-        v-model="modal2"
-        @on-close="modal2 = false"
-        @checked-type="getDataType" />
+  <div>
+    <div style="width: 500px; height: 450px; margin:auto;margin-top: 20px;text-align: center;">
+      <DataTypeSelector v-model="dataType01" />
+      <span>数据类型id: {{ dataType01 }}</span>
     </div>
+    <div style="text-align: center">
+      <DataTypeButton v-model="dataType02">
+        <!-- 使用slot修改按钮 -->
+        <!-- <a href="#" slot="button">数据类型</a> -->
+      </DataTypeButton>
+      <span>数据类型id: {{ dataType02 }}</span>
+    </div>
+  </div>
 </template>
 
 <script>
-import { Button, Input } from 'iview'
-import DataTypeSelector from '@/components/kfc-datatype-selector'
+import { DataTypeSelector, DataTypeButton } from '@/components/kfc-datatype-selector'
 
 export default {
-    components: {
-        Button,
-        Input,
-        DataTypeSelector
-    },
-    data () {
-        return {
-            dataType: '',
-            modal2: false
-        }
-    },
-    methods: {
-        checkDataType2 () {
-            this.modal2 = !this.modal2
-        },
-        getDataType (val) {
-            this.dataType = val
-        }
+  components: {
+    DataTypeSelector,
+    DataTypeButton
+  },
+  data () {
+    return {
+      dataType01: '',
+      dataType02: ''
     }
+  }
 }
 </script>
 
