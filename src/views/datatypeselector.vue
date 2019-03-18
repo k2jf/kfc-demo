@@ -1,40 +1,31 @@
 <template>
   <div>
-    <!--显示选择的数据类型id-->
-    <Input placeholder="default size" v-model="dataType" />
-    <!-- 触发对话框按钮 -->
-    <Button type="primary" @click="checkDataType2">
-      选择数据类型
-    </Button>
-    <DataTypeSelector
-      v-model="modal2"
-      @on-close="modal2 = false"
-      @checked-type="getDataType" />
+    <div style="width: 500px; height: 450px; margin:auto;margin-top: 20px;text-align: center;">
+      <DataTypeSelector v-model="dataType01" />
+      <span>数据类型id: {{ dataType01 }}</span>
+    </div>
+    <div style="text-align: center">
+      <DataTypeButton v-model="dataType02">
+        <!-- 使用slot修改按钮 -->
+        <!-- <a href="#" slot="button">数据类型</a> -->
+      </DataTypeButton>
+      <span>数据类型id: {{ dataType02 }}</span>
+    </div>
   </div>
 </template>
 
 <script>
-import { Button, Input } from 'iview'
-import DataTypeSelector from '@/components/kfc-datatype-selector'
+import { DataTypeSelector, DataTypeButton } from '@/components/kfc-datatype-selector'
 
 export default {
   components: {
-    Button,
-    Input,
-    DataTypeSelector
+    DataTypeSelector,
+    DataTypeButton
   },
   data () {
     return {
-      dataType: '',
-      modal2: false
-    }
-  },
-  methods: {
-    checkDataType2 () {
-      this.modal2 = !this.modal2
-    },
-    getDataType (val) {
-      this.dataType = val
+      dataType01: '',
+      dataType02: ''
     }
   }
 }
