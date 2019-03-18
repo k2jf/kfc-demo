@@ -16,37 +16,17 @@ youli
 </template>
 
 <script>
-    import Authorization from '@/components/kfc-auth'
+  import Authorization from '@/components/kfc-auth'
+
+  export default {
     components: {
         Authorization
     },
-    export default {
     data () {
         return {
         }
     },
-    }
-</script>
-
-```
-
-## src/api/auth.js
-```
-module.exports = {
-  api: {
-    // 授权管理
-    resourceTypes: '/auth-service/v1/resourcetypes',
-    roles: '/auth-service/v1/roles',
-    users: '/auth-service/v1/users',
-    permissions: '/auth-service/v1/permissions',
-    resourceinfos: '/auth-service/v1/resourceinfos',
-    // 时序
-    timeSeries: '/batch-rest/dataset',
-    // pas
-    pasService: '/pas/services/hdfs/browse',
-    pasDownload: '/pas/services/hdfs/download'
   }
-}
-
+</script>
 
 ```
