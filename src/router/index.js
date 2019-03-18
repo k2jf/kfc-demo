@@ -10,7 +10,7 @@ import DataTypeSelector from '@/views/datatypeselector'
 import fieldselector from '@/views/fieldselector'
 import pasresults from '@/views/pasresults'
 import ProjectList from '@/components/kfc-data-project'
-import PasProjectDetail from '@/components/kfc-project-detail'
+import pasprojectdetail from '@/views/pasprojectdetail'
 import DataCompleteness from '@/components/kfc-data-completeness'
 import KfcUserManage from '@/components/kfc-user-manage'
 
@@ -68,7 +68,7 @@ export default new Router({
         {
           path: '/pasprojectdetail',
           name: 'pasprojectdetail',
-          component: PasProjectDetail
+          component: pasprojectdetail
         },
         {
           path: '/pasjobs',
