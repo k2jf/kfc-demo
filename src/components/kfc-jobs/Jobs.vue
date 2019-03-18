@@ -167,9 +167,9 @@ export default {
     getJobsData () {
       let url = ''
       if (this.content === '') {
-        url = `http://10.12.20.36:28085/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}`
+        url = `/kmx/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}`
       } else {
-        url = `http://10.12.20.36:28085/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}&type=like&name=${this.content}`
+        url = `/kmx/pas/services/jobs?size=${this.table.pageSize}&page=${this.table.pageNo}&type=like&name=${this.content}`
       }
       this.getData(url)
     },
@@ -177,24 +177,19 @@ export default {
       this.getJobsData()
     },
     getData (url) {
-      let token = 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..K09zHAVbgBDJLugW2TsKhg.ImY4y0pxJw1buidfWO6W7p7xwf7TxdOhBfndlPWhoCfcK7ggiqAj5qyWiMXCHbTr4scEGmzv1kROmGKJaNvX-aVFnEsnXSdjCjtfHT_GX-e0MSBWKfsfOgCtuLznXk5wcVK0BFf1mQXOQUS74JWmTNK9OGfRqyKwAm_iwI3CBz46OFgZ3H53VhXZZhLM1N-Uz0FRtgZ8JtIAL_CIP5ZcMotSH7OgCRWNanIT6s5b8JXBaHOcjM1qkzPlY0kSuNlm.ZlizGrSVV40yJEvnTMdFQsc_lyxPW7v0'
-      let xhr = new XMLHttpRequest()
-      xhr.timeout = 6000
-      xhr.ontimeout = function (event) {
-        alert('请求超时！')
-      }
-      xhr.open('GET', url)
-      xhr.setRequestHeader('K2_KEY', token)
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          this.table.dataList = JSON.parse(xhr.responseText).result
-          this.table.total = JSON.parse(xhr.responseText).pageInfo.total
-        }
-      }
-      xhr.send(null)
+      this.$axios.get(url).then(res => {
+        this.table.dataList = res.data.result
+        this.table.total = res.data.pageInfo.total
+      })
+    },
+    download (param) {
+      console.log('下载')
+      console.log(param)
+    },
+    stop (params) {
+      console.log('停止')
+      console.log(params)
     }
-
   }
 }
 </script>
