@@ -41,7 +41,7 @@
         border
         :columns="selectHeader"
         :data="selectField"
-        :height="(selectField.length < 9 ? 'auto' : 400)">
+        :height="(selectField.length < 9 ? 'auto' : 300)">
       </i-table>
     </div>
     <div class="dataMessage">
@@ -52,7 +52,7 @@
       </i-row>
       <i-row v-for="(value, key) in extension" :key="key">
         <i-col span="12">
-          <span>{{ key }}:</span>
+          <span>{{ key }}：</span>
         </i-col>
         <i-col span="12">
           <span>{{ value }}</span>
@@ -62,12 +62,35 @@
     <div class="dataMessage">
       <i-row>
         <i-col span="24">
-          <span>筛选条件:</span>
+          <span>查询条件:</span>
         </i-col>
       </i-row>
-      <i-row style="height: 40px">
+      <i-row>
         <i-col span="24">
-          <span>{{ partitionInfo }}</span>
+          <span>时间：</span>
+        </i-col>
+      </i-row>
+      <i-row>
+        <i-col span="24">
+          <div v-for="(partitionItem,index) in partitionInfo" :key="index">
+            <span v-for="(tsItem, tsIndex) in partitionInfo[index].ts" :key="tsIndex">
+              {{ partitionInfo[index].ts && partitionInfo[index].ts[tsIndex].from }} - {{ partitionInfo[index].ts && partitionInfo[index].ts[tsIndex].to }}
+            </span>
+          </div>
+        </i-col>
+      </i-row>
+      <i-row>
+        <i-col span="24">
+          <span>id：</span>
+        </i-col>
+      </i-row>
+      <i-row>
+        <i-col span="24">
+          <div v-for="(partitionItem,index) in partitionInfo" :key="index">
+            <span v-for="(compoundId, compoundIdIndex) in partitionInfo[index].ts" :key="compoundIdIndex">
+              {{ partitionInfo[index].ts && partitionInfo[index].compoundId[compoundIdIndex].fieldKey }} {{ partitionInfo[index].ts && partitionInfo[index].compoundId[compoundIdIndex].condition }} {{ partitionInfo[index].ts && partitionInfo[index].compoundId[compoundIdIndex].fieldValue }}
+            </span>
+          </div>
         </i-col>
       </i-row>
     </div>
@@ -76,90 +99,82 @@
 
 <script>
 import { Row, Col, Table } from 'iview'
+import { api } from './api'
 export default {
-	components: {
-		'i-row': Row,
-		'i-col': Col,
-		'i-table': Table
-	},
-	props: {
-		projectId: {
-			type: Number,
-			required: true
-		},
-		nodeId: {
-			type: String,
-			required: true
-		}
-	},
-	data () {
-		return {
-			datasetDetail: {},
-			selectHeader: [{ title: '名称', key: 'name' }, { title: '类型', key: 'type' }]
-		}
-	},
-	computed: {
-		selectField () {
-			if (this.datasetDetail != null && this.datasetDetail.stmtSelect != null) {
-				return this.datasetDetail.stmtSelect
-			} else {
-				return []
-			}
-		},
-		partitionInfo () {
-			if (this.datasetDetail != null && this.datasetDetail.partitionInfo != null) {
-				return JSON.stringify(this.datasetDetail.partitionInfo)
-			} else {
-				return ''
-			}
-		},
-		extension () {
-			if (this.datasetDetail != null && this.datasetDetail.extention != null) {
-				return this.datasetDetail.extention
-			} else {
-				return {}
-			}
-		},
-		dataCategory () {
-			var sourceData = ''
-			if (this.datasetDetail != null) {
-				if (this.datasetDetail.dataSource === 'kmx' && this.datasetDetail.stmtTable != null) {
-					sourceData = this.datasetDetail.stmtTable
-				} else if (this.datasetDetail.dataSource === 'hdfs') {
-					sourceData = this.datasetDetail.hdfsPath
-				}
-			}
-			return sourceData
-		}
-	},
-	mounted () {
-		this.httpRequest()
-	},
-	methods: {
-		httpRequest () {
-			var xhr = new XMLHttpRequest()
-			var url = 'http://10.12.20.36:28085/pas/services/projects/data-set?projId=' +
-                 this.projectId + '&id=' + this.nodeId
-			let token = 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMTkyQ0JDLUhTMzg0IiwiYWxnIjoiZGlyIn0..K09zHAVbgBDJLugW2TsKhg.ImY4y0pxJw1buidfWO6W7p7xwf7TxdOhBfndlPWhoCfcK7ggiqAj5qyWiMXCHbTr4scEGmzv1kROmGKJaNvX-aVFnEsnXSdjCjtfHT_GX-e0MSBWKfsfOgCtuLznXk5wcVK0BFf1mQXOQUS74JWmTNK9OGfRqyKwAm_iwI3CBz46OFgZ3H53VhXZZhLM1N-Uz0FRtgZ8JtIAL_CIP5ZcMotSH7OgCRWNanIT6s5b8JXBaHOcjM1qkzPlY0kSuNlm.ZlizGrSVV40yJEvnTMdFQsc_lyxPW7v0'
-			xhr.open('GET', url, true)
-			xhr.setRequestHeader('K2_KEY', token)
-			xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-			xhr.onreadystatechange = () => {
-				if (xhr.readyState === 4) {
-					this.datasetDetail = JSON.parse(xhr.responseText).result
-				}
-			}
-			xhr.send(null)
-		}
-	}
+  components: {
+    'i-row': Row,
+    'i-col': Col,
+    'i-table': Table
+  },
+  props: {
+    projectId: {
+      type: Number,
+      required: true
+    },
+    nodeId: {
+      type: String,
+      required: true
+    }
+  },
+  data () {
+    return {
+      datasetDetail: {},
+      selectHeader: [{ title: '名称', key: 'name' }, { title: '类型', key: 'type' }]
+    }
+  },
+  computed: {
+    selectField () {
+      if (this.datasetDetail != null && this.datasetDetail.stmtSelect != null) {
+        return this.datasetDetail.stmtSelect
+      } else {
+        return []
+      }
+    },
+    partitionInfo () {
+      if (this.datasetDetail != null && this.datasetDetail.partitionInfo != null) {
+        return this.datasetDetail.partitionInfo
+      } else {
+        return ''
+      }
+    },
+    extension () {
+      if (this.datasetDetail != null && this.datasetDetail.extention != null) {
+        return this.datasetDetail.extention
+      } else {
+        return {}
+      }
+    },
+    dataCategory () {
+      var sourceData = ''
+      if (this.datasetDetail != null) {
+        if (this.datasetDetail.dataSource === 'kmx' && this.datasetDetail.stmtTable != null) {
+          sourceData = this.datasetDetail.stmtTable
+        } else if (this.datasetDetail.dataSource === 'hdfs') {
+          sourceData = this.datasetDetail.hdfsPath
+        }
+      }
+      return sourceData
+    }
+  },
+  mounted () {
+    this.httpRequest()
+  },
+  methods: {
+    httpRequest () {
+      var url = `${api.dataSetDetail}?projId=${this.projectId}&id=${this.nodeId}`
+      this.$axios.get(url).then(res => {
+        this.datasetDetail = res.data.result
+      })
+    }
+  }
 }
 </script>
 
 <style scoped>
-.dataMessage {
+  .dataMessage {
     width: 98%;
-    padding:15px;
-    margin:10px auto auto auto;
+    padding: 15px;
+    margin: 10px auto auto auto;
     border: 1px solid #e8eaec;
   }
   #div-dm .ivu-row{

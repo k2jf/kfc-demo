@@ -24,16 +24,16 @@ wangyanan
 </template>
 
 <script>
-import PasProjectDetail from '@/kfc-project-detail/PasProjectDetail'
+import PasProjectDetail from '@/components/kfc-project-detail'
 export default {
-	components: {
-		PasProjectDetail
-	},
-	data () {
-		return {
-			projectId: 102295
-		}
-	}
+  components: {
+    PasProjectDetail
+  },
+  data () {
+    return {
+      projectId: 102295
+    }
+  }
 }
 </script>
 ```

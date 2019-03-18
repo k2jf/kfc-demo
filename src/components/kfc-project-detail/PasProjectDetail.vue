@@ -78,31 +78,31 @@ import { Row, Col, Tabs, TabPane, Button } from 'iview'
 import TabItemContent from './TabItemContent.js'
 
 export default {
-	components: {
-		'i-row': Row,
-		'i-col': Col,
-		Tabs,
-		TabPane,
-		TabItemContent,
-		'i-button': Button
-	},
-	props: {
-		value: {
-			type: Number,
-			required: true
-		}
-	},
-	data: function () {
-		return {
-			extensions: { 'pas.target.extraction.result.withTitle': true },
-			flow: { 'nodes': [{ 'x': 5, 'y': 58, 'id': 'e6fdc3cf-7031-4843-9aab-60a5893b8a77', 'name': 'KMX时序数据源', 'type': 'data-set', 'input': 1, 'output': 1, 'operationId': 'f1834623-e78e-48f6-927d-bd9b0fca8bf9' }, { 'x': 142, 'y': 327, 'id': 'de43180f-ee07-4bdc-bb4d-edfb9bc47a53', 'name': 'mysql', 'type': 'output-mysql', 'input': 1, 'output': 1, 'operationId': '6c5bfb94-4ab9-466a-8f9f-cd5ecbe87dc5' }, { 'x': 140, 'y': 215, 'id': '0eab1a15-d7e0-4202-8b98-e0268d99e409', 'name': 'R脚本', 'type': 'script-alg', 'input': 2, 'output': 1, 'operationId': 'c1a14c95-88cf-44d5-a6d9-cde951316450' }, { 'x': 276, 'y': 52, 'id': '77a1cfa6-3c6e-4da0-9fad-990c9668bd60', 'name': '文件系统数据源', 'type': 'data-set', 'input': 1, 'output': 1, 'operationId': '1dcf8c1a-8e3f-4a70-bdff-9a3ca58e89e0' }], 'arrows': [{ 'to': { 'id': '0eab1a15-d7e0-4202-8b98-e0268d99e409', 'input': 'input', 'location': 1 }, 'from': { 'id': 'e6fdc3cf-7031-4843-9aab-60a5893b8a77', 'output': 'output', 'location': 1 } }, { 'to': { 'id': 'de43180f-ee07-4bdc-bb4d-edfb9bc47a53', 'input': 'input', 'location': 1 }, 'from': { 'id': '0eab1a15-d7e0-4202-8b98-e0268d99e409', 'output': 'output', 'location': 1 } }, { 'to': { 'id': '0eab1a15-d7e0-4202-8b98-e0268d99e409', 'input': 'input', 'location': 2 }, 'from': { 'id': '77a1cfa6-3c6e-4da0-9fad-990c9668bd60', 'output': 'output', 'location': 1 } }] }
-		}
-	},
-	methods: {
-		runJob () {
-			alert('运行了项目' + this.value)
-		}
-	}
+  components: {
+    'i-row': Row,
+    'i-col': Col,
+    Tabs,
+    TabPane,
+    TabItemContent,
+    'i-button': Button
+  },
+  props: {
+    value: {
+      type: Number,
+      required: true
+    }
+  },
+  data: function () {
+    return {
+      extensions: { 'pas.target.extraction.result.withTitle': true },
+      flow: { 'nodes': [{ 'x': 5, 'y': 58, 'id': 'e6fdc3cf-7031-4843-9aab-60a5893b8a77', 'name': 'KMX时序数据源', 'type': 'data-set', 'input': 1, 'output': 1, 'operationId': 'f1834623-e78e-48f6-927d-bd9b0fca8bf9' }, { 'x': 142, 'y': 327, 'id': 'de43180f-ee07-4bdc-bb4d-edfb9bc47a53', 'name': 'mysql', 'type': 'output-mysql', 'input': 1, 'output': 1, 'operationId': '6c5bfb94-4ab9-466a-8f9f-cd5ecbe87dc5' }, { 'x': 140, 'y': 215, 'id': '0eab1a15-d7e0-4202-8b98-e0268d99e409', 'name': 'R脚本', 'type': 'script-alg', 'input': 2, 'output': 1, 'operationId': 'c1a14c95-88cf-44d5-a6d9-cde951316450' }, { 'x': 276, 'y': 52, 'id': '77a1cfa6-3c6e-4da0-9fad-990c9668bd60', 'name': '文件系统数据源', 'type': 'data-set', 'input': 1, 'output': 1, 'operationId': '1dcf8c1a-8e3f-4a70-bdff-9a3ca58e89e0' }], 'arrows': [{ 'to': { 'id': '0eab1a15-d7e0-4202-8b98-e0268d99e409', 'input': 'input', 'location': 1 }, 'from': { 'id': 'e6fdc3cf-7031-4843-9aab-60a5893b8a77', 'output': 'output', 'location': 1 } }, { 'to': { 'id': 'de43180f-ee07-4bdc-bb4d-edfb9bc47a53', 'input': 'input', 'location': 1 }, 'from': { 'id': '0eab1a15-d7e0-4202-8b98-e0268d99e409', 'output': 'output', 'location': 1 } }, { 'to': { 'id': '0eab1a15-d7e0-4202-8b98-e0268d99e409', 'input': 'input', 'location': 2 }, 'from': { 'id': '77a1cfa6-3c6e-4da0-9fad-990c9668bd60', 'output': 'output', 'location': 1 } }] }
+    }
+  },
+  methods: {
+    runJob () {
+      alert('运行了项目' + this.value)
+    }
+  }
 }
 </script>
 
