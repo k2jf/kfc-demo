@@ -1,9 +1,6 @@
 <template>
   <div class="auth-split">
-    <Split
-      :value="0.2"
-      :min="240"
-      :max="250">
+    <Split v-model="split">
       <div slot="left">
         <RoleInfo @on-role-change="getCurrentRole" />
       </div>
@@ -15,7 +12,7 @@
             <Button
               type="primary"
               size="small"
-              style="margin: 15px"
+              style="margin: 25px"
               v-if="currentTab === 'auth'"
               @click="isShowAuthModal = true"
             >
@@ -24,7 +21,7 @@
             <Button
               type="primary"
               size="small"
-              style="margin: 15px"
+              style="margin: 25px"
               v-if="currentTab === 'user'"
               @click="isShowUserModal = true"
             >
@@ -91,6 +88,7 @@ export default {
   },
   data () {
     return {
+      split: 0.2,
       currentTab: 'user',
       isShowAuthModal: false,
       isShowUserModal: false,
