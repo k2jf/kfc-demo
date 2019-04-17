@@ -88,6 +88,6 @@ export default {
     width: 100%;
   }
   .kfc-page {
-    /*float: left;*/
+    float: right;
   }
 </style>

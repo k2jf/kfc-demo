@@ -1,8 +1,5 @@
 <template>
-  <Card style="width: 90%;margin-left: 5%;margin-top: 2%">
-    <p slot="title">
-      审计日志
-    </p>
+  <div>
     <div style="margin-top: 1px">
       <span style="width: 15em;">
         <span class="four-char">操作用户</span>
@@ -23,24 +20,22 @@
         <Button style="margin-left: 5px" @click.native="onReset">重置</Button>
       </span>
     </div>
-    <div style="margin-top: 20px">
-      <KfcTable
-        :headers="table.headers"
-        :datas="table.dataList"
-        :total="table.total"
-        ref="table"
-        @on-page-change="onPageChange" />
-    </div>
-  </Card>
+    <KfcTable
+      style="margin-top: 20px"
+      :headers="table.headers"
+      :datas="table.dataList"
+      :total="table.total"
+      ref="table"
+      @on-page-change="onPageChange" />
+  </div>
 </template>
 
 <script>
-import { Card, Input, DatePicker, Button } from 'iview'
+import { Input, DatePicker, Button } from 'iview'
 import KfcTable from './KfcTable'
 export default {
   name: 'KfcAudit',
   components: {
-    Card,
     Input,
     DatePicker,
     Button,
