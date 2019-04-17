@@ -62,7 +62,7 @@ export default {
         dataList: [],
         pageNo: 1,
         pageSize: 10,
-        total: 6
+        total: 0
       }
     }
   },
