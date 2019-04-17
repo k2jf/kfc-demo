@@ -9,6 +9,11 @@ module.exports = {
       name: 'top-menu2',
       icon: 'md-person',
       title: '数据分析'
+    },
+    {
+      name: 'top-menu3',
+      icon: 'md-person',
+      title: '其他'
     }
   ],
   siderMenuMap: {
@@ -85,6 +90,13 @@ module.exports = {
             title: '左侧二级菜单2'
           }
         ]
+      }
+    ],
+    'top-menu3': [
+      {
+        name: 'audit',
+        icon: 'md-person',
+        title: '审计日志'
       }
     ]
   }
