@@ -5,6 +5,7 @@ import KFCFrame from '@/components/kfc-frame'
 import TimeSeries from '@/components/kfc-timeseries-chart'
 import Authorization from '@/components/kfc-auth'
 import Jobs from '@/components/kfc-jobs'
+import KfcAudit from '@/components/kfc-audit'
 // import DataTypeSelector from '@/components/kfc-datatype-selector'
 import DataTypeSelector from '@/views/datatypeselector'
 import fieldselector from '@/views/fieldselector'
@@ -79,6 +80,11 @@ export default new Router({
           path: '/pasresults',
           name: 'pasresults',
           component: pasresults
+        },
+        {
+          path: '/audit',
+          name: 'audit',
+          component: KfcAudit
         }
       ]
     }
