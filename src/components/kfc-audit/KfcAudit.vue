@@ -47,12 +47,12 @@ export default {
       dateRange: [],
       table: {
         headers: [
-          { title: '操作标题', key: 'title' },
-          { title: '请求地址', key: 'requestURL' },
-          { title: '请求方式', key: 'requestMethod' },
-          { title: '操作用户', key: 'creator' },
-          { title: '操作用户IP', key: 'ip' },
-          { title: '操作时间', key: 'createDate' }
+          { title: '操作标题', key: 'title', width: '100' },
+          { title: '请求地址', key: 'requestURL', width: '' },
+          { title: '请求方式', key: 'requestMethod', width: '100' },
+          { title: '操作用户', key: 'creator', width: '100' },
+          { title: '操作用户IP', key: 'ip', width: '150' },
+          { title: '操作时间', key: 'createDate', width: '' }
         ],
         dataList: [],
         pageNo: 1,
@@ -65,7 +65,6 @@ export default {
     this.reloadTable()
   },
   methods: {
-    // todo 对接数据
     reloadTable () {
       let param =
         {
@@ -76,8 +75,10 @@ export default {
           size: this.table.pageSize
         }
       this.$axios.get('/auditLogList', param).then(res => {
-        this.table.dataList = res.body.audiLogList
-        /* this.table.total = res.body. */
+        // TODO 后端返回分页数据及分页信息
+        // TODO 后端增加条件查询
+        this.table.dataList = res.data.body.audiLogList
+        this.table.total = res.data.body.audiLogList.length
       })
     },
     onSearch () {
