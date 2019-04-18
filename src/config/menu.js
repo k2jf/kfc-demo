@@ -12,8 +12,8 @@ module.exports = {
     },
     {
       name: 'top-menu3',
-      icon: 'md-construct',
-      title: '系统集成'
+      icon: 'md-person',
+      title: '其他'
     }
   ],
   siderMenuMap: {
@@ -93,6 +93,11 @@ module.exports = {
       }
     ],
     'top-menu3': [
+      {
+        name: 'audit',
+        icon: 'md-person',
+        title: '审计日志'
+      },
       {
         name: 'kmxiframe',
         icon: 'md-easel',

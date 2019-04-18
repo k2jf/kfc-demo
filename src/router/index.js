@@ -13,6 +13,7 @@ import ProjectList from '@/components/kfc-data-project'
 import pasprojectdetail from '@/views/pasprojectdetail'
 import DataCompleteness from '@/components/kfc-data-completeness'
 import KfcUserManage from '@/components/kfc-user-manage'
+import Audit from '@/views/others/Audit'
 
 Vue.use(Router)
 
@@ -84,6 +85,11 @@ export default new Router({
           path: '/kmxiframe',
           name: 'kmxiframe',
           component: () => import('@/views/kmxiframe')
+        },
+        {
+          path: '/audit',
+          name: 'audit',
+          component: Audit
         }
       ]
     }
