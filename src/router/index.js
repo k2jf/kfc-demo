@@ -79,6 +79,11 @@ export default new Router({
           path: '/pasresults',
           name: 'pasresults',
           component: pasresults
+        },
+        {
+          path: '/kmxiframe',
+          name: 'kmxiframe',
+          component: () => import('@/views/kmxiframe')
         }
       ]
     }
