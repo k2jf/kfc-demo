@@ -3,7 +3,8 @@
     <i-menu
       :active-name="activeName"
       mode="vertical"
-      :open-names="openNames">
+      :open-names="openNames"
+      ref="menu">
       <template v-for="submenu in dataList">
         <i-menu-item
           :name="submenu.name"
@@ -40,67 +41,75 @@ import { Menu, MenuItem, Submenu, Icon } from 'iview'
 const prefixCls = 'kfc-sider'
 
 export default {
-	name: 'KfcSider',
-	components: {
-		'i-menu': Menu,
-		'i-menu-item': MenuItem,
-		'i-submenu': Submenu,
-		'i-icon': Icon
-	},
-	props: {
-		data: {
-			type: Array,
-			required: true,
-			default: function () {
-				return []
-			}
-		}
-	},
-	data () {
-		return {
-			dataList: this.data,
-			activeName: '',
-			openNames: [],
-			prefixCls: prefixCls
-		}
-	},
-	watch: {
-		data (val) {
-			this.dataList = val
-			setTimeout(this.init, 0)
-		}
-	},
-	mounted () {
-		setTimeout(this.init, 0)
-	},
-	methods: {
-		getParentName (name) {
-			let result = null
-			for (let i = 0; i < this.data.length; i++) {
-				let dataChild = this.data[i]
-				if (!dataChild.children) {
-					continue
-				}
+  name: 'KfcSider',
+  components: {
+    'i-menu': Menu,
+    'i-menu-item': MenuItem,
+    'i-submenu': Submenu,
+    'i-icon': Icon
+  },
+  props: {
+    data: {
+      type: Array,
+      required: true,
+      default: function () {
+        return []
+      }
+    }
+  },
+  data () {
+    return {
+      dataList: this.data,
+      activeName: '',
+      openNames: [],
+      prefixCls: prefixCls
+    }
+  },
+  watch: {
+    data (val) {
+      this.dataList = val
+      this.init()
+    }
+  },
+  mounted () {
+    setTimeout(this.init, 0)
+  },
+  methods: {
+    getParentName (name) {
+      let result = null
+      for (let i = 0; i < this.data.length; i++) {
+        let dataChild = this.data[i]
+        if (!dataChild.children) {
+          continue
+        }
 
-				for (let j = 0; j < dataChild.children.length; j++) {
-					if (dataChild.children[j].name === name) {
-						result = dataChild.name
-						return result
-					}
-				}
-			}
+        for (let j = 0; j < dataChild.children.length; j++) {
+          if (dataChild.children[j].name === name) {
+            result = dataChild.name
+            return result
+          }
+        }
+      }
 
-			return result
-		},
+      return result
+    },
 
-		init () {
-			this.activeName = this.$router.currentRoute.name
-			this.openNames = []
+    init () {
+      this.activeName = this.$router.currentRoute.name
+      this.openNames = []
 
-			if (this.activeName) {
-				this.openNames.push(this.getParentName(this.activeName))
-			}
-		}
-	}
+      if (this.activeName) {
+        let parentName = this.getParentName(this.activeName)
+        if (parentName) {
+          this.openNames.push(parentName)
+        }
+      }
+
+      this.$nextTick(() => {
+        this.$refs.menu.updateOpened()
+        this.$refs.menu.updateActiveName()
+      })
+    }
+  }
 }
 </script>

@@ -33,26 +33,42 @@ k2liumc
 ```bash
 import KFCFrame from '@/components/kfc-frame'
 
-  routes: [
+    routes: [
     {
       path: '/',
       name: 'index',
       component: KFCFrame,
-      chilren: [
+      children: [
         {
           path: '/page1',
           name: 'page1',
-          component: Page1
+          component: Home
         },
         {
           path: '/page2',
           name: 'page2',
-          component: Page2
+          component: Home
         },
-        ......
+        {
+          path: '/page3',
+          name: 'page3',
+          component: Home
+        },
+        {
+          path: '/page4',
+          name: 'page4',
+          component: Home
+        },
+        {
+          path: '/page5',
+          name: 'page5',
+          component: Home
+        }
       ]
+    }
+  ]
 ```
-2、在src目录下创建menu文件夹，在menu文件夹下创建menu.js文件，文件格式如下:
+2、在src/config目录下新建menu.js文件，文件格式如下:
 ```bash
 1)只有头导航栏菜单，无左侧导航栏
 module.exports = {
@@ -82,6 +98,7 @@ module.exports = {
     {
       icon: 'md-person',
       title: '菜单2',
+      name: 'page2',
       children: [
         {
           name: 'page3',
@@ -133,6 +150,7 @@ module.exports = {
         title: '左侧一级菜单3'
       },
       {
+        name: 'page',
         icon: 'md-person',
         title: '左侧一级菜单4',
         children: [
@@ -142,7 +160,7 @@ module.exports = {
             title: '左侧二级菜单1'
           },
           {
-            name: 'page4',
+            name: 'page5',
             icon: 'md-person',
             title: '左侧二级菜单2'
           }
