@@ -39,6 +39,21 @@ module.exports = {
         title: '授权管理'
       },
       {
+        name: 'user_1',
+        icon: 'md-person',
+        title: '用户管理(新)'
+      },
+      {
+        name: 'user-groups',
+        icon: 'md-person',
+        title: '用户组管理(新)'
+      },
+      {
+        name: 'auth_1',
+        icon: 'md-person',
+        title: '角色管理(新)'
+      },
+      {
         name: 'dataTypeSelector',
         icon: 'md-person',
         title: '选择数据类型'

@@ -15,6 +15,9 @@ import DataCompleteness from '@/components/kfc-data-completeness'
 import KfcUserManage from '@/components/kfc-user-manage'
 import Audit from '@/views/others/Audit'
 import KFCModifyPassword from '@/components/kfc-frame/header/kfc-header-password.vue'
+import KfcUser from '@/components/kfc-user'
+import KfcAuthorization from '@/components/kfc-auth-manage'
+import UserGroups from '@/components/kfc-user-groups'
 
 Vue.use(Router)
 
@@ -51,6 +54,21 @@ export default new Router({
           path: '/auth',
           name: 'auth',
           component: Authorization
+        },
+        {
+          path: '/user_1',
+          name: 'user_1',
+          component: KfcUser
+        },
+        {
+          path: '/user-groups',
+          name: 'user-groups',
+          component: UserGroups
+        },
+        {
+          path: '/auth_1',
+          name: 'auth_1',
+          component: KfcAuthorization
         },
         {
           path: '/dataTypeSelector',
