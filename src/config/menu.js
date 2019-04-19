@@ -112,6 +112,11 @@ module.exports = {
         name: 'audit',
         icon: 'md-person',
         title: '审计日志'
+      },
+      {
+        name: 'kmxiframe',
+        icon: 'md-easel',
+        title: 'kmx页面嵌入'
       }
     ]
   }

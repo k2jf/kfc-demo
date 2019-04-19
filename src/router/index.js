@@ -106,6 +106,11 @@ export default new Router({
           component: pasresults
         },
         {
+          path: '/kmxiframe',
+          name: 'kmxiframe',
+          component: () => import('@/views/kmxiframe')
+        },
+        {
           path: '/audit',
           name: 'audit',
           component: Audit
