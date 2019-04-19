@@ -1,5 +1,5 @@
 <template>
-  <PasResultsList :pasQueryParams="pasQueryParams"></PasResultsList>
+  <PasResultsList :filePath="filePath" :expand="expand"></PasResultsList>
 </template>
 
 <script>
@@ -11,10 +11,8 @@ export default {
   },
   data () {
     return {
-      pasQueryParams: {
-        filePath: '/test-lxt/102282/31284/20190226140308149/EXTRACTION',
-        expand: false
-      }
+      filePath: '/test-lxt/102282/31284/20190226140308149/EXTRACTION',
+      expand: false
     }
   }
 }

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home'
 import KFCFrame from '@/components/kfc-frame'
-import TimeSeries from '@/components/kfc-timeseries-chart'
+import TimeSeries from '@/views/timeseries'
 import Authorization from '@/components/kfc-auth'
 import Jobs from '@/components/kfc-jobs'
 // import DataTypeSelector from '@/components/kfc-datatype-selector'
@@ -14,6 +14,7 @@ import pasprojectdetail from '@/views/pasprojectdetail'
 import DataCompleteness from '@/components/kfc-data-completeness'
 import KfcUserManage from '@/components/kfc-user-manage'
 import Audit from '@/views/others/Audit'
+import KFCModifyPassword from '@/components/kfc-frame/header/kfc-header-password.vue'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
       name: 'demo',
       component: KFCFrame,
       children: [
+        {
+          path: '/modify-password',
+          name: 'modify-password',
+          component: KFCModifyPassword
+        },
         {
           path: '/home',
           name: 'home',

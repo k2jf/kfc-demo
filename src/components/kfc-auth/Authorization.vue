@@ -12,7 +12,7 @@
             <Button
               type="primary"
               size="small"
-              style="margin: 25px"
+              style="margin: 15px"
               v-if="currentTab === 'auth'"
               @click="isShowAuthModal = true"
             >
@@ -21,7 +21,7 @@
             <Button
               type="primary"
               size="small"
-              style="margin: 25px"
+              style="margin: 15px"
               v-if="currentTab === 'user'"
               @click="isShowUserModal = true"
             >
