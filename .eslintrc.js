@@ -69,7 +69,7 @@ module.exports = {
     'vue/eqeqeq': 'error',
     'vue/match-component-file-name': ['error', {
       'extensions': ['vue'],
-      'shouldMatchCase': true
+      'shouldMatchCase': false
     }],
     // ------------------------------------------------------------------------------
     // vue: need to close
