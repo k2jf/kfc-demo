@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PasResultsList from '@/components/kfc-pas-results-list'
+import PasResultsList from '@/components/kfc-kmx-eaf-result'
 
 export default {
   components: {

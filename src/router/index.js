@@ -15,9 +15,9 @@ import DataCompleteness from '@/components/kfc-data-completeness'
 import KfcUserManage from '@/components/kfc-user-manage'
 import Audit from '@/views/others/Audit'
 import KFCModifyPassword from '@/components/kfc-frame/header/kfc-header-password.vue'
-import KfcUser from '@/components/kfc-user'
+import KfcUser from '@/components/kfc-auth-user'
 import KfcAuthorization from '@/components/kfc-auth-manage'
-import UserGroups from '@/components/kfc-user-groups'
+import UserGroups from '@/components/kfc-auth-group'
 
 Vue.use(Router)
 
