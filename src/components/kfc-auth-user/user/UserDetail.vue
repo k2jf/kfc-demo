@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { Form, FormItem, Input, Card, Button, Table } from 'iview'
+import { Form, FormItem, Input, Button, Table } from 'iview'
 
 import api from '../api'
 
@@ -39,7 +39,6 @@ export default {
     Form,
     FormItem,
     Input,
-    Card,
     Table,
     Button
   },
