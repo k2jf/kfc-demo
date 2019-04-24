@@ -132,8 +132,8 @@ export default {
   },
   methods: {
     // 删除用户
-    onDeleteClick (userId) {
-      this.$axios.delete(`${api.groups}/${this.currentGroup.id}/users/${userId}`).then(res => {
+    onDeleteClick () {
+      this.$axios.delete(`${api.groups}/${this.currentGroup.id}/users/${this.id}`).then(res => {
         this.$Message.success('删除成功！')
         this.getUserList()
       })
