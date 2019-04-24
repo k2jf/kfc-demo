@@ -130,7 +130,7 @@ export default {
   methods: {
     // 删除用户组
     onDeleteClick () {
-      this.$axios.delete(`${api.roles}/${this.currentRole.id}/usrgrps/${this.id}`).then(res => {
+      this.$axios.delete(`${api.rowners}/${this.id}/roles/${this.currentRole.id}`).then(res => {
         this.$Message.success('删除成功！')
         this.getGroupList()
       })
