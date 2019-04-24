@@ -40,7 +40,7 @@ npm install --save echarts
 </template>
 
 <script>
-import TimeSeries from '@/components/kfc-timeseries-chart'
+import TimeSeries from '@/components/kfc-kmx-tsdw-chart'
 
 export default {
   components: {
