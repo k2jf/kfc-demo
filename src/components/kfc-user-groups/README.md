@@ -1,4 +1,4 @@
-# kfc-user-groups
+# kfc-auth-group
 用户组管理
 # UserGroups
 
@@ -15,7 +15,7 @@ youli
 </template>
 
 <script>
-  import UserGroups from '@/components/kfc-user-groups'
+  import UserGroups from '@/components/kfc-auth-group'
 
   export default {
     components: {

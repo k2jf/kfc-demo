@@ -76,7 +76,7 @@ export default {
     onClickOk () {
       let userIds = this.user.selectKeys.join(',')
 
-      this.$axios.put(`${api.groups}/${this.currentGroup.id}/users/${userIds}`).then(res => {
+      this.$axios.put(`${api.groups}/${this.currentGroup.id}/users`, { userIds }).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
       }).catch(() => {

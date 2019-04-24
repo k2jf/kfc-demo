@@ -76,7 +76,7 @@ export default {
     onClickOk () {
       let roleIds = this.role.selectKeys.join(',')
 
-      this.$axios.put(`${api.groups}/${this.currentGroup.id}/roles/${roleIds}`).then(res => {
+      this.$axios.put(`${api.rowners}/${this.currentGroup.id}/roles?roleIds=${roleIds}`).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
       }).catch(() => {
