@@ -1,4 +1,4 @@
-# kfc-login
+# kfc-auth-login
 分为基础登录页和酷炫登录页
 
 ### 基础登录页：
