@@ -141,17 +141,12 @@ export default {
   methods: {
     // 新建权限
     onClickOk () {
-      let resourceId = this.resourceData.selectKeys.join(',')
-      let permission = {
-        resourceId,
-        typeId: this.resourceData.typeId,
-        operations: this.operations.join(','),
-        roleId: this.currentRole.id
-      }
+      let resourceIds = this.resourceData.selectKeys.join(',')
+      let operations = this.operations.join(',')
 
-      this.$axios.post(`${api.authorizes}`, permission).then(res => {
+      this.$axios.put(`${api.roles}/${this.currentRole.id}/permissions?resourceIds=${resourceIds}&operations=${operations}`).then(res => {
         this.$Message.success('新建成功！')
-        this.$emit('on-submit', permission)
+        this.$emit('on-submit', this.resourceData.typeId)
         this.$refs.formValidate.resetFields()
       }).catch(() => {
         this.$emit('on-close')

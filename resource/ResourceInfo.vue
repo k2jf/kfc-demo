@@ -88,7 +88,7 @@ export default {
         typeId: 0,
         data: [{ id: 1, resource: 'name' }],
         columns: [
-          { title: '资源名称', key: 'resource', minWidth: 80 },
+          { title: '资源名称', key: 'resourceName', minWidth: 80 },
           { title: '权限', key: 'operations', minWidth: 80 },
           {
             title: '操作',
@@ -102,7 +102,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.showConfirmModal(params.row.id)
+                      this.showConfirmModal(params.row.resourceId)
                     }
                   }
                 },
@@ -148,7 +148,7 @@ export default {
     },
     // 删除权限
     onDeleteClick () {
-      this.$axios.delete(`${api.authorizes}?roleId=${this.currentRole.id}&subjectType=role&typeId=${this.resourceData.typeId}&appResInfoId=${this.id}`).then(res => {
+      this.$axios.delete(`${api.roles}/${this.currentRole.id}/permissions/${this.id}`).then(res => {
         this.$Message.success('删除成功！')
         this.getResourceData()
       })
@@ -162,19 +162,21 @@ export default {
     // 获取资源列表
     getResourceData () {
       this.resourceData.loading = true
-      let { typeId } = this.resourceData
+      let { typeId, fuzzyName } = this.resourceData
       let { id } = this.currentRole
+      let url = `${api.roles}/${id}/permissions?resourceTypeId=${typeId}`
+      url = fuzzyName ? `${url}&fuzzyName=${fuzzyName}` : url
 
-      this.$axios.get(`${api.authorizes}?typeId=${typeId}&roleId=${id}`).then(res => {
-        this.resourceData.data = res.data.body.authorizes
+      this.$axios.get(url).then(res => {
+        this.resourceData.data = res.data.body.roles
       }).finally(() => {
         this.resourceData.loading = false
       })
     },
     // 获取新增权限
-    getSubmitResource (resource) {
+    getSubmitResource (typeId) {
       this.isShowAuthModal = false
-      if (resource && resource.typeId === this.resourceData.typeId) {
+      if (typeId === this.resourceData.typeId) {
         // 新增权限类型为当前列表显示类型刷新页面
         this.getResourceData()
       }

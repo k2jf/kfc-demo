@@ -77,9 +77,9 @@ export default {
   methods: {
     // 添加用户组
     onClickOk () {
-      let usrgrpIds = this.group.selectKeys.join(',')
+      let rownerIds = this.group.selectKeys.join(',')
 
-      this.$axios.put(`${api.roles}/${this.currentRole.id}/roles/${usrgrpIds}`).then(res => {
+      this.$axios.put(`${api.roles}/${this.currentRole.id}/rowners?rownerIds=${rownerIds}`).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
       }).catch(() => {
