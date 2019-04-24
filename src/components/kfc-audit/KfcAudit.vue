@@ -33,6 +33,7 @@
 <script>
 import { Input, DatePicker, Button } from 'iview'
 import KfcTable from './KfcTable'
+import { formatDateToTS } from './utils'
 export default {
   name: 'KfcAudit',
   components: {
@@ -47,12 +48,18 @@ export default {
       dateRange: [],
       table: {
         headers: [
-          { title: '操作标题', key: 'title', width: '100' },
-          { title: '请求地址', key: 'requestURL', width: '' },
+          { title: '操作标题', key: 'operation', width: '100' },
+          { title: '请求地址', key: 'requestUrl', width: '' },
           { title: '请求方式', key: 'requestMethod', width: '100' },
           { title: '操作用户', key: 'creator', width: '100' },
           { title: '操作用户IP', key: 'ip', width: '150' },
-          { title: '操作时间', key: 'createDate', width: '' }
+          { title: '操作时间',
+            width: '',
+            key: 'requestStartTime'
+            /* render: (h, params) => {
+              return h('span', formatDate(params.row.requestStartTime))
+            } */
+          }
         ],
         dataList: [],
         pageNo: 1,
@@ -66,17 +73,20 @@ export default {
   },
   methods: {
     reloadTable () {
+      let url = '/auditLogList'
+      if (this.searchContent !== '') {
+        url += '/' + this.searchContent
+      }
+      if (this.dateRange !== '' && this.dateRange[0] !== '' && this.dateRange.length > 0) {
+        url += '/' + formatDateToTS(this.dateRange[0]) + '/' + formatDateToTS(this.dateRange[1])
+      }
       let param =
         {
-          creator: this.searchContent,
-          createStartDate: this.dateRange[0],
-          createEndDate: this.dateRange[1],
           pageNo: this.table.pageNo,
           size: this.table.pageSize
         }
-      this.$axios.get('/auditLogList', param).then(res => {
+      this.$axios.get(url, param).then(res => {
         // TODO 后端返回分页数据及分页信息
-        // TODO 后端增加条件查询
         this.table.dataList = res.data.body.audiLogList
         this.table.total = res.data.body.audiLogList.length
       })
