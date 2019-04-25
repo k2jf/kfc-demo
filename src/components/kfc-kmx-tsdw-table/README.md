@@ -23,7 +23,7 @@ DataTypeButton： 数据类型选择button对话框展示
 
 | 名称        | 说明                                        |
 | ----------- | ------------------------------------------ |
-| button       | 自定义按钮，可以是img, icon，a等| 
+| button       | 自定义按钮，可以是img, icon，a等|
 
 ## 示例
 ```
@@ -44,7 +44,7 @@ DataTypeButton： 数据类型选择button对话框展示
 </template>
 
 <script>
-import { DataTypeSelector, DataTypeButton } from '@/components/kfc-datatype-selector'
+import { DataTypeSelector, DataTypeButton } from '@/components/kfc-kmx-eaf-result'
 
 export default {
   components: {

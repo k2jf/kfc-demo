@@ -10,8 +10,8 @@
       <FormItem prop="email" label="邮箱:">
         <Input placeholder="请输入邮箱" v-model="user.email" />
       </FormItem>
-      <FormItem label="权限:">
-        <div class="auth-detail" v-if="user.permissions && user.permissions.length">
+      <FormItem label="权限:" v-if="user.permissions && user.permissions.length">
+        <div class="auth-detail">
           <Table
             :columns="permissionColumns"
             :data="user.permissions"

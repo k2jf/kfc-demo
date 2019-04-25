@@ -53,7 +53,7 @@ export default {
       group: {
         titles: ['未选用户组', '已选用户组'],
         data: [],
-        selectKeys: [...this.currentGroupList]
+        selectKeys: []
       }
     }
   },
@@ -61,11 +61,14 @@ export default {
     isShowGroupModal: {
       handler (curVal, oldVal) {
         this.isShowModal = curVal
-        // 清空选中用户组
-        this.group.selectKeys.splice(0, this.group.selectKeys.length)
+
         if (curVal) {
           this.getGroupList()
+          this.group.selectKeys = [...this.currentGroupList]
+          return
         }
+        // 清空选中用户组
+        this.group.selectKeys.splice(0, this.group.selectKeys.length)
       }
     },
     currentGroupList: {
@@ -90,6 +93,7 @@ export default {
       this.$emit('on-close')
     },
     getGroupList () {
+      if (this.group.data.length) return
       // 获取所有用户组
       this.$axios.get(`${api.groups}`).then(res => {
         this.group.data = res.data.body.userGroups.map(item => {
