@@ -44,7 +44,6 @@
       :columns="resourceData.columns"
       :data="resourceData.data"
       size="small"
-      height="300"
       :loading="resourceData.loading"
       class="margin-bottom"></Table>
     <ConfirmModal ref="confirmModal" @transfer-ok="onDeleteClick"></ConfirmModal>
@@ -92,10 +91,10 @@ export default {
         typeId: 0,
         data: [],
         columns: [
-          { title: '资源个例名称', key: 'resourceName', minWidth: 130 },
-          { title: '权限', key: 'operations', minWidth: 80 },
+          { title: '资源个例名称', key: 'resourceName', minWidth: 100 },
+          { title: '权限', key: 'operations', minWidth: 100 },
           { title: '起止时间',
-            minWidth: 240,
+            minWidth: 220,
             render: (h, params) => {
               return h('div', [
                 h(DatePicker, {
@@ -118,7 +117,7 @@ export default {
             }
           },
           { title: '是否生效',
-            minWidth: 100,
+            width: 90,
             render: (h, params) => {
               return h('div', [
                 h(Switch, {
@@ -238,9 +237,9 @@ export default {
       this.getResourceData()
     },
     // 获取新增权限
-    getSubmitResource (resource) {
+    getSubmitResource (typeId) {
       this.isShowAuthModal = false
-      if (resource && resource.typeId === this.resourceData.typeId) {
+      if (typeId === this.resourceData.typeId) {
         // 新增权限类型为当前列表显示类型刷新页面
         this.getResourceData()
       }

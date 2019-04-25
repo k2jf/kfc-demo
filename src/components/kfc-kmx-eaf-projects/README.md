@@ -21,7 +21,7 @@ k2liumc
 </template>
 
 <script>
-    import ProjectList from '@/components/kfc-data-project'
+    import ProjectList from '@/components/kfc-kmx-eaf-projects'
     components: {
         ProjectList
     },

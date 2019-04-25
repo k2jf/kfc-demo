@@ -67,7 +67,7 @@ module.exports = {
       'ignores': []
     }],
     'vue/eqeqeq': 'error',
-    'vue/match-component-file-name':['error', {
+    'vue/match-component-file-name': ['error', {
       'extensions': ['vue'],
       'shouldMatchCase': true
     }],

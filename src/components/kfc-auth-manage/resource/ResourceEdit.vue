@@ -1,7 +1,7 @@
 <!-- 添加权限对话框 -->
 <template>
   <Modal
-    title="添加权限"
+    title="编辑权限"
     width="800"
     v-model="isShowModal"
     @on-ok="onClickOk"
@@ -144,7 +144,13 @@ export default {
       let resourceIds = this.resourceData.selectKeys.join(',')
       let operations = this.operations.join(',')
 
-      this.$axios.put(`${api.roles}/${this.currentRole.id}/permissions?resourceIds=${resourceIds}&operations=${operations}`).then(res => {
+      let permissions = {
+        resourceIds,
+        operations,
+        resourceTypeId: this.resourceData.typeId
+      }
+
+      this.$axios.put(`${api.roles}/${this.currentRole.id}/permissions`, permissions).then(res => {
         this.$Message.success('新建成功！')
         this.$emit('on-submit', this.resourceData.typeId)
         this.$refs.formValidate.resetFields()
@@ -168,6 +174,17 @@ export default {
       this.resourceData.selectKeys.splice(0, this.resourceData.selectKeys.length)
       this.operations.splice(0, this.operations.length)
       this.getResourceData()
+
+      let { typeId } = this.resourceData
+      let { id } = this.currentRole
+      let url = `${api.roles}/${id}/permissions?resourceTypeId=${typeId}`
+
+      if (typeId === undefined) return
+
+      this.$axios.get(url).then(res => {
+        this.operations = res.data.body.roles[0].operations.split(',')
+        this.resourceData.selectKeys = res.data.body.roles.map(item => item.resourceId)
+      })
     },
     handleChange (selectedFields) {
       this.resourceData.selectKeys = selectedFields

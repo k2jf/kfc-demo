@@ -145,13 +145,14 @@ export default {
     onClickOk () {
       let resourceIds = this.resourceData.selectKeys.join(',')
       let permission = {
+        resourceTypeId: this.resourceData.typeId,
         resourceIds,
         operations: this.operations.join(',')
       }
 
       this.$axios.put(`${api.authorizes}/${this.currentUser.id}/permissions`, permission).then(res => {
         this.$Message.success('新建成功！')
-        this.$emit('on-submit', permission)
+        this.$emit('on-submit', this.resourceData.typeId)
         this.$refs.formValidate.resetFields()
       }).catch(() => {
         this.$emit('on-close')
@@ -173,6 +174,17 @@ export default {
       this.resourceData.selectKeys.splice(0, this.resourceData.selectKeys.length)
       this.operations.splice(0, this.operations.length)
       this.getResourceData()
+
+      let { typeId } = this.resourceData
+      let { id } = this.currentUser
+      let url = `${api.authorizes}/${id}/permissions?resourceTypeId=${typeId}`
+
+      if (typeId === undefined) return
+
+      this.$axios.get(url).then(res => {
+        this.operations = res.data.body.permissions[0].operations.split(',')
+        this.resourceData.selectKeys = res.data.body.permissions.map(item => item.resourceId)
+      })
     },
     handleChange (selectedFields) {
       this.resourceData.selectKeys = selectedFields

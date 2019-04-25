@@ -43,7 +43,8 @@
       :data="resourceData.data"
       size="small"
       :loading="resourceData.loading"
-      class="margin-bottom"></Table>
+      class="margin-bottom"
+      @on-selection-change="onSelectionChange"></Table>
     <ConfirmModal ref="confirmModal" @transfer-ok="onDeleteClick"></ConfirmModal>
   </div>
 </template>
@@ -88,8 +89,13 @@ export default {
         typeId: 0,
         data: [{ id: 1, resource: 'name' }],
         columns: [
+          {
+            type: 'selection',
+            width: 60,
+            align: 'center'
+          },
           { title: '资源名称', key: 'resourceName', minWidth: 80 },
-          { title: '权限', key: 'operations', minWidth: 80 },
+          { title: '类型', key: 'operations', minWidth: 80 },
           {
             title: '操作',
             width: 70,
@@ -180,6 +186,8 @@ export default {
         // 新增权限类型为当前列表显示类型刷新页面
         this.getResourceData()
       }
+    },
+    onSelectionChange (selections) {
     },
     // 资源类型改变
     onTypeChange () {
