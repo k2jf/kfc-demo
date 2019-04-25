@@ -21,21 +21,21 @@ import iButton from 'iview/src/components/button/button.vue'
 import Icon from 'iview/src/components/icon/icon.vue'
 
 export default {
-	name: 'Operation',
-	components: { iButton, Icon },
-	props: {
-		prefixCls: String,
-		operations: Array,
-		leftActive: Boolean,
-		rightActive: Boolean
-	},
-	methods: {
-		moveToLeft () {
-			this.$parent.moveTo('left')
-		},
-		moveToRight () {
-			this.$parent.moveTo('right')
-		}
-	}
+  name: 'Operation',
+  components: { iButton, Icon },
+  props: {
+    prefixCls: String,
+    operations: Array,
+    leftActive: Boolean,
+    rightActive: Boolean
+  },
+  methods: {
+    moveToLeft () {
+      this.$parent.moveTo('left')
+    },
+    moveToRight () {
+      this.$parent.moveTo('right')
+    }
+  }
 }
 </script>

@@ -7,10 +7,10 @@ import card from './another-page'
 Vue.use(Router)
 
 export default new Router({
-	mode: 'history',
-	base: process.env.BASE_URL,
-	routes: [
-		home,
-		card
-	]
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
+    home,
+    card
+  ]
 })

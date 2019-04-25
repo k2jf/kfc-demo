@@ -7,17 +7,17 @@ import home from './module/home'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-	state: {
+  state: {
 
-	},
-	mutations: {
+  },
+  mutations: {
 
-	},
-	actions: {
+  },
+  actions: {
 
-	},
-	modules: {
-		user,
-		home
-	}
+  },
+  modules: {
+    user,
+    home
+  }
 })

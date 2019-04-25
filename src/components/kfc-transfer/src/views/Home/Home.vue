@@ -19,16 +19,16 @@ import HelloWorld from '@/components/HelloWorld'
 import { Button } from 'iview'
 
 export default {
-	name: 'Home',
-	components: {
-		HelloWorld,
-		Button
-	},
-	methods: {
-		navigateToAnotherPage () {
-			this.$router.push('/another-page')
-		}
-	}
+  name: 'Home',
+  components: {
+    HelloWorld,
+    Button
+  },
+  methods: {
+    navigateToAnotherPage () {
+      this.$router.push('/another-page')
+    }
+  }
 }
 </script>
 
