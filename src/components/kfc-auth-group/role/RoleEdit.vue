@@ -1,23 +1,23 @@
-<!-- 添加用户组对话框 -->
+<!-- 添加角色对话框 -->
 <template>
   <Modal
-    title="添加已有用户组"
+    title="添加已有角色"
     width="700"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
   >
     <K2Transfer
-      :data="group.data"
+      :data="role.data"
       filterable
       :style="{width: '702px', margin: '0 auto'}"
       :list-style="{height: '400px', width: '300px'}"
-      :target-keys="group.selectKeys"
-      :selected-keys="group.selectKeys"
-      :titles="group.titles"
+      :target-keys="role.selectKeys"
+      :selected-keys="role.selectKeys"
+      :titles="role.titles"
       @on-change="handleChange"
       @on-dblclick="handleChange">
-    </K2Transfer>
+    </k2transfer>
   </Modal>
 </template>
 
@@ -28,58 +28,55 @@ import K2Transfer from '@/components/kfc-k2transfer'
 import api from '../api'
 
 export default {
-  name: 'GroupEdit',
+  name: 'RoleEdit',
   components: {
     Modal,
     K2Transfer
   },
   props: {
-    currentRole: {
+    currentGroup: {
       type: Object,
       required: true
     },
-    isShowGroupModal: {
+    isShowRoleModal: {
       type: Boolean,
       required: true
     },
-    currentGroupList: {
+    currentRoleList: {
       type: Array,
       required: false
     }
   },
   data () {
     return {
-      isShowModal: this.isShowGroupModal,
-      group: {
-        titles: ['未选用户组', '已选用户组'],
+      isShowModal: this.isShowRoleModal,
+      role: {
         data: [],
-        selectKeys: [...this.currentGroupList]
+        selectKeys: [...this.currentRoleList],
+        titles: ['未选角色', '已选角色']
       }
     }
   },
   watch: {
-    isShowGroupModal: {
+    isShowRoleModal: {
       handler (curVal, oldVal) {
         this.isShowModal = curVal
-        // 清空选中用户组
-        this.group.selectKeys.splice(0, this.group.selectKeys.length)
-        if (curVal) {
-          this.getGroupList()
-        }
+        if (this.role.data.length) return
+        this.getRoleList()
       }
     },
-    currentGroupList: {
+    currentRoleList: {
       handler (curVal, oldVal) {
-        this.group.selectKeys = [...curVal]
+        this.role.selectKeys = [...curVal]
       }
     }
   },
   methods: {
-    // 添加用户组
+    // 添加角色
     onClickOk () {
-      let rownerIds = this.group.selectKeys.join(',')
+      let roleIds = this.role.selectKeys.join(',')
 
-      this.$axios.put(`${api.roles}/${this.currentRole.id}/rowners?rownerIds=${rownerIds}`).then(res => {
+      this.$axios.put(`${api.rowners}/${this.currentGroup.id}/roles?roleIds=${roleIds}`).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
       }).catch(() => {
@@ -89,10 +86,9 @@ export default {
     onClickCancel () {
       this.$emit('on-close')
     },
-    getGroupList () {
-      // 获取所有用户组
-      this.$axios.get(`${api.groups}`).then(res => {
-        this.group.data = res.data.body.userGroups.map(item => {
+    getRoleList () {
+      this.$axios.get(`${api.roles}`).then(res => {
+        this.role.data = res.data.body.roles.map(item => {
           return {
             key: item.id,
             label: item.name
@@ -101,7 +97,7 @@ export default {
       })
     },
     handleChange (selection) {
-      this.group.selectKeys = selection
+      this.role.selectKeys = selection
     }
   }
 }

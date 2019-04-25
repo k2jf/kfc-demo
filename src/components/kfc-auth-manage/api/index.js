@@ -1,8 +1,9 @@
 export default {
   // 授权管理
-  restyps: '/restyps',
-  roles: '/roles',
-  groups: '/usrgrps',
-  resources: '/resources',
-  authorizes: '/authorizes'
+  restyps: '/resmgr/types',
+  groups: '/usrmgr/usrgrps',
+  resources: '/resmgr/resources',
+  roles: '/permmgr/roles',
+  owners: '/permmgr/owners',
+  rowners: '/permmgr/rowners'
 }

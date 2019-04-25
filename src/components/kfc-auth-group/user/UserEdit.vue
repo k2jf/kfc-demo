@@ -1,20 +1,20 @@
-<!-- 添加用户组对话框 -->
+<!-- 添加用户对话框 -->
 <template>
   <Modal
-    title="添加已有用户组"
+    title="添加已有用户"
     width="700"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
   >
     <K2Transfer
-      :data="group.data"
+      :data="user.data"
       filterable
       :style="{width: '702px', margin: '0 auto'}"
       :list-style="{height: '400px', width: '300px'}"
-      :target-keys="group.selectKeys"
-      :selected-keys="group.selectKeys"
-      :titles="group.titles"
+      :target-keys="user.selectKeys"
+      :selected-keys="user.selectKeys"
+      :titles="user.titles"
       @on-change="handleChange"
       @on-dblclick="handleChange">
     </K2Transfer>
@@ -28,58 +28,55 @@ import K2Transfer from '@/components/kfc-k2transfer'
 import api from '../api'
 
 export default {
-  name: 'GroupEdit',
+  name: 'UserEdit',
   components: {
     Modal,
     K2Transfer
   },
   props: {
-    currentRole: {
+    currentGroup: {
       type: Object,
       required: true
     },
-    isShowGroupModal: {
+    isShowUserModal: {
       type: Boolean,
       required: true
     },
-    currentGroupList: {
+    currentUserList: {
       type: Array,
       required: false
     }
   },
   data () {
     return {
-      isShowModal: this.isShowGroupModal,
-      group: {
-        titles: ['未选用户组', '已选用户组'],
+      isShowModal: this.isShowUserModal,
+      user: {
+        titles: ['未选用户', '已选用户'],
         data: [],
-        selectKeys: [...this.currentGroupList]
+        selectKeys: [...this.currentUserList]
       }
     }
   },
   watch: {
-    isShowGroupModal: {
+    isShowUserModal: {
       handler (curVal, oldVal) {
         this.isShowModal = curVal
-        // 清空选中用户组
-        this.group.selectKeys.splice(0, this.group.selectKeys.length)
-        if (curVal) {
-          this.getGroupList()
-        }
+        if (this.user.data.length) return
+        this.getUserList()
       }
     },
-    currentGroupList: {
+    currentUserList: {
       handler (curVal, oldVal) {
-        this.group.selectKeys = [...curVal]
+        this.user.selectKeys = [...curVal]
       }
     }
   },
   methods: {
-    // 添加用户组
+    // 添加用户
     onClickOk () {
-      let rownerIds = this.group.selectKeys.join(',')
+      let userIds = this.user.selectKeys.join(',')
 
-      this.$axios.put(`${api.roles}/${this.currentRole.id}/rowners?rownerIds=${rownerIds}`).then(res => {
+      this.$axios.put(`${api.groups}/${this.currentGroup.id}/users`, { userIds }).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
       }).catch(() => {
@@ -89,10 +86,10 @@ export default {
     onClickCancel () {
       this.$emit('on-close')
     },
-    getGroupList () {
-      // 获取所有用户组
-      this.$axios.get(`${api.groups}`).then(res => {
-        this.group.data = res.data.body.userGroups.map(item => {
+    getUserList () {
+      // 获取所有用户
+      this.$axios.get(`${api.users}`).then(res => {
+        this.user.data = res.data.body.users.map(item => {
           return {
             key: item.id,
             label: item.name
@@ -101,7 +98,7 @@ export default {
       })
     },
     handleChange (selection) {
-      this.group.selectKeys = selection
+      this.user.selectKeys = selection
     }
   }
 }

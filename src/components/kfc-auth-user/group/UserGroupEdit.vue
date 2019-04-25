@@ -28,13 +28,13 @@ import K2Transfer from '@/components/kfc-k2transfer'
 import api from '../api'
 
 export default {
-  name: 'GroupEdit',
+  name: 'UserGroupEdit',
   components: {
     Modal,
     K2Transfer
   },
   props: {
-    currentRole: {
+    currentUser: {
       type: Object,
       required: true
     },
@@ -61,11 +61,8 @@ export default {
     isShowGroupModal: {
       handler (curVal, oldVal) {
         this.isShowModal = curVal
-        // 清空选中用户组
-        this.group.selectKeys.splice(0, this.group.selectKeys.length)
-        if (curVal) {
-          this.getGroupList()
-        }
+        if (this.group.data.length) return
+        this.getGroupList()
       }
     },
     currentGroupList: {
@@ -77,9 +74,9 @@ export default {
   methods: {
     // 添加用户组
     onClickOk () {
-      let rownerIds = this.group.selectKeys.join(',')
+      let usrgrpIds = this.group.selectKeys.join(',')
 
-      this.$axios.put(`${api.roles}/${this.currentRole.id}/rowners?rownerIds=${rownerIds}`).then(res => {
+      this.$axios.put(`${api.users}/${this.currentUser.id}/usrgrps/`, { usrgrpIds }).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
       }).catch(() => {
@@ -100,8 +97,8 @@ export default {
         })
       })
     },
-    handleChange (selection) {
-      this.group.selectKeys = selection
+    handleChange (selectedFields) {
+      this.group.selectKeys = selectedFields
     }
   }
 }

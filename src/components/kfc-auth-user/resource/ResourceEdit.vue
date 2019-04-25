@@ -13,7 +13,7 @@
       ref="formValidate">
       <FormItem label="资源类型" prop="type">
         <Select
-          :transfer="true"
+          transfer
           style="width: 300px"
           v-model="resourceData.typeId"
           @on-change="onTypeChange">
@@ -71,7 +71,7 @@ export default {
     K2Transfer
   },
   props: {
-    currentRole: {
+    currentUser: {
       type: Object,
       required: true
     },
@@ -87,7 +87,8 @@ export default {
       }
     },
     typeId: {
-      type: Number
+      type: Number,
+      required: false
     }
   },
   data () {
@@ -95,7 +96,7 @@ export default {
       isShowModal: this.isShowAuthModal,
       operations: [], // 选中操作
       resourceData: {
-        typeId: '',
+        typeId: this.typeId,
         data: [],
         selectKeys: [],
         titles: ['未选权限', '已选权限']
@@ -103,10 +104,6 @@ export default {
     }
   },
   computed: {
-    getOperations () {
-      if (!this.resourceData.typeId) return
-      return this.resourceTypeList.find(item => item.id === this.resourceData.typeId).operations
-    },
     getTransferData () {
       if (this.resourceData.data.length === 0) return []
       return this.resourceData.data.map(item => {
@@ -115,6 +112,10 @@ export default {
           label: item.name
         }
       })
+    },
+    getOperations () {
+      if (!this.resourceData.typeId) return
+      return this.resourceTypeList.find(item => item.id === this.resourceData.typeId).operations
     }
   },
   watch: {
@@ -131,6 +132,7 @@ export default {
     typeId: {
       handler (curVal, oldVal) {
         this.resourceData.typeId = curVal
+        if (!this.isShowModal) return
         this.getResourceData()
       }
     }
@@ -142,11 +144,14 @@ export default {
     // 新建权限
     onClickOk () {
       let resourceIds = this.resourceData.selectKeys.join(',')
-      let operations = this.operations.join(',')
+      let permission = {
+        resourceIds,
+        operations: this.operations.join(',')
+      }
 
-      this.$axios.put(`${api.roles}/${this.currentRole.id}/permissions?resourceIds=${resourceIds}&operations=${operations}`).then(res => {
+      this.$axios.put(`${api.authorizes}/${this.currentUser.id}/permissions`, permission).then(res => {
         this.$Message.success('新建成功！')
-        this.$emit('on-submit', this.resourceData.typeId)
+        this.$emit('on-submit', permission)
         this.$refs.formValidate.resetFields()
       }).catch(() => {
         this.$emit('on-close')

@@ -2,12 +2,14 @@
 <template>
   <div style="height: 100%;">
     <Row :gutter="16" class="margin-bottom">
-      <Col span="16">资源类型:
+      <Col span="16">
+      资源类型:
       <Select
         transfer
         style="max-width:200px;margin-left:10px;"
         v-model="resourceData.typeId"
-        @on-change="onTypeChange">
+        @on-change="onTypeChange"
+      >
         <Option
           :value="item.id"
           v-for="item in resourceTypeList"
@@ -31,17 +33,18 @@
       </Col>
     </Row>
     <ResourceEdit
-      :currentRole="currentRole"
+      :currentUser="currentUser"
       :resourceTypeList="resourceTypeList"
       :isShowAuthModal="isShowAuthModal"
       :typeId="resourceData.typeId"
-      v-if="currentRole"
+      v-if="currentUser"
       @on-submit="getSubmitResource"
       @on-close="isShowAuthModal = false" />
     <Table
       :columns="resourceData.columns"
       :data="resourceData.data"
       size="small"
+      height="300"
       :loading="resourceData.loading"
       class="margin-bottom"></Table>
     <ConfirmModal ref="confirmModal" @transfer-ok="onDeleteClick"></ConfirmModal>
@@ -50,7 +53,7 @@
 
 <script>
 // eslint-disable-next-line
-import { Col, Row, Input, Select, Option, Table, Page, Icon, Button} from 'iview'
+import { Col, Row, Input, Select, Option, Table, Icon, Button, Switch, DatePicker } from 'iview'
 import ResourceEdit from './ResourceEdit.vue'
 import ConfirmModal from '../components/ConfirmModal.vue'
 
@@ -70,7 +73,7 @@ export default {
     ConfirmModal
   },
   props: {
-    currentRole: {
+    currentUser: {
       type: Object,
       required: false,
       default: () => {
@@ -81,15 +84,58 @@ export default {
   data () {
     return {
       isShowAuthModal: false,
+      resourceTypeList: [],
       id: null, // 删除id
       resourceData: {
         loading: false,
         fuzzyName: '',
         typeId: 0,
-        data: [{ id: 1, resource: 'name' }],
+        data: [],
         columns: [
-          { title: '资源名称', key: 'resourceName', minWidth: 80 },
+          { title: '资源个例名称', key: 'resourceName', minWidth: 130 },
           { title: '权限', key: 'operations', minWidth: 80 },
+          { title: '起止时间',
+            minWidth: 240,
+            render: (h, params) => {
+              return h('div', [
+                h(DatePicker, {
+                  props: {
+                    type: 'daterange',
+                    transfer: true,
+                    value: params.row.valiableTime,
+                    disabled: !params.row.disabled
+                  },
+                  on: {
+                    'on-change': (valiableTime) => {
+                      this.resourceData.data[params.index].effectTime = valiableTime[0]
+                      this.resourceData.data[params.index].expireTime = valiableTime[1]
+                      this.resourceData.data[params.index].valiableTime = valiableTime
+                      this.onStatusChange(params.index)
+                    }
+                  }
+                })
+              ])
+            }
+          },
+          { title: '是否生效',
+            minWidth: 100,
+            render: (h, params) => {
+              return h('div', [
+                h(Switch, {
+                  props: {
+                    value: params.row.disabled,
+                    size: 'small'
+                  },
+                  on: {
+                    'on-change': (isDisabled) => {
+                      this.resourceData.data[params.index].disabled = isDisabled
+                      this.onStatusChange(params.index)
+                    }
+                  }
+                })
+              ])
+            }
+          },
           {
             title: '操作',
             width: 70,
@@ -122,12 +168,11 @@ export default {
             }
           }
         ]
-      },
-      resourceTypeList: []
+      }
     }
   },
   watch: {
-    currentRole: {
+    currentUser: {
       handler (curVal, oldVal) {
         if (curVal && curVal.id && this.resourceData.typeId) {
           this.getResourceData()
@@ -147,43 +192,58 @@ export default {
       this.getResourceData()
     },
     // 删除权限
-    onDeleteClick () {
-      this.$axios.delete(`${api.roles}/${this.currentRole.id}/permissions/${this.id}`).then(res => {
-        this.$Message.success('删除成功！')
-        this.getResourceData()
-      })
-    },
     showConfirmModal (id) {
       this.id = id
       this.$refs.confirmModal.handleModal({
         content: '是否确认删除？'
       })
     },
+    // 确认删除
+    onDeleteClick () {
+      this.$axios.delete(`${api.authorizes}/${this.currentUser.id}/permissions/${this.id}`).then(res => {
+        this.$Message.success('删除成功！')
+        this.getResourceData()
+      })
+    },
     // 获取资源列表
     getResourceData () {
       this.resourceData.loading = true
       let { typeId, fuzzyName } = this.resourceData
-      let { id } = this.currentRole
-      let url = `${api.roles}/${id}/permissions?resourceTypeId=${typeId}`
-      url = fuzzyName ? `${url}&fuzzyName=${fuzzyName}` : url
+      let { id } = this.currentUser
+      let url = `${api.authorizes}/${id}/permissions?resourceTypeId=${typeId}`
+
+      url = fuzzyName ? `${url}&fuzzyResName=${fuzzyName}` : url
 
       this.$axios.get(url).then(res => {
-        this.resourceData.data = res.data.body.roles
+        res.data.body.permissions.forEach(item => {
+          item.disabled = item.disabled === undefined ? false : item.disabled
+          item.effectTime = new Date(item.effectTime) || new Date()
+          item.expireTime = new Date(item.expireTime) || new Date()
+          item.valiableTime = [item.effectTime, item.expireTime]
+        })
+        this.resourceData.data = res.data.body.permissions
       }).finally(() => {
         this.resourceData.loading = false
       })
     },
-    // 获取新增权限
-    getSubmitResource (typeId) {
-      this.isShowAuthModal = false
-      if (typeId === this.resourceData.typeId) {
-        // 新增权限类型为当前列表显示类型刷新页面
-        this.getResourceData()
-      }
+    onStatusChange (index) {
+      let { resourceId, effectTime, expireTime, disabled } = this.resourceData.data[index]
+      effectTime = Number(new Date(effectTime))
+      expireTime = Number(new Date(expireTime))
+      let url = `${api.authorizes}/${this.currentUser.id}/permissions/${resourceId}?effectTime=${effectTime}&expireTime=${expireTime}&disabled=${disabled}`
+      this.$axios.put(url)
     },
     // 资源类型改变
     onTypeChange () {
       this.getResourceData()
+    },
+    // 获取新增权限
+    getSubmitResource (resource) {
+      this.isShowAuthModal = false
+      if (resource && resource.typeId === this.resourceData.typeId) {
+        // 新增权限类型为当前列表显示类型刷新页面
+        this.getResourceData()
+      }
     }
   }
 }
