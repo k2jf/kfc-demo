@@ -1,3 +1,3 @@
-import TimeSeries from './TimeSeries.vue'
+import TsdwChart from './TsdwChart.vue'
 
-export default TimeSeries
+export default TsdwChart
