@@ -2,17 +2,17 @@
 
 将下面配置加入 `package.json >> dependencies` 中
 
-`"kfc-k2transfer": "git+https://github.com/k2jf/kfc-k2transfer.git"`
+`"kfc-transfer": "git+https://github.com/k2jf/kfc-transfer.git"`
 
 然后执行
 
 ```bash
 # 安装依赖
-npm install kfc-k2transfer
+npm install kfc-transfer
 # 克隆组件到当前项目components中
-git remote add -f kfc-field-selection git@github.com:k2jf/kfc-field-selection.git
-git subtree add -P src/components/kfc-field-selection kfc-field-selection master --squash
-# 检查一下是否成功连接远程库 kfc-field-selection
+git remote add -f kfc-kmx-tsdw-field git@github.com:k2jf/kfc-kmx-tsdw-field.git
+git subtree add -P src/components/kfc-kmx-tsdw-field kfc-kmx-tsdw-field master --squash
+# 检查一下是否成功连接远程库 kfc-kmx-tsdw-field
 git remote -vv
 ```
 

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { DataTypeSelector, DataTypeButton } from '@/components/kfc-datatype-selector'
+import { DataTypeSelector, DataTypeButton } from '@/components/kfc-kmx-tsdw-table'
 
 export default {
   components: {

@@ -1,5 +1,5 @@
 {
-  "name": "kfc-k2transfer",
+  "name": "kfc-transfer",
   "version": "1.0.0",
   "description": "基于iview Transfer的增强版穿梭框组件",
     "keywords": [
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/k2jf/kfc-k2transfer"
+    "url": "https://github.com/k2jf/kfc-transfer"
   },
   "husky": {
     "hooks": {
