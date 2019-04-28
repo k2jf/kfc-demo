@@ -44,7 +44,7 @@ DataTypeButton： 数据类型选择button对话框展示
 </template>
 
 <script>
-import { DataTypeSelector, DataTypeButton } from '@/components/kfc-kmx-eaf-result'
+import { DataTypeSelector, DataTypeButton } from '@/components/kfc-kmx-tsdw-table'
 
 export default {
   components: {
