@@ -1,4 +1,4 @@
-# TimeSeries
+# kfc-kmx-tsdw-chart
 
 ## 功能
 用于展示时序图表
@@ -26,7 +26,7 @@ npm install --save echarts
 ## 示例
 ```
 <template>
-  <TimeSeries
+  <TsdwChart
     :title="title"
     :path="path"
     :queueName="queueName"
@@ -40,11 +40,11 @@ npm install --save echarts
 </template>
 
 <script>
-import TimeSeries from '@/components/kfc-kmx-tsdw-chart'
+import TsdwChart from '@/components/kfc-kmx-tsdw-chart'
 
 export default {
   components: {
-    TimeSeries
+    TsdwChart
   },
   data () {
     return {

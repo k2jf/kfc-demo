@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container" ref="TimeSeriesChart" />
+  <div class="chart-container" ref="TsdwChart" />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import Echarts from 'echarts'
 import { api } from './api'
 
 export default {
-  name: 'TimeSeries',
+  name: 'TsdwChart',
   props: {
     title: {
       type: String,
@@ -66,7 +66,7 @@ export default {
   },
   data () {
     return {
-      timeSeriesData: null,
+      tsdwData: null,
       seriesItem: {
         type: 'line',
         showSymbol: false,
@@ -124,17 +124,17 @@ export default {
     }
   },
   watch: {
-    timeSeriesData: {
+    tsdwData: {
       handler (curVal, oldVal) {
         if (curVal) {
-          this.showTimeSeriesChart()
+          this.showTsdwChart()
         }
       },
       deep: true
     }
   },
   created () {
-    this.getTimeSeriesData()
+    this.getTsdwData()
   },
   mounted () {
     this.init()
@@ -142,11 +142,11 @@ export default {
   methods: {
     // 初始化图表
     init () {
-      this.timeSeriesChart = Echarts.init(this.$refs.TimeSeriesChart)
-      this.timeSeriesChart.showLoading({ text: '加载中...' })
+      this.tsdwChart = Echarts.init(this.$refs.TsdwChart)
+      this.tsdwChart.showLoading({ text: '加载中...' })
     },
     // 调用接口获取时序数据
-    getTimeSeriesData () {
+    getTsdwData () {
       let queryParams = {
         // eslint-disable-next-line
         query: `select type, ${this.selectType} from ${this.selectTable} where ((type=\'${this.selectTable}\' and wfid = \'${this.wfid}\' and wtid = \'${this.wtid}\')) and ts >= \'${this.startTime}\' and ts <= \'${this.endTime}\'`,
@@ -157,17 +157,17 @@ export default {
       }
 
       this.$axios.post(`${api.timeSeries}`, queryParams).then(res => {
-        this.timeSeriesData = res.data.body.results
+        this.tsdwData = res.data.body.results
       }).catch(() => {
-        this.timeSeriesChart.hideLoading()
+        this.tsdwChart.hideLoading()
       })
     },
     // 时序折线图
-    showTimeSeriesChart () {
+    showTsdwChart () {
       let dataType = ['ts', 'type', 'wfid', 'wtid']
       let legendData = []
       // 获取图例
-      Object.keys(this.timeSeriesData[0]).filter(item => {
+      Object.keys(this.tsdwData[0]).filter(item => {
         if (!dataType.includes(item)) {
           legendData.push(item)
         }
@@ -178,9 +178,9 @@ export default {
         ...this.option,
         series: this.getSeriesData()
       }
-      this.timeSeriesChart.hideLoading()
-      this.timeSeriesChart.setOption(option)
-      window.onresize = this.timeSeriesChart.resize
+      this.tsdwChart.hideLoading()
+      this.tsdwChart.setOption(option)
+      window.onresize = this.tsdwChart.resize
     },
     getSeriesData () {
       let legendData = this.option.legend.data
@@ -207,7 +207,7 @@ export default {
       return seriesList
     },
     getSeriesDataItem (legendItem) {
-      const seriesData = this.timeSeriesData.reduce((seriesList, item) => {
+      const seriesData = this.tsdwData.reduce((seriesList, item) => {
         seriesList.push([item.ts, item[legendItem]])
         return seriesList
       }, [])
@@ -216,7 +216,7 @@ export default {
     }
   },
   beforDestory () {
-    this.timeSeriesChart.clear()
+    this.tsdwChart.clear()
   }
 }
 </script>
