@@ -1,7 +1,7 @@
-# PasProjectDetail
+# EafProjectDetail
 
 ## 功能
-pas项目详情， 可重试
+Eaf项目详情， 可重试
 
 ## 维护者
 wangyanan
@@ -19,15 +19,15 @@ wangyanan
 ```
 <template>
   <div>
-    <PasProjectDetail v-model="projectId" />
+    <EafProjectDetail v-model="projectId" />
   </div>
 </template>
 
 <script>
-import PasProjectDetail from '@/components/kfc-kmx-eaf-project'
+import EafProjectDetail from '@/components/kfc-kmx-eaf-project'
 export default {
   components: {
-    PasProjectDetail
+    EafProjectDetail
   },
   data () {
     return {
