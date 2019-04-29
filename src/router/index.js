@@ -124,6 +124,11 @@ export default new Router({
           path: '/announce',
           name: 'announce',
           component: () => import('@/views/AnnounceParts')
+        },
+        {
+          path: '/property-manamger',
+          name: 'propertyManager',
+          component: () => import('@/views/PropertyManagerShowPage')
         }
       ]
     }

@@ -123,6 +123,11 @@ export default {
         name: 'announce',
         icon: 'logo-angular',
         title: '通知跑马灯&管理器'
+      },
+      {
+        name: 'propertyManager',
+        icon: 'md-brush',
+        title: '系统设置编辑器'
       }
     ]
   }
