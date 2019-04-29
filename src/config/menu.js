@@ -1,4 +1,5 @@
-module.exports = {
+// module.exports = { // new webpack prevent this from loading. This may be a mis-config
+export default {
   headerMenu: [
     {
       name: 'top-menu1',
@@ -117,6 +118,11 @@ module.exports = {
         name: 'kmxiframe',
         icon: 'md-easel',
         title: 'kmx页面嵌入'
+      },
+      {
+        name: 'announce',
+        icon: 'logo-angular',
+        title: '通知跑马灯&管理器'
       }
     ]
   }

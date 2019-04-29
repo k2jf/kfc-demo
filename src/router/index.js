@@ -119,6 +119,11 @@ export default new Router({
           path: '/audit',
           name: 'audit',
           component: Audit
+        },
+        {
+          path: '/announce',
+          name: 'announce',
+          component: () => import('@/views/AnnounceParts')
         }
       ]
     }
