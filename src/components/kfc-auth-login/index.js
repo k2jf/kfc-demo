@@ -3,6 +3,6 @@ import CoolLogin from './CoolLogin.vue'
 
 export default Login
 
-export  {
+export {
   CoolLogin
 }

@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: 'CoolLogin',
   props: {
     videoSrc: {
       type: String,
