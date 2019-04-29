@@ -17,6 +17,7 @@ import KFCModifyPassword from '@/components/kfc-frame/header/kfc-header-password
 import KfcUser from '@/components/kfc-auth-user'
 import KfcAuthorization from '@/components/kfc-auth-manage'
 import UserGroups from '@/components/kfc-auth-group'
+import Login from '@/components/kfc-auth-login/Login'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
     {
       path: '/',
       name: 'demo',
