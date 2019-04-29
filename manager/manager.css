@@ -1,0 +1,47 @@
+.form-row {
+    min-height: 50px;
+    margin-left: 8px;
+    margin-bottom: 8px;
+}
+.form-row>span {
+    display: inline-block;
+    margin-right: 8px;
+}
+.form-row>span:last-child {
+    margin-right: 0;
+}
+
+.four-char {
+    display: inline-block;
+    text-align: right;
+    width: 5em;
+    margin-right: 0.5em;
+}
+.four-char:after {
+    content: ' :'
+}
+
+.four-char-out {
+    width: calc( 100% - 6.5em ) !important;
+    height: auto;
+}
+
+.five-char {
+    display: inline-block;
+    text-align: right;
+    width: 6em;
+    margin-right: 0.5em;
+}
+.five-char:after {
+    content: ' :'
+}
+
+.five-char-out {
+    width: calc( 100% - 7.5em );
+    max-width: 25em;
+}
+
+.hint {
+    color: #999999;
+    font-size: smaller;
+}
