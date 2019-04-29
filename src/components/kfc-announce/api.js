@@ -1,7 +1,7 @@
 export const getAnnounces = (params) => {
   return global.axios.get('/announces').then(res => {
     const data = res.data
-    const list = (data.body && data.body.anounces) || []
+    const list = (data.body && data.body.announces) || []
     console.log(data)
     return {
       list: list,
@@ -17,7 +17,7 @@ export const getAnnounces = (params) => {
 export const getEffectiveAnnounce = () => {
   return global.axios.get('/announces').then(res => {
     const data = res.data
-    const list = (data.body && data.body.anounces) || []
+    const list = (data.body && data.body.announces) || []
     console.log(data)
     return {
       list: list,
