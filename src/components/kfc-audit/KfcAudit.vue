@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     reloadTable () {
-      let url = '/auditLogList'
+      let url = '/logs'
       if (this.searchContent !== '') {
         url += '/' + this.searchContent
       }
@@ -87,8 +87,8 @@ export default {
         }
       this.$axios.get(url, param).then(res => {
         // TODO 后端返回分页数据及分页信息
-        this.table.dataList = res.data.body.audiLogList
-        this.table.total = res.data.body.audiLogList.length
+        this.table.dataList = res.data.body.logs
+        this.table.total = res.data.body.logs.length
       })
     },
     onSearch () {
