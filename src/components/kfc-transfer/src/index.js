@@ -1,8 +1,8 @@
-import K2Transfer from './components/K2Transfer'
+import Transfer from './components/Transfer'
 
 module.exports.default = module.exports = {
-  K2Transfer,
+  Transfer,
   install: function (Vue) {
-    Vue.component('K2Transfer', K2Transfer)
+    Vue.component('Transfer', Transfer)
   }
 }

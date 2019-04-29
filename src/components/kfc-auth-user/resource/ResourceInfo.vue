@@ -160,7 +160,7 @@ export default {
               ])
             }
           },
-          { title: '是否生效',
+          { title: '是否启用',
             width: 90,
             render: (h, params) => {
               return h('div', [

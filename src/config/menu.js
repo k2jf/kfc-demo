@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   headerMenu: [
     {
       name: 'top-menu1',

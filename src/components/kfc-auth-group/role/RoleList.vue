@@ -122,7 +122,7 @@ export default {
               ])
             }
           },
-          { title: '是否生效',
+          { title: '是否启用',
             minWidth: 100,
             render: (h, params) => {
               return h('div', [
