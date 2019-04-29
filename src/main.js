@@ -13,7 +13,7 @@ Vue.prototype.$Message = Message
 Vue.use(kfcAxios, {
   baseUrl: config.baseUrl,
   login: function () {
-    console.warn('需要自己实现')
+    router.push('/login')
   }
 })
 
