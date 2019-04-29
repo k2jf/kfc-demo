@@ -40,21 +40,13 @@
           </K2Transfer>
         </div>
       </FormItem>
-      <FormItem label="操作" prop="operations">
-        <CheckboxGroup v-model="operations">
-          <Checkbox
-            :label="item"
-            v-for="item in getOperations"
-            :key="item"></Checkbox>
-        </CheckboxGroup>
-      </FormItem>
     </Form>
   </Modal>
 </template>
 
 <script>
-import { Modal, Form, FormItem, Select, Option, CheckboxGroup, Checkbox } from 'iview'
-import K2Transfer from '@/components/kfc-k2transfer'
+import { Modal, Form, FormItem, Select, Option } from 'iview'
+import K2Transfer from '@/components/kfc-transfer'
 
 import api from '../api'
 
@@ -66,8 +58,6 @@ export default {
     FormItem,
     Select,
     Option,
-    CheckboxGroup,
-    Checkbox,
     K2Transfer
   },
   props: {
@@ -93,7 +83,6 @@ export default {
   data () {
     return {
       isShowModal: this.isShowAuthModal,
-      operations: [], // 选中操作
       resourceData: {
         typeId: '',
         data: [],
@@ -103,10 +92,6 @@ export default {
     }
   },
   computed: {
-    getOperations () {
-      if (!this.resourceData.typeId) return
-      return this.resourceTypeList.find(item => item.id === this.resourceData.typeId).operations
-    },
     getTransferData () {
       if (this.resourceData.data.length === 0) return []
       return this.resourceData.data.map(item => {
@@ -123,7 +108,6 @@ export default {
         this.isShowModal = curVal
         // 清空选中参数
         this.resourceData.selectKeys.splice(0, this.resourceData.selectKeys.length)
-        this.operations.splice(0, this.operations.length)
         this.resourceData.typeId = ''
         this.resourceData.data.splice(0, this.resourceData.data.length)
       }
@@ -142,11 +126,9 @@ export default {
     // 新建权限
     onClickOk () {
       let resourceIds = this.resourceData.selectKeys.join(',')
-      let operations = this.operations.join(',')
 
       let permissions = {
         resourceIds,
-        operations,
         resourceTypeId: this.resourceData.typeId
       }
 
@@ -172,7 +154,6 @@ export default {
     onTypeChange () {
       // 清空选中参数
       this.resourceData.selectKeys.splice(0, this.resourceData.selectKeys.length)
-      this.operations.splice(0, this.operations.length)
       this.getResourceData()
 
       let { typeId } = this.resourceData
@@ -182,7 +163,6 @@ export default {
       if (typeId === undefined) return
 
       this.$axios.get(url).then(res => {
-        this.operations = res.data.body.roles[0].operations.split(',')
         this.resourceData.selectKeys = res.data.body.roles.map(item => item.resourceId)
       })
     },

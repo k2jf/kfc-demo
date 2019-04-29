@@ -1,6 +1,6 @@
 <template>
-  <div id="pas-project">
-    <div class="pas-project-detail">
+  <div id="project">
+    <div class="project-detail">
       <i-row>
         <i-col span="4" style="text-align: center">
           <span class="detail-key">项目名称：</span>
@@ -107,13 +107,13 @@ export default {
 </script>
 
 <style>
-  .pas-project-detail {
+  .project-detail {
     width: 90%;
     padding:15px;
     margin:30px auto auto auto;
     border: 1px solid #e8eaec;
   }
-  #pas-project .ivu-row{
+  #project .ivu-row{
     height: 30px;
   }
   .div-params{

@@ -1,3 +1,3 @@
-import PasProjectDetail from './PasProjectDetail.vue'
+import EafProjectDetail from './EafProjectDetail.vue'
 
-export default PasProjectDetail
+export default EafProjectDetail

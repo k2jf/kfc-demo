@@ -2,7 +2,7 @@
 <template>
   <div style="height: 100%;">
     <Row :gutter="16" class="margin-bottom">
-      <Col span="16">资源类型:
+      <Col span="18">资源类型:
       <Select
         transfer
         style="max-width:200px;margin-left:10px;"
@@ -22,8 +22,22 @@
       >
         添加权限
       </Button>
+      <Button
+        type="primary"
+        style="margin-left: 10px"
+        @click="showSettingModal()"
+      >
+        批量编辑
+      </Button>
+      <Button
+        type="primary"
+        style="margin-left: 10px"
+        @click="showConfirmModal(getSelectedIds.join(','))"
+      >
+        批量删除
+      </Button>
       </Col>
-      <Col span="8">
+      <Col span="6">
       <Input
         placeholder="搜索资源个例"
         v-model="resourceData.fuzzyName"
@@ -38,6 +52,14 @@
       v-if="currentRole"
       @on-submit="getSubmitResource"
       @on-close="isShowAuthModal = false" />
+    <ResourceSetting
+      :currentRole="currentRole"
+      :isShowSettingModal="isShowSettingModal"
+      :resourceIdList="getSelectedIds"
+      :operations="getOperations"
+      v-if="currentRole"
+      @on-submit="getResourceData"
+      @on-close="isShowSettingModal = false" />
     <Table
       :columns="resourceData.columns"
       :data="resourceData.data"
@@ -53,7 +75,9 @@
 // eslint-disable-next-line
 import { Col, Row, Input, Select, Option, Table, Page, Icon, Button} from 'iview'
 import ResourceEdit from './ResourceEdit.vue'
+import ResourceSetting from './ResourceSetting.vue'
 import ConfirmModal from '../components/ConfirmModal.vue'
+import OperationCell from './OperationCell.vue'
 
 import api from '../api'
 
@@ -68,6 +92,7 @@ export default {
     Table,
     Button,
     ResourceEdit,
+    ResourceSetting,
     ConfirmModal
   },
   props: {
@@ -81,21 +106,34 @@ export default {
   },
   data () {
     return {
+      isShowSettingModal: false,
       isShowAuthModal: false,
       id: null, // 删除id
       resourceData: {
         loading: false,
         fuzzyName: '',
         typeId: 0,
-        data: [{ id: 1, resource: 'name' }],
+        data: [],
+        selections: [],
         columns: [
-          {
-            type: 'selection',
-            width: 60,
-            align: 'center'
-          },
+          { type: 'selection', width: 60, align: 'center' },
           { title: '资源名称', key: 'resourceName', minWidth: 80 },
-          { title: '类型', key: 'operations', minWidth: 80 },
+          { title: '操作类型',
+            minWidth: 220,
+            render: (h, params) => {
+              return h(OperationCell, {
+                props: {
+                  operations: params.row.operations,
+                  operationList: this.getOperations
+                },
+                on: {
+                  change: (operations) => {
+                    this.onOperationChange(operations, params.index)
+                  }
+                }
+              })
+            }
+          },
           {
             title: '操作',
             width: 70,
@@ -132,6 +170,17 @@ export default {
       resourceTypeList: []
     }
   },
+  computed: {
+    getSelectedIds () {
+      return this.resourceData.selections.map(item => item.resourceId)
+    },
+    getOperations () {
+      let typeId = this.resourceData.typeId
+      let typeInfo = this.resourceTypeList.find(item => item.id === typeId)
+      if (!this.resourceTypeList.length || !typeInfo) return []
+      return typeInfo ? typeInfo.operations : []
+    }
+  },
   watch: {
     currentRole: {
       handler (curVal, oldVal) {
@@ -154,16 +203,27 @@ export default {
     },
     // 删除权限
     onDeleteClick () {
-      this.$axios.delete(`${api.roles}/${this.currentRole.id}/permissions/${this.id}`).then(res => {
+      this.$axios.delete(`${api.roles}/${this.currentRole.id}/permissions?resourceIds=${this.id}`).then(res => {
         this.$Message.success('删除成功！')
         this.getResourceData()
       })
     },
     showConfirmModal (id) {
       this.id = id
+      if (!id) {
+        this.$Message.warning('请选择权限！')
+        return
+      }
       this.$refs.confirmModal.handleModal({
         content: '是否确认删除？'
       })
+    },
+    showSettingModal () {
+      if (!this.resourceData.selections.length) {
+        this.$Message.warning('请选择权限！')
+        return
+      }
+      this.isShowSettingModal = true
     },
     // 获取资源列表
     getResourceData () {
@@ -187,7 +247,14 @@ export default {
         this.getResourceData()
       }
     },
+    // 修改单个资源权限
+    onOperationChange (operations, index) {
+      let { resourceId } = this.resourceData.data[index]
+      let url = `${api.roles}/${this.currentRole.id}/permissions?resourceIds=${resourceId}&operations=${operations}&action=config`
+      this.$axios.put(url)
+    },
     onSelectionChange (selections) {
+      this.resourceData.selections = selections
     },
     // 资源类型改变
     onTypeChange () {

@@ -9,6 +9,20 @@
       >
         添加已有角色
       </Button>
+      <Button
+        type="primary"
+        style="margin-left: 10px"
+        @click="showSettingModal"
+      >
+        批量编辑
+      </Button>
+      <Button
+        type="primary"
+        style="margin-left: 10px"
+        @click="showConfirmModal(getSelectedIds.join(','))"
+      >
+        批量删除
+      </Button>
       </Col>
       <Col span="10">
       <Input
@@ -24,12 +38,20 @@
       v-if="currentGroup"
       @on-submit="onReloadList"
       @on-close="isShowRoleModal = false" />
+    <ResourceSetting
+      :currentGroup="currentGroup"
+      :isShowSettingModal="isShowSettingModal"
+      :roleIdList="getSelectedIds"
+      v-if="currentGroup"
+      @on-submit="onReloadList"
+      @on-close="isShowSettingModal = false" />
     <Table
       :columns="role.columns"
       :data="role.data"
       size="small"
       :loading="role.loading"
-      class="margin-bottom"></Table>
+      class="margin-bottom"
+      @on-selection-change="onSelectionChange"></Table>
     <ConfirmModal ref="confirmModal" @transfer-ok="onDeleteClick"></ConfirmModal>
   </div>
 </template>
@@ -38,6 +60,7 @@
 // eslint-disable-next-line
 import { Table, Icon, Col, Row, Button, Input, Switch, DatePicker } from 'iview'
 import RoleEdit from './RoleEdit.vue'
+import ResourceSetting from './ResourceSetting.vue'
 import ConfirmModal from '../components/ConfirmModal.vue'
 
 import api from '../api'
@@ -51,6 +74,7 @@ export default {
     Input,
     Table,
     RoleEdit,
+    ResourceSetting,
     ConfirmModal
   },
   props: {
@@ -64,13 +88,16 @@ export default {
   },
   data () {
     return {
+      isShowSettingModal: false,
       isShowRoleModal: false,
       id: null, // 删除id
       role: {
         fuzzyName: '',
         loading: false,
         data: [],
+        selections: [],
         columns: [
+          { type: 'selection', width: 60, align: 'center' },
           { title: '角色', key: 'roleName', minWidth: 80 },
           { title: '起止时间',
             minWidth: 240,
@@ -155,6 +182,9 @@ export default {
   computed: {
     getCurrentRoleList () {
       return this.role.data.map(item => item.roleId)
+    },
+    getSelectedIds () {
+      return this.role.selections.map(item => item.roleId)
     }
   },
   watch: {
@@ -174,13 +204,17 @@ export default {
   methods: {
     // 删除角色
     onDeleteClick () {
-      this.$axios.delete(`${api.rowners}/${this.currentGroup.id}/roles/${this.id}`).then(res => {
+      this.$axios.delete(`${api.rowners}/${this.currentGroup.id}/roles?roleIds=${this.id}`).then(res => {
         this.$Message.success('删除成功！')
         this.getRoleList()
       })
     },
     showConfirmModal (id) {
       this.id = id
+      if (!id) {
+        this.$Message.warning('请选择角色！')
+        return
+      }
       this.$refs.confirmModal.handleModal({
         content: '是否确认删除？'
       })
@@ -199,9 +233,9 @@ export default {
       this.$axios.get(url).then(res => {
         res.data.body.ownerRoles.forEach(item => {
           item.disabled = item.disabled === undefined ? false : item.disabled
-          item.effectTime = new Date(item.effectTime) || new Date()
-          item.expireTime = new Date(item.expireTime) || new Date()
-          item.valiableTime = [item.effectTime, item.expireTime]
+          item.effectTime = item.effectTime || new Date()
+          item.expireTime = item.expireTime || new Date()
+          item.valiableTime = [new Date(item.effectTime), new Date(item.expireTime)]
         })
         this.role.data = res.data.body.ownerRoles
       }).finally(() => {
@@ -213,15 +247,26 @@ export default {
       let { roleId, effectTime, expireTime, disabled } = this.role.data[index]
       effectTime = Number(new Date(effectTime))
       expireTime = Number(new Date(expireTime))
-      let url = `${api.rowners}/${this.currentGroup.id}/roles/${roleId}?effectTime=${effectTime}&expireTime=${expireTime}&disabled=${disabled}`
-      this.$axios.put(url)
+      let url = `${api.rowners}/${this.currentGroup.id}/roles?action=config&roleIds=${roleId}`
+      this.$axios.put(url, { effectTime, expireTime, disabled })
+    },
+    showSettingModal () {
+      if (!this.role.selections.length) {
+        this.$Message.warning('请先选择角色！')
+        return
+      }
+      this.isShowSettingModal = true
     },
     onSearchClick () {
       this.getRoleList()
     },
-    // 添加角色后刷新角色列表页面
+    onSelectionChange (selections) {
+      this.role.selections = selections
+    },
+    // 编辑角色后刷新角色列表页面
     onReloadList () {
       this.isShowRoleModal = false
+      this.isShowSettingModal = false
       if (this.currentGroup) {
         this.getRoleList()
       }

@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import { FieldSelection, FieldSelectedButton } from '@/components/kfc-field-selection'
+import { FieldSelection, FieldSelectedButton } from '@/components/kfc-kmx-tsdw-field'
 
 export default {
   components: {
