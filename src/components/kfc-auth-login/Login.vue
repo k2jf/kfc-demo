@@ -89,7 +89,7 @@ export default {
               username: this.formInline.username,
               password: this.formInline.password
             }
-          this.$axios.post('/kmx_login', param).then(res => {
+          this.$axios.get('/login?userName=' + param.username + '&password=' + param.password).then(res => {
             this.$router.push('/')
           })
         } else {
