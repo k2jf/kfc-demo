@@ -1,4 +1,4 @@
-# kfc-jobs
+# kfc-kmx-eaf-job
 
 ## 功能
 项目作业结果
@@ -18,7 +18,7 @@ wangliheng@k2data.com.cn
 </template>
 
 <script>
-import Jobs from '@/components/kfc-jobs'
+import Jobs from '@/components/kfc-kmx-eaf-job'
 
 export default {
   components: {

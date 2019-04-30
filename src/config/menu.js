@@ -1,3 +1,4 @@
+// module.exports = { // new webpack prevent this from loading. This may be a mis-config
 export default {
   headerMenu: [
     {
@@ -117,6 +118,16 @@ export default {
         name: 'kmxiframe',
         icon: 'md-easel',
         title: 'kmx页面嵌入'
+      },
+      {
+        name: 'announce',
+        icon: 'logo-angular',
+        title: '通知跑马灯&管理器'
+      },
+      {
+        name: 'propertyManager',
+        icon: 'md-brush',
+        title: '系统设置编辑器'
       }
     ]
   }

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="prompt">
       <h1 style="margin: 20px 0; color: #333333">
-        KFC-Login
+        kfc-auth-login
       </h1>
       <i-form
         :model="formInline"
@@ -54,6 +54,7 @@
 
 <script>
 import { Form, FormItem, Input, Icon, Button } from 'iview'
+import MD5 from 'md5.js'
 
 export default {
   name: 'Login',
@@ -87,9 +88,9 @@ export default {
           let param =
             {
               username: this.formInline.username,
-              password: this.formInline.password
+              password: new MD5().update(this.formInline.password).digest('hex')
             }
-          this.$axios.post('/kmx_login', param).then(res => {
+          this.$axios.get('/login?userName=' + param.username + '&password=' + param.password).then(res => {
             this.$router.push('/')
           })
         } else {

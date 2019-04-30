@@ -34,7 +34,7 @@
 
 <script>
 import { Table, Page, Tabs, TabPane, Input } from 'iview'
-import { formatDateTime, formatDuring } from '@/components/kfc-jobs/utils'
+import { formatDateTime, formatDuring } from '@/components/kfc-kmx-eaf-job/utils'
 
 export default {
   name: 'Jobs',

@@ -4,7 +4,7 @@ import Home from '@/views/Home'
 import KFCFrame from '@/components/kfc-frame'
 import TimeSeries from '@/views/timeseries'
 import Authorization from '@/components/kfc-auth'
-import Jobs from '@/components/kfc-jobs'
+import Jobs from '@/components/kfc-kmx-eaf-job'
 import DataTypeSelector from '@/views/datatypeselector'
 import fieldselector from '@/views/fieldselector'
 import pasresults from '@/views/pasresults'
@@ -17,6 +17,7 @@ import KFCModifyPassword from '@/components/kfc-frame/header/kfc-header-password
 import KfcUser from '@/components/kfc-auth-user'
 import KfcAuthorization from '@/components/kfc-auth-manage'
 import UserGroups from '@/components/kfc-auth-group'
+import Login from '@/components/kfc-auth-login/Login'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
     {
       path: '/',
       name: 'demo',
@@ -113,6 +119,16 @@ export default new Router({
           path: '/audit',
           name: 'audit',
           component: Audit
+        },
+        {
+          path: '/announce',
+          name: 'announce',
+          component: () => import('@/views/AnnounceParts')
+        },
+        {
+          path: '/property-manamger',
+          name: 'propertyManager',
+          component: () => import('@/views/PropertyManagerShowPage')
         }
       ]
     }
