@@ -29,3 +29,6 @@ npm run serve
 ```
 http://localhost:8080/home
 ```
+### 修改请求url
+手动修改kfc-demo/.env.dev
+VUE_APP_BASE_URL

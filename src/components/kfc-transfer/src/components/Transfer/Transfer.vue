@@ -8,7 +8,7 @@ import Emitter from 'iview/src/mixins/emitter'
 const prefixCls = 'ivu-transfer'
 
 export default {
-  name: 'K2Transfer',
+  name: 'Transfer',
   mixins: [ Emitter, Locale ],
   props: {
     data: {

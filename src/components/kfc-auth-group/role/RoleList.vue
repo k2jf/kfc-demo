@@ -102,7 +102,9 @@ export default {
           { title: '起止时间',
             minWidth: 240,
             render: (h, params) => {
-              return h('div', [
+              return h('div', {
+                class: this.getTimeStatus(params.row.valiableTime)
+              }, [
                 h(DatePicker, {
                   props: {
                     type: 'daterange',
@@ -122,7 +124,7 @@ export default {
               ])
             }
           },
-          { title: '是否生效',
+          { title: '是否启用',
             minWidth: 100,
             render: (h, params) => {
               return h('div', [
@@ -270,7 +272,19 @@ export default {
       if (this.currentGroup) {
         this.getRoleList()
       }
+    },
+    getTimeStatus (valiableTime) {
+      let now = Number(new Date())
+      let expireTime = Number(valiableTime[1])
+      if (expireTime < now) return 'time-disabled'
+      return ''
     }
   }
 }
 </script>
+
+<style scoped lang="css">
+.margin-bottom >>> .time-disabled .ivu-input {
+  color: #c5c8ce !important;
+}
+</style>
