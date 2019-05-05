@@ -115,6 +115,11 @@ export default {
         title: '审计日志'
       },
       {
+        name: 'tag',
+        icon: 'md-person',
+        title: '标签管理'
+      },
+      {
         name: 'kmxiframe',
         icon: 'md-easel',
         title: 'kmx页面嵌入'
