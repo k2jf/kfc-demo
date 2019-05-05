@@ -13,6 +13,7 @@ import pasprojectdetail from '@/views/pasprojectdetail'
 import DataCompleteness from '@/components/kfc-data-completeness'
 import KfcUserManage from '@/components/kfc-user-manage'
 import Audit from '@/views/others/Audit'
+import Tag from '@/views/others/Tag'
 import KFCModifyPassword from '@/components/kfc-frame/header/kfc-header-password.vue'
 import KfcUser from '@/components/kfc-auth-user'
 import KfcAuthorization from '@/components/kfc-auth-manage'
@@ -119,6 +120,11 @@ export default new Router({
           path: '/audit',
           name: 'audit',
           component: Audit
+        },
+        {
+          path: '/tag',
+          name: 'tag',
+          component: Tag
         },
         {
           path: '/announce',
