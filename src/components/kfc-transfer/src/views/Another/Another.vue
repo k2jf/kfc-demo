@@ -1,6 +1,6 @@
 <template>
   <div class="transfer-demo">
-    <K2Transfer
+    <Transfer
       :data="data3"
       filterable
       :style="{width: '702px', margin: '0 auto'}"
@@ -16,17 +16,17 @@
           刷新
         </Button>
       </div>
-    </K2Transfer>
+    </Transfer>
   </div>
 </template>
 <script>
-import K2Transfer from '@/components/K2Transfer'
+import Transfer from '@/components/Transfer'
 import { Button } from 'iview'
 
 export default {
   name: 'Another',
   components: {
-    K2Transfer,
+    Transfer,
     Button
   },
   data () {

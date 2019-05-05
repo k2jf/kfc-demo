@@ -62,10 +62,10 @@ module.exports = {
         'renderError'
       ]
     }],
-    'vue/component-name-in-template-casing': ['error', 'PascalCase' | 'kebab-case', {
-      'registeredComponentsOnly': true,
-      'ignores': []
-    }],
+    // 'vue/component-name-in-template-casing': ['error', 'PascalCase' | 'kebab-case', {
+    //   'registeredComponentsOnly': true,
+    //   'ignores': []
+    // }],
     'vue/eqeqeq': 'error',
     'vue/match-component-file-name': ['error', {
       'extensions': ['vue'],

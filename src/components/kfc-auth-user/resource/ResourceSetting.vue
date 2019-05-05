@@ -98,11 +98,12 @@ export default {
         this.resource.isDisabled = []
         this.resource.effectTime = null
         this.resource.expireTime = null
+        this.resource.valiableTime = null
       }
     }
   },
   methods: {
-    // 是否生效单选，都不选则不批量修改生效状态
+    // 是否启用单选，都不选则不批量修改生效状态
     onDisableChange (status) {
       if (!status.length) return
       this.resource.isDisabled = [status.pop()]

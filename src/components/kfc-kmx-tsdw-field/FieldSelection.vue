@@ -1,6 +1,6 @@
 <template>
   <div class="transfer-demo">
-    <K2Transfer
+    <Transfer
       :data="fieldData"
       filterable
       :style="{width: '702px', margin: '0 auto'}"
@@ -10,16 +10,16 @@
       :operations="['去除','选取']"
       @on-change="handleChange"
       @on-dblclick="handleChange">
-    </K2Transfer>
+    </Transfer>
   </div>
 </template>
 <script>
-import K2Transfer from 'k2-transfer'
+import Transfer from 'k2-transfer'
 
 export default {
   name: 'FieldSelection',
   components: {
-    K2Transfer
+    Transfer
   },
   props: {
     fieldType: {
@@ -45,7 +45,6 @@ export default {
   },
   mounted () {
     this.$axios.get('/kmx/data-service/v2/field-groups/' + this.fieldType).then(res => {
-      console.log(res.data.fieldGroup.fields)
       this.fields = res.data.fieldGroup.fields
     })
   },
