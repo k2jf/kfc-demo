@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// import { Button } from 'iview'
 import KfcTable from './KfcTable'
 export default {
   name: 'KfcTag',
