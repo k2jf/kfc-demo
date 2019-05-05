@@ -1,7 +1,7 @@
 # kfc-audit
 
 ## 功能
-项目作业结果
+审计日志
 
 ## 维护者
 wangliheng@k2data.com.cn
