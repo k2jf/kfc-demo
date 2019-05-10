@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       prefixCls: prefixCls,
-      userName: JSON.parse(localStorage.getItem('user')).name
+      userName: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).name : ''
     }
   },
   methods: {
