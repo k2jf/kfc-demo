@@ -8,7 +8,7 @@ import Jobs from '@/components/kfc-kmx-eaf-job'
 import DataTypeSelector from '@/views/datatypeselector'
 import fieldselector from '@/views/fieldselector'
 import pasresults from '@/views/pasresults'
-import ProjectList from '@/components/kfc-kmx-eaf-projects'
+import EAFProjectsList from '@/components/kfc-kmx-eaf-projects'
 import pasprojectdetail from '@/views/pasprojectdetail'
 import DataCompleteness from '@/components/kfc-data-completeness'
 import KfcUserManage from '@/components/kfc-user-manage'
@@ -92,9 +92,9 @@ export default new Router({
           component: DataCompleteness
         },
         {
-          path: '/pasprojects',
-          name: 'pasprojects',
-          component: ProjectList
+          path: '/eaf-projects',
+          name: 'eaf-projects',
+          component: EAFProjectsList
         },
         {
           path: '/pasprojectdetail',

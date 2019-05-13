@@ -65,14 +65,14 @@ export default {
         title: '选择变量'
       },
       {
-        name: 'completeness',
+        name: 'tsdw-stat',
         icon: 'md-person',
         title: '数据完整度'
       }
     ],
     'top-menu2': [
       {
-        name: 'pasprojects',
+        name: 'eaf-projects',
         icon: 'md-person',
         title: 'PAS项目'
       },
