@@ -10,7 +10,7 @@ import fieldselector from '@/views/fieldselector'
 import pasresults from '@/views/pasresults'
 import EAFProjectsList from '@/components/kfc-kmx-eaf-projects'
 import pasprojectdetail from '@/views/pasprojectdetail'
-import DataCompleteness from '@/components/kfc-data-completeness'
+import KmxTsdwStat from '@/components/kfc-kmx-tsdw-stat'
 import KfcUserManage from '@/components/kfc-user-manage'
 import Audit from '@/views/others/Audit'
 import Tag from '@/views/others/Tag'
@@ -87,9 +87,9 @@ export default new Router({
           component: fieldselector
         },
         {
-          path: '/completeness',
-          name: 'completeness',
-          component: DataCompleteness
+          path: '/tsdw-stat',
+          name: 'tsdw-stat',
+          component: KmxTsdwStat
         },
         {
           path: '/eaf-projects',
