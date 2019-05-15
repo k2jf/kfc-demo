@@ -1,0 +1,25 @@
+.tsdw-stat-table {
+  margin-top: 30px;
+  height: calc(100% - 100px);
+}
+
+.tsdw-stat-table-title {
+  height: 50px;
+  border-bottom: 1px solid #e8eaec;
+  display: flex;
+  align-items: center;
+}
+
+.tsdw-stat-table-title p {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.tsdw-stat-table-body {
+  margin-top: 10px;
+}
+
+.tsdw-stat-table-page {
+  float: right;
+  margin-top: 5px;
+}
