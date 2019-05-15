@@ -1,0 +1,19 @@
+.tsdw-stat-search {
+  height: 100px;
+}
+
+.tsdw-stat-search-title {
+  height: 50px;
+  border-bottom: 1px solid #e8eaec;
+  display: flex;
+  align-items: center;
+}
+
+.tsdw-stat-search-title p {
+  font-weight: 600;
+  font-size: large;
+}
+
+.tsdw-stat-search-body {
+  margin-top: 10px;
+}
