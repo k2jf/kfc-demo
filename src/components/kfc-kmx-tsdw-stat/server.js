@@ -1,4 +1,4 @@
-const getDataCompleteness = function (filters, pageNo, pageSize) {
+const getDataTsdwStat = function (filters, pageNo, pageSize) {
   let result = new Promise(function (resolve, reject) {
     let dataList = [
       {
@@ -23,5 +23,5 @@ const getDataCompleteness = function (filters, pageNo, pageSize) {
 }
 
 export default {
-  getDataCompleteness: getDataCompleteness
+  getDataTsdwStat: getDataTsdwStat
 }

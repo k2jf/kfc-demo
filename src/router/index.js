@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home'
-import KFCFrame from '@/components/kfc-frame'
+import kFCNavigation from '@/components/kfc-navigation'
 import TimeSeries from '@/views/timeseries'
 import Authorization from '@/components/kfc-auth'
 import Jobs from '@/components/kfc-kmx-eaf-job'
 import DataTypeSelector from '@/views/datatypeselector'
 import fieldselector from '@/views/fieldselector'
 import pasresults from '@/views/pasresults'
-import ProjectList from '@/components/kfc-kmx-eaf-projects'
+import EAFProjectsList from '@/components/kfc-kmx-eaf-projects'
 import pasprojectdetail from '@/views/pasprojectdetail'
-import DataCompleteness from '@/components/kfc-data-completeness'
+import KmxTsdwStat from '@/components/kfc-kmx-tsdw-stat'
 import KfcUserManage from '@/components/kfc-user-manage'
 import Audit from '@/views/others/Audit'
 import Tag from '@/views/others/Tag'
-import KFCModifyPassword from '@/components/kfc-frame/header/kfc-header-password.vue'
+import KFCModifyPassword from '@/components/kfc-navigation/header/kfc-header-password.vue'
 import KfcUser from '@/components/kfc-auth-user'
 import KfcAuthorization from '@/components/kfc-auth-manage'
 import UserGroups from '@/components/kfc-auth-group'
@@ -34,7 +34,7 @@ export default new Router({
     {
       path: '/',
       name: 'demo',
-      component: KFCFrame,
+      component: kFCNavigation,
       children: [
         {
           path: '/modify-password',
@@ -87,14 +87,14 @@ export default new Router({
           component: fieldselector
         },
         {
-          path: '/completeness',
-          name: 'completeness',
-          component: DataCompleteness
+          path: '/tsdw-stat',
+          name: 'tsdw-stat',
+          component: KmxTsdwStat
         },
         {
-          path: '/pasprojects',
-          name: 'pasprojects',
-          component: ProjectList
+          path: '/eaf-projects',
+          name: 'eaf-projects',
+          component: EAFProjectsList
         },
         {
           path: '/pasprojectdetail',

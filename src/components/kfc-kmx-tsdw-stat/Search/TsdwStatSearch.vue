@@ -41,10 +41,10 @@ import { Row, Col, Button, DatePicker, Select, Option } from 'iview'
 import DataApi from '../server.js'
 import DateUtil from '../utils/date-util.js'
 
-const prefixCls = 'completeness-search'
+const prefixCls = 'tsdw-stat-search'
 
 export default {
-  name: 'CompletenessSearch',
+  name: 'TsdwStatSearch',
   components: {
     'i-row': Row,
     'i-col': Col,

@@ -25,10 +25,10 @@
 import { Table, Page } from 'iview'
 import DataApi from '../server.js'
 
-const prefixCls = 'completeness-table'
+const prefixCls = 'tsdw-stat-table'
 
 export default {
-  name: 'CompletenessTable',
+  name: 'TsdwStatTable',
   components: {
     'i-table': Table,
     'i-page': Page
@@ -50,7 +50,7 @@ export default {
   methods: {
     onPageNoChange (pageNo) {
       this.pageNo = pageNo
-      DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
+      DataApi.getDataTsdwStat(this.filters, this.pageNo, this.pageSize)
         .then(data => {
           this.data = data.data
           this.total = data.total
@@ -58,7 +58,7 @@ export default {
     },
     onPageSizeChange (pageSize) {
       this.pageSize = pageSize
-      DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
+      DataApi.getDataTsdwStat(this.filters, this.pageNo, this.pageSize)
         .then(data => {
           this.data = data.data
           this.total = data.total
@@ -69,7 +69,7 @@ export default {
       this.pageNo = 1
       this.pageSize = 10
 
-      DataApi.getDataCompleteness(this.filters, this.pageNo, this.pageSize)
+      DataApi.getDataTsdwStat(this.filters, this.pageNo, this.pageSize)
         .then(data => {
           this.data = data.data
           this.total = data.total

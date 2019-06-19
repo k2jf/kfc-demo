@@ -1,25 +1,25 @@
-.completeness-table {
+.tsdw-stat-table {
   margin-top: 30px;
   height: calc(100% - 100px);
 }
 
-.completeness-table-title {
+.tsdw-stat-table-title {
   height: 50px;
   border-bottom: 1px solid #e8eaec;
   display: flex;
   align-items: center;
 }
 
-.completeness-table-title p {
+.tsdw-stat-table-title p {
   font-weight: 600;
   font-size: 16px;
 }
 
-.completeness-table-body {
+.tsdw-stat-table-body {
   margin-top: 10px;
 }
 
-.completeness-table-page {
+.tsdw-stat-table-page {
   float: right;
   margin-top: 5px;
 }

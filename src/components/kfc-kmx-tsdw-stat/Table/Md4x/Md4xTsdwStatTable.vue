@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import DataMd4xCompletenessTable from './DataMd4xCompletenessTable.js'
-import FileMd4xCompletenessTable from './FileMd4xCompletenessTable.js'
+import DataMd4xTsdwStatTable from './DataMd4xTsdwStatTable.js'
+import FileMd4xTsdwStatTable from './FileMd4xTsdwStatTable.js'
 
 export default {
-  name: 'Md4xCompletenessTable',
+  name: 'Md4xTsdwStatTable',
   components: {
-    DataMd4xCompletenessTable,
-    FileMd4xCompletenessTable
+    DataMd4xTsdwStatTable,
+    FileMd4xTsdwStatTable
   },
   props: {
     type: {
@@ -21,10 +21,10 @@ export default {
   computed: {
     panel () {
       if (this.type === 'data') {
-        return 'DataMd4xCompletenessTable'
+        return 'DataMd4xTsdwStatTable'
       }
 
-      return 'FileMd4xCompletenessTable'
+      return 'FileMd4xTsdwStatTable'
     }
   },
   methods: {

@@ -1,4 +1,4 @@
-# ProjectList
+# EAFProjectList
 
 ## 功能
 用于展示模型开发项目列表
@@ -17,13 +17,13 @@ k2liumc
 ## 示例
 ```
 <template>
-    <ProjectList />
+    <EAFProjectList />
 </template>
 
 <script>
     import ProjectList from '@/components/kfc-kmx-eaf-projects'
     components: {
-        ProjectList
+        EAFProjectList
     },
     export default {
     }

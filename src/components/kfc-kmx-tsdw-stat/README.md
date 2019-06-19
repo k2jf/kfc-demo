@@ -1,4 +1,4 @@
-#### CompletenessList
+#### TsdwStatList
 
 用于展示示例模板
 
@@ -14,13 +14,13 @@ author: liumc
 #示例代码
 ```
 <template>
-    <DataCompleteness/>
+    <KmxTsdwStat/>
 </template>
 <script>
-    import DataCompleteness from '@/components/kfc-data-completeness'
+    import KmxTsdwStat from '@/components/kfc-kmx-tsdw-stat'
     export default {
         components: {
-            DataCompleteness
+            KmxTsdwStat
         }
     }
 </script>

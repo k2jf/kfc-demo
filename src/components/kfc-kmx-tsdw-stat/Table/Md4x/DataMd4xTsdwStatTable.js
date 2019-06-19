@@ -1,8 +1,8 @@
-import CompletenessTable from '../CompletenessTable.vue'
+import TsdwStatTable from '../TsdwStatTable.vue'
 
 export default {
-  name: 'Md4xCompletenessTable',
-  mixins: [ CompletenessTable ],
+  name: 'Md4xTsdwStatTable',
+  mixins: [ TsdwStatTable ],
   data () {
     return {
       columns: [
@@ -10,7 +10,7 @@ export default {
         { title: '风场ID', key: 'wfId', width: 120 },
         { title: '风场名称', key: 'wfName', minWidth: 150 },
         { title: '数据类型', key: 'dataTypeNameCh' },
-        { title: '文件数量', key: 'sum' }
+        { title: '数据完整度', key: 'percenTage' }
       ]
     }
   }
