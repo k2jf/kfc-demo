@@ -3,6 +3,8 @@
   <Modal
     title="编辑权限"
     width="800"
+    :maskClosable="false"
+    :loading="isLoading"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
@@ -83,6 +85,7 @@ export default {
   data () {
     return {
       isShowModal: this.isShowAuthModal,
+      isLoading: true,
       resourceData: {
         typeId: '',
         data: [],
@@ -108,14 +111,10 @@ export default {
         this.isShowModal = curVal
         // 清空选中参数
         this.resourceData.selectKeys.splice(0, this.resourceData.selectKeys.length)
-        this.resourceData.typeId = ''
+        this.resourceData.typeId = this.typeId
         this.resourceData.data.splice(0, this.resourceData.data.length)
-      }
-    },
-    typeId: {
-      handler (curVal, oldVal) {
-        this.resourceData.typeId = curVal
-        this.getResourceData()
+        if (!curVal || this.typeId < 0) return
+        this.onTypeChange()
       }
     }
   },
@@ -126,18 +125,29 @@ export default {
     // 新建权限
     onClickOk () {
       let resourceIds = this.resourceData.selectKeys.join(',')
-
       let permissions = {
         resourceIds,
         resourceTypeId: this.resourceData.typeId
+      }
+
+      if (!resourceIds) {
+        this.$Message.warning('请选择权限！')
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
+        return
       }
 
       this.$axios.put(`${api.roles}/${this.currentRole.id}/permissions`, permissions).then(res => {
         this.$Message.success('新建成功！')
         this.$emit('on-submit', this.resourceData.typeId)
         this.$refs.formValidate.resetFields()
-      }).catch(() => {
-        this.$emit('on-close')
+      }).finally(() => {
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
       })
     },
     onClickCancel () {

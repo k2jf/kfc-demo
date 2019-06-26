@@ -41,12 +41,25 @@ export default {
     GroupEdit,
     GroupList
   },
+  props: {
+    isReloadGroupList: {
+      type: Boolean,
+      required: false
+    }
+  },
   data () {
     return {
       isShowGroupModal: false,
       fuzzyName: '',
       groupData: null,
       currentGroup: null
+    }
+  },
+  watch: {
+    isReloadGroupList: {
+      handler (curVal, oldVal) {
+        this.getGroupList()
+      }
     }
   },
   mounted () {

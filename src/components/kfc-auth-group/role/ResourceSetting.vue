@@ -3,6 +3,8 @@
   <Modal
     title="角色用户组关联设置"
     width="600"
+    :maskClosable="false"
+    :loading="isLoading"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
@@ -64,6 +66,7 @@ export default {
   data () {
     return {
       isShowModal: this.isShowSettingModal,
+      isLoading: true,
       disableList: ['是', '否'],
       resource: {
         isDisabled: [],
@@ -99,9 +102,12 @@ export default {
       let configParams = {}
       let url = `${api.rowners}/${this.currentGroup.id}/roles?action=config&roleIds=${roleIds}`
 
-      if (disabled === null && !valiableTime[0]) {
+      if (disabled === null && !(valiableTime || [])[0]) {
         this.$Message.warning('请修改配置！')
-        this.$emit('on-close')
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
         return
       }
 
@@ -118,8 +124,11 @@ export default {
       this.$axios.put(url, configParams).then(res => {
         this.$Message.success('修改成功！')
         this.$emit('on-submit')
-      }).catch(() => {
-        this.$emit('on-close')
+      }).finally(() => {
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
       })
     },
     onClickCancel () {

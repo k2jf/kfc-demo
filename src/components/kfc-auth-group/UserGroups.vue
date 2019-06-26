@@ -2,12 +2,21 @@
   <Card class="container">
     <Split v-model="split">
       <div slot="left">
-        <GroupInfo @on-group-change="getCurrentGroup" />
+        <GroupInfo :isReloadGroupList="isReloadGroupList" @on-group-change="getCurrentGroup" />
       </div>
       <div slot="right">
         <Tabs
           type="line"
           v-model="currentTab">
+          <TabPane
+            label="详情"
+            name="group"
+            class="tab-pane">
+            <GroupDetail
+              :currentGroup="currentGroup"
+              v-if="currentGroup"
+              @on-modify-group="onModifyGroup" />
+          </TabPane>
           <TabPane
             label="用户"
             name="user"
@@ -30,6 +39,7 @@
 import { Split, Tabs, TabPane, Card } from 'iview'
 
 import GroupInfo from './group'
+import GroupDetail from './group/GroupDetail.vue'
 import RoleList from './role'
 import UserList from './user'
 
@@ -42,18 +52,24 @@ export default {
     Card,
     GroupInfo,
     RoleList,
-    UserList
+    UserList,
+    GroupDetail
   },
   data () {
     return {
       split: 0.2,
-      currentTab: 'user',
-      currentGroup: null
+      currentTab: 'group',
+      currentGroup: null,
+      isReloadGroupList: false
     }
   },
   methods: {
     getCurrentGroup (currentGroup) {
       this.currentGroup = currentGroup
+    },
+    onModifyGroup (currentGroup) {
+      this.currentGroup = currentGroup
+      this.isReloadGroupList = !this.isReloadGroupList
     }
   }
 }

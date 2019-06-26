@@ -41,12 +41,25 @@ export default {
     RoleEdit,
     RoleList
   },
+  props: {
+    isReloadRoleList: {
+      type: Boolean,
+      required: false
+    }
+  },
   data () {
     return {
       isShowRoleModal: false,
       fuzzyName: '',
       roleData: null,
       currentRole: null
+    }
+  },
+  watch: {
+    isReloadRoleList: {
+      handler (curVal, oldVal) {
+        this.getRoleList()
+      }
     }
   },
   mounted () {
