@@ -3,6 +3,8 @@
   <Modal
     title="添加已有角色"
     width="700"
+    :maskClosable="false"
+    :loading="isLoading"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
@@ -50,6 +52,7 @@ export default {
   data () {
     return {
       isShowModal: this.isShowRoleModal,
+      isLoading: true,
       role: {
         data: [],
         selectKeys: [...this.currentRoleList],
@@ -75,12 +78,23 @@ export default {
     // 添加角色
     onClickOk () {
       let roleIds = this.role.selectKeys.join(',')
+      if (!roleIds) {
+        this.$Message.warning('请选择角色！')
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
+        return
+      }
 
       this.$axios.put(`${api.rowners}/${this.currentGroup.id}/roles?roleIds=${roleIds}`).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
-      }).catch(() => {
-        this.$emit('on-close')
+      }).finally(() => {
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
       })
     },
     onClickCancel () {

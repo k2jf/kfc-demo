@@ -3,6 +3,8 @@
   <Modal
     title="添加已有用户"
     width="700"
+    :maskClosable="false"
+    :loading="isLoading"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
@@ -50,6 +52,7 @@ export default {
   data () {
     return {
       isShowModal: this.isShowUserModal,
+      isLoading: true,
       user: {
         titles: ['未选用户', '已选用户'],
         data: [],
@@ -75,12 +78,23 @@ export default {
     // 添加用户
     onClickOk () {
       let userIds = this.user.selectKeys.join(',')
+      if (!userIds) {
+        this.$Message.warning('请选择用户！')
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
+        return
+      }
 
       this.$axios.put(`${api.groups}/${this.currentGroup.id}/users`, { userIds }).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
-      }).catch(() => {
-        this.$emit('on-close')
+      }).finally(() => {
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
       })
     },
     onClickCancel () {

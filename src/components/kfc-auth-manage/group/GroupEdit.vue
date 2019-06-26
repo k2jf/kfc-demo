@@ -3,6 +3,8 @@
   <Modal
     title="添加已有用户组"
     width="700"
+    :maskClosable="false"
+    :loading="isLoading"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
@@ -50,6 +52,7 @@ export default {
   data () {
     return {
       isShowModal: this.isShowGroupModal,
+      isLoading: true,
       group: {
         titles: ['未选用户组', '已选用户组'],
         data: [],
@@ -81,12 +84,23 @@ export default {
     // 添加用户组
     onClickOk () {
       let rownerIds = this.group.selectKeys.join(',')
+      if (!rownerIds) {
+        this.$Message.warning('请选择用户组！')
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
+        return
+      }
 
       this.$axios.put(`${api.roles}/${this.currentRole.id}/rowners?rownerIds=${rownerIds}`).then(res => {
         this.$Message.success('添加成功！')
         this.$emit('on-submit')
-      }).catch(() => {
-        this.$emit('on-close')
+      }).finally(() => {
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
       })
     },
     onClickCancel () {

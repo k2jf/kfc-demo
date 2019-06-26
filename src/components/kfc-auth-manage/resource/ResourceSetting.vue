@@ -3,6 +3,8 @@
   <Modal
     title="资源设置"
     width="600"
+    :maskClosable="false"
+    :loading="isLoading"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
@@ -61,6 +63,7 @@ export default {
   data () {
     return {
       isShowModal: this.isShowSettingModal,
+      isLoading: true,
       permissions: []
     }
   },
@@ -78,8 +81,11 @@ export default {
     onClickOk () {
       let operations = this.permissions.join(',')
       if (!operations) {
-        this.$Message.warning('请修改操作权限！')
-        this.$emit('on-close')
+        this.$Message.warning('请修改配置！')
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
         return
       }
 
@@ -89,8 +95,11 @@ export default {
       this.$axios.put(url).then(res => {
         this.$Message.success('修改成功！')
         this.$emit('on-submit')
-      }).catch(() => {
-        this.$emit('on-close')
+      }).finally(() => {
+        this.isLoading = false
+        this.$nextTick(() => {
+          this.isLoading = true
+        })
       })
     },
     onClickCancel () {

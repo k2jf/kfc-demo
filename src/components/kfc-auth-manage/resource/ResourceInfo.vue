@@ -8,6 +8,9 @@
         style="max-width:200px;margin-left:10px;"
         v-model="resourceData.typeId"
         @on-change="onTypeChange">
+        <Option :value="-1">
+          全部资源
+        </Option>
         <Option
           :value="item.id"
           v-for="item in resourceTypeList"
@@ -58,7 +61,7 @@
       :resourceIdList="getSelectedIds"
       :operations="getOperations"
       v-if="currentRole"
-      @on-submit="getResourceData"
+      @on-submit="onModifySetting"
       @on-close="isShowSettingModal = false" />
     <Table
       :columns="resourceData.columns"
@@ -112,7 +115,7 @@ export default {
       resourceData: {
         loading: false,
         fuzzyName: '',
-        typeId: 0,
+        typeId: -1,
         data: [],
         selections: [],
         columns: [
@@ -176,6 +179,11 @@ export default {
     },
     getOperations () {
       let typeId = this.resourceData.typeId
+      if (typeId < 0) {
+        let operations = []
+        this.resourceTypeList.forEach(item => operations.push(...item.operations))
+        return operations
+      }
       let typeInfo = this.resourceTypeList.find(item => item.id === typeId)
       if (!this.resourceTypeList.length || !typeInfo) return []
       return typeInfo ? typeInfo.operations : []
@@ -195,6 +203,7 @@ export default {
     this.$axios.get(`${api.restyps}`).then(res => {
       this.resourceTypeList = res.data.body.restyps
     })
+    this.getResourceData()
   },
   methods: {
     // 搜索资源
@@ -225,6 +234,11 @@ export default {
       }
       this.isShowSettingModal = true
     },
+    onModifySetting () {
+      this.getResourceData()
+      this.isShowSettingModal = false
+      this.resourceData.selections = []
+    },
     // 获取资源列表
     getResourceData () {
       this.resourceData.loading = true
@@ -232,6 +246,11 @@ export default {
       let { id } = this.currentRole
       let url = `${api.roles}/${id}/permissions?resourceTypeId=${typeId}`
       url = fuzzyName ? `${url}&fuzzyName=${fuzzyName}` : url
+
+      // 全部资源
+      if (typeId < 0) {
+        url = `${api.roles}/${id}/permissions`
+      }
 
       this.$axios.get(url).then(res => {
         this.resourceData.data = res.data.body.roles

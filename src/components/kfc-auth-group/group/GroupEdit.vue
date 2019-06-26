@@ -2,6 +2,8 @@
 <template>
   <Modal
     title="创建用户组"
+    :maskClosable="false"
+    :loading="isLoading"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel">
@@ -46,6 +48,7 @@ export default {
   data () {
     return {
       isShowModal: this.isShowGroupModal,
+      isLoading: true,
       group: {
         name: '',
         description: ''
@@ -69,7 +72,10 @@ export default {
     onClickOk () {
       this.$refs.formValidate.validate((valid) => {
         if (!valid) {
-          this.$emit('on-close')
+          this.isLoading = false
+          this.$nextTick(() => {
+            this.isLoading = true
+          })
           return
         }
 
@@ -77,8 +83,11 @@ export default {
           this.$Message.success('新建成功！')
           this.$refs.formValidate.resetFields()
           this.$emit('on-submit')
-        }).catch(() => {
-          this.$emit('on-close')
+        }).finally(() => {
+          this.isLoading = false
+          this.$nextTick(() => {
+            this.isLoading = true
+          })
         })
       })
     },

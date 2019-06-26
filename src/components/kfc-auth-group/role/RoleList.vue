@@ -43,7 +43,7 @@
       :isShowSettingModal="isShowSettingModal"
       :roleIdList="getSelectedIds"
       v-if="currentGroup"
-      @on-submit="onReloadList"
+      @on-submit="onModifySetting"
       @on-close="isShowSettingModal = false" />
     <Table
       :columns="role.columns"
@@ -272,6 +272,10 @@ export default {
       if (this.currentGroup) {
         this.getRoleList()
       }
+    },
+    onModifySetting () {
+      this.role.selections = []
+      this.onReloadList()
     },
     getTimeStatus (valiableTime) {
       let now = Number(new Date())

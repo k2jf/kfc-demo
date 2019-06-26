@@ -2,6 +2,7 @@
 <template>
   <Modal
     title="创建角色"
+    :maskClosable="false"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel">
