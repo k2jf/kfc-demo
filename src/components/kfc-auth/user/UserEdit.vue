@@ -3,6 +3,7 @@
   <Modal
     title="添加已有用户"
     width="800"
+    :maskClosable="false"
     v-model="isShowModal"
     @on-ok="onClickOk"
     @on-cancel="onClickCancel"
